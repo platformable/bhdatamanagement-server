@@ -3,7 +3,7 @@ let nodemailer = require("nodemailer");
 
 
 
-const sendMessageToSubscriber =(email)=>{
+const sendMessageToSubscriber =(name,email)=>{
   let mailTrasporter = nodemailer.createTransport({
     service:'gmail',
     auth:{
@@ -17,7 +17,12 @@ const sendMessageToSubscriber =(email)=>{
     //to: clientHCWEmail,
     to:[email,'mark@platformable.com'],
     subject:"Please complete your registration to BH Data app",
-    text:`The supervisor has added you as Program Worker in Black Health Data Management app, please complete your registration visiting this link http://www.platformable.com`
+    text:`Hi ${name}
+
+    Melissa Baker at Black Health has created a new account for you so you can access the Black Health Data Management App.
+    
+    The next step is for you to register your email and set a password. Please visit:
+    https://bh.platformable.com`
   }
 
   mailTrasporter.sendMail(details,(err)=>{
@@ -59,7 +64,7 @@ module.exports = {
         db
           .query(query)
           .then(data => res.status(200).json(data.rows[0]))
-          .then(subscriber=>sendMessageToSubscriber(email))
+          .then(subscriber=>sendMessageToSubscriber(name,email))
           .catch(e => console.error(e.stack))
     },
     updateUser: async (req, res) => {
