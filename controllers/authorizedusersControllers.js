@@ -1,4 +1,34 @@
 const db = require('../dbConnect')
+let nodemailer = require("nodemailer");
+
+
+
+const sendMessageToSubscriber =(email)=>{
+  let mailTrasporter = nodemailer.createTransport({
+    service:'gmail',
+    auth:{
+      user:process.env.NODEMAILEREMAIL,
+      pass:process.env.EMAILPASSWORD
+    }
+  })
+
+  let details = {
+    from:"accounts@platformable.com",
+    //to: clientHCWEmail,
+    to:[email,'mark@platformable.com'],
+    subject:"Please complete your registration to BH Data app",
+    text:`The supervisor has added you as Program Worker in Black Health Data Management app, please complete your registration visiting this link http://www.platformable.com`
+  }
+
+  mailTrasporter.sendMail(details,(err)=>{
+    
+    if(err){
+      console.log(err)
+    } else {
+      console.log("email sent")
+    }
+  })
+}
 
 module.exports = {
     get : async (req,res)=>{
@@ -15,11 +45,11 @@ module.exports = {
     post: async (req,res)=>{
         let {name,lastname,userRole,email,isactive} = req.body
     
-        if(isactive==="true"){
+       /*  if(isactive==="true"){
           isactive="Active"
         } else {
           isactive="No Active"
-        }
+        } */
         const dateaccountactivated = new Date()
         const query = {
           text: 'INSERT INTO authorizedusers (name,lastname,role,email,isactive,dateaccountactivated) VALUES($1,$2,$3,$4,$5,$6) RETURNING *',
@@ -29,6 +59,7 @@ module.exports = {
         db
           .query(query)
           .then(data => res.status(200).json(data.rows[0]))
+          .then(subscriber=>sendMessageToSubscriber(email))
           .catch(e => console.error(e.stack))
     },
     updateUser: async (req, res) => {
