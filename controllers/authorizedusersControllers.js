@@ -91,7 +91,6 @@ module.exports = {
 console.log("req.body",req.body)
         try {
           const query = await {
-            name: "update-user",
             text: `update authorizedusers set id=$1, name=$2, lastname=$3, role=$4, email=$5, isactive=$6 where id=$1`,
             values: [id,name,lastname,role,email,isactive],
           };
@@ -144,7 +143,6 @@ console.log("req.body",req.body)
      
       try {
         const query = await {
-          name: "update-user-from-user_edits",
           text: `update authorizedusers set isactive=$1,email=$2 where email=$2`,
           values: [useractivestatus,useremail],
         };
