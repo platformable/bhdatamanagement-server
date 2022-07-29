@@ -19,10 +19,15 @@ const sendMessageToSubscriber =(name,email)=>{
     subject:"Please complete your registration to BH Data app",
     text:`Hi ${name}
 
-    Melissa Baker at Black Health has created a new account for you so you can access the Black Health Data Management App.
-    
-    The next step is for you to register your email and set a password. Please visit:
-    https://bh.platformable.com`
+Melissa Baker at Black Health has created a new account for you so you can access the Black Health Data Management App.
+The next step is for you to register your email and set a password. Please visit: https://bh.platformable.com
+
+Choose “Sign Up” in the input box and enter your email and choose a password. Then click Sign Up and your account will be created.
+
+You can also consult our training materials at any time for further help, or book in for a 1:1 support call.
+
+Welcome! 
+`
   }
 
   mailTrasporter.sendMail(details,(err)=>{
@@ -55,6 +60,15 @@ module.exports = {
         } else {
           isactive="No Active"
         } */
+
+         if(isactive==="true"){
+          isactive="Active"
+        }
+        if(isactive==="false"){
+          isactive="No Active"
+        }
+
+        
         const dateaccountactivated = new Date()
         const query = {
           text: 'INSERT INTO authorizedusers (name,lastname,role,email,isactive,dateaccountactivated) VALUES($1,$2,$3,$4,$5,$6) RETURNING *',
