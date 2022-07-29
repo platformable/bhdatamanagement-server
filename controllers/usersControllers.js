@@ -11,11 +11,11 @@ module.exports = {
     }
   },
   createUser: async (req, res) => {
-    const {user_id, name, lastname, userrole, email, dateaccountactivated,useractivestatus } = req.body;
+    const {userid, name, lastname, role, email, dateaccountactivated,isactive } = req.body;
   
     const text =
-      "INSERT INTO users(user_id,name,lastname,userrole,useremail,dateaccountactivated,useractivestatus) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *";
-    const values = [user_id,name, lastname, userrole, email, dateaccountactivated,useractivestatus];
+      "INSERT INTO users(userid,name,lastname,role,email,dateaccountactivated,isactive) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *";
+    const values = [userid,name, lastname, role, email, dateaccountactivated,isactive];
     // callback
     db.query(text, values, (err, res) => {
       if (err) {
@@ -26,11 +26,11 @@ module.exports = {
     });
   },
   delete: async (req, res) => {
-    const { user_id } = req.body;
+    const { userid } = req.body;
     console.log(req.body)
     const query = {
-      text: "DELETE from users where user_id=$1",
-      values: [user_id],
+      text: "DELETE from users where userid=$1",
+      values: [userid],
     };
     // promise
     db.query(query)
@@ -50,12 +50,12 @@ module.exports = {
       .catch((e) => console.error(e.stack));
   },
   updateLastLogin: async (req, res) => {
-    const { datelastlogin, useremail } = req.body;
+    const { datelastlogin, email } = req.body;
     try {
       const query = await {
         name: "update-last-login",
-        text: `update users set datelastlogin=$1 where useremail=$2`,
-        values: [datelastlogin, useremail],
+        text: `update users set datelastlogin=$1 where email=$2`,
+        values: [datelastlogin, email],
       };
       db
         .query(query)
@@ -72,7 +72,7 @@ module.exports = {
     }
   },
   updateUser: async (req, res) => {
-    let { name,lastname,userrole,useremail,useractivestatus} = req.body;
+    let { name,lastname,role,email,isactive} = req.body;
 
  /*    if(useractivestatus==="true"){
       useractivestatus="Active"
@@ -83,8 +83,8 @@ module.exports = {
     try {
       const query = await {
         name: "update-user",
-        text: `update users set name=$1,lastname=$2,userrole=$3,useremail=$4 ,useractivestatus =$5 where useremail=$6`,
-        values: [name,lastname,userrole,useremail,useractivestatus,useremail],
+        text: `update users set name=$1,lastname=$2,role=$3,email=$4 ,isactive =$5 where email=$6`,
+        values: [name,lastname,role,email,isactive,email],
       };
       db
         .query(query)
