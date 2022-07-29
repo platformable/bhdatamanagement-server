@@ -83,11 +83,11 @@ module.exports = {
     },
     updateUser: async (req, res) => {
         let {id,name,lastname,role,email,isactive} = req.body;
-        if(isactive==="true"){
+    /*     if(isactive==="true"){
           isactive="Active"
         } else {
           isactive="No Active"
-        }
+        } */
 console.log("req.body",req.body)
         try {
           const query = await {
