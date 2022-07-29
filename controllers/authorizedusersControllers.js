@@ -15,7 +15,7 @@ const sendMessageToSubscriber =(name,email)=>{
   let details = {
     from:"accounts@platformable.com",
     //to: clientHCWEmail,
-    to:[email,'mark@platformable.com'],
+    to:[email],
     subject:"Please complete your registration to BH Data app",
     text:`Hi ${name}
 
