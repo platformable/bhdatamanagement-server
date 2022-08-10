@@ -42,6 +42,9 @@ app.use('/event_location_type', eventLocationTypeRoute)
 const healthAreaOfFocusRoute = require('./routes/healthAreasOfFocus.js')
 app.use('/health_area_of_focus', healthAreaOfFocusRoute)
 
+const eventsRoute = require('./routes/events.js')
+app.use('/events', eventsRoute)
+
 
 /* PORT */
 
