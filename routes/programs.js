@@ -1,0 +1,12 @@
+
+const express = require('express')
+const router = express.Router()
+const controller = require('../controllers/programsControllers')
+
+router.get("/",controller.getPrograms)
+
+module.exports = router
+
+
+
+

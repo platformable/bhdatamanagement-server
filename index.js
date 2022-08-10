@@ -33,6 +33,15 @@ app.use('/authorizedusers', authorizedUserRoute)
 const usersRoute = require('./routes/users')
 app.use('/users', usersRoute)
 
+const programsRoute = require('./routes/programs.js')
+app.use('/programs', programsRoute)
+
+const eventLocationTypeRoute = require('./routes/eventLocationType.js')
+app.use('/event_location_type', eventLocationTypeRoute)
+
+const healthAreaOfFocusRoute = require('./routes/healthAreasOfFocus.js')
+app.use('/health_area_of_focus', healthAreaOfFocusRoute)
+
 
 /* PORT */
 

@@ -27,7 +27,7 @@ module.exports = {
   },
   delete: async (req, res) => {
     const { userid } = req.body;
-    console.log(req.body)
+    console.log("users req.body",req.body)
     const query = {
       text: "DELETE from users where userid=$1",
       values: [userid],
@@ -51,6 +51,7 @@ module.exports = {
   },
   updateLastLogin: async (req, res) => {
     const { datelastlogin, email } = req.body;
+
     try {
       const query = await {
         name: "update-last-login",
