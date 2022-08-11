@@ -13,24 +13,22 @@ module.exports= {
     },
     createEvent: async (req,res)=>{
         const {
-            userid ,
-            eventdatecreated ,
-            programid ,
-            programname ,
-            eventname ,
-            eventdate ,
-            eventstarttime ,
-            eventfinishtime ,
-            eventlocationtypeid ,
-            eventlocationtypename ,
-            healthareaoffocusid ,
-            healthareaoffocusname ,
+            userID ,
+            eventDateCreated ,
+            programID ,
+            programName ,
+            eventName ,
+            eventDate ,
+            eventStartTime ,
+            eventFinishTime ,
+            eventLocationTypeID ,
+            eventLocationTypeName ,
+            healthAreaOfFocusID ,
+            healthAreaOfFocusName ,
             eventtypeid ,
-            eventtypename
+            eventTypeName
         } = req.body;
-
-        console.log("req.body",req.body)
-  
+  console.log("req.body",req.body)
     const text =
       `INSERT INTO events (
         userID ,
@@ -49,20 +47,20 @@ module.exports= {
             eventTypeName
       ) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14) RETURNING *`;
     const values = [
-        userid ,
-        eventdatecreated ,
-        programid ,
-        programname ,
-        eventname ,
-        eventdate ,
-        eventstarttime ,
-        eventfinishtime ,
-        eventlocationtypeid ,
-        eventlocationtypename ,
-        healthareaoffocusid ,
-        healthareaoffocusname ,
+        userID ,
+        eventDateCreated ,
+        programID ,
+        programName ,
+        eventName ,
+        eventDate ,
+        eventStartTime ,
+        eventFinishTime ,
+        eventLocationTypeID ,
+        eventLocationTypeName ,
+        healthAreaOfFocusID ,
+        healthAreaOfFocusName ,
         eventtypeid ,
-            eventtypename];
+            eventTypeName];
     // callback
     db.query(text, values, (err, res) => {
       if (err) {
