@@ -28,6 +28,8 @@ module.exports= {
             eventtypeid ,
             eventtypename
         } = req.body;
+
+        console.log("req.body",req.body)
   
     const text =
       `INSERT INTO events (
