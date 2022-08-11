@@ -25,7 +25,7 @@ module.exports= {
             eventLocationTypeName ,
             healthAreaOfFocusID ,
             healthAreaOfFocusName ,
-            eventtypeid ,
+            eventTypeID ,
             eventTypeName
         } = req.body;
   console.log("req.body",req.body)
@@ -43,7 +43,7 @@ module.exports= {
             eventLocationTypeName ,
             healthAreaOfFocusID ,
             healthAreaOfFocusName ,
-            eventtypeid ,
+            eventTypeID ,
             eventTypeName
       ) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14) RETURNING *`;
     const values = [
@@ -59,7 +59,7 @@ module.exports= {
         eventLocationTypeName ,
         healthAreaOfFocusID ,
         healthAreaOfFocusName ,
-        eventtypeid ,
+        eventTypeID ,
             eventTypeName];
     // callback
     db.query(text, values, (err, res) => {
