@@ -13,20 +13,20 @@ module.exports= {
     },
     createEvent: async (req,res)=>{
         const {
-            userID ,
-            eventDateCreated ,
-            programID ,
-            programName ,
-            eventName ,
-            eventDate ,
-            eventStartTime ,
-            eventFinishTime ,
-            eventLocationTypeID ,
-            eventLocationTypeName ,
-            healthAreaOfFocusID ,
-            healthAreaOfFocusName ,
+            userid ,
+            eventdatecreated ,
+            programid ,
+            programname ,
+            eventname ,
+            eventdate ,
+            eventstarttime ,
+            eventfinishtime ,
+            eventlocationtypeid ,
+            eventlocationtypename ,
+            healthareaoffocusid ,
+            healthareaoffocusname ,
             eventtypeid ,
-            eventTypeName
+            eventtypename
         } = req.body;
   
     const text =
@@ -46,20 +46,21 @@ module.exports= {
             eventtypeid ,
             eventTypeName
       ) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14) RETURNING *`;
-    const values = [userID ,
-        eventDateCreated ,
-        programID ,
-        programName ,
-        eventName ,
-        eventDate ,
-        eventStartTime ,
-        eventFinishTime ,
-        eventLocationTypeID ,
-        eventLocationTypeName ,
-        healthAreaOfFocusID ,
-        healthAreaOfFocusName ,
+    const values = [
+        userid ,
+        eventdatecreated ,
+        programid ,
+        programname ,
+        eventname ,
+        eventdate ,
+        eventstarttime ,
+        eventfinishtime ,
+        eventlocationtypeid ,
+        eventlocationtypename ,
+        healthareaoffocusid ,
+        healthareaoffocusname ,
         eventtypeid ,
-            eventTypeName];
+            eventtypename];
     // callback
     db.query(text, values, (err, res) => {
       if (err) {
