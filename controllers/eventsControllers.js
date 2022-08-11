@@ -28,10 +28,11 @@ module.exports= {
             eventTypeID ,
             eventTypeName
         } = req.body;
-  console.log("req.body",req.body)
-    const text =
+
+        try {
+            const text =
       `INSERT INTO events (
-        userID ,
+            userID,
             eventDateCreated ,
             programID ,
             programName ,
@@ -61,13 +62,23 @@ module.exports= {
         healthAreaOfFocusName ,
         eventTypeID ,
             eventTypeName];
-    // callback
+
+            const allData = await db.query(text,values);
+            const response = allData.rows;
+            res.status(200).json({"message":"Event saved successfully", "statusText":"OK"});
+
+        } catch(e){
+            res.status(400).json({"message":"an error ocurred, please try again", "statusText":"FAIL"})
+        }
+
+    
+   /*  // callback
     db.query(text, values, (err, res) => {
       if (err) {
         console.log(err.stack);
       } else {
         console.log(res.rows[0]);
       }
-    });
+    }); */
     }
 }
