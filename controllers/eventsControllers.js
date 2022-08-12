@@ -11,21 +11,37 @@ module.exports= {
             res.send("an error ocurred");
           }
     },
+    getEventById:async (req,res)=>{
+        let { id } = await req.params;
+
+        const query = {
+
+          text:`select * from events where id=$1`,
+          values: [id],
+        };
+        try {
+            const allData = await db.query(query);
+            const response = allData.rows;
+            res.send(response);
+          } catch (e) {
+            res.send("an error ocurred");
+          }
+    },
     createEvent: async (req,res)=>{
         const {
             userID ,
             eventDateCreated ,
-            programID ,
+            programID,
             programName ,
             eventName ,
             eventDate ,
             eventStartTime ,
             eventFinishTime ,
-            eventLocationTypeID ,
+            eventLocationTypeID=Number(eventLocationTypeID) ,
             eventLocationTypeName ,
-            healthAreaOfFocusID ,
+            healthAreaOfFocusID=Number(eventLocationTypeID),
             healthAreaOfFocusName ,
-            eventTypeID ,
+            eventTypeID=Number(eventTypeID),
             eventTypeName
         } = req.body;
 
@@ -50,35 +66,92 @@ module.exports= {
     const values = [
         userID ,
         eventDateCreated ,
-        programID ,
+        programID,
         programName ,
         eventName ,
         eventDate ,
         eventStartTime ,
         eventFinishTime ,
-        eventLocationTypeID ,
+        eventLocationTypeID,
         eventLocationTypeName ,
-        healthAreaOfFocusID ,
+        healthAreaOfFocusID,
         healthAreaOfFocusName ,
-        eventTypeID ,
-            eventTypeName];
+        eventTypeID,
+        eventTypeName];
 
             const allData = await db.query(text,values);
             const response = allData.rows;
             res.status(200).json({"message":"Event saved successfully", "statusText":"OK"});
 
         } catch(e){
+            console.log("error",e)
             res.status(400).json({"message":"an error ocurred, please try again", "statusText":"FAIL"})
         }
-
-    
-   /*  // callback
-    db.query(text, values, (err, res) => {
-      if (err) {
-        console.log(err.stack);
-      } else {
-        console.log(res.rows[0]);
-      }
-    }); */
-    }
+    },
+    updateEvent: async (req, res) => {
+        let {
+            eventid,userID ,
+            eventDateCreated ,
+            programID,
+            programName ,
+            eventName ,
+            eventDate ,
+            eventStartTime ,
+            eventFinishTime ,
+            eventLocationTypeID,
+            eventLocationTypeName ,
+            healthAreaOfFocusID,
+            healthAreaOfFocusName ,
+            eventTypeID,
+            eventTypeName} = req.body;
+ 
+        try {
+          const query = await {
+            name: "update-user",
+            text: `update events set 
+            userID ,
+        eventDateCreated ,
+        programID,
+        programName ,
+        eventName ,
+        eventDate ,
+        eventStartTime ,
+        eventFinishTime ,
+        eventLocationTypeID,
+        eventLocationTypeName ,
+        healthAreaOfFocusID,
+        healthAreaOfFocusName ,
+        eventTypeID,
+        eventTypeName where id=$1`,
+            values: [eventid,userID ,
+                eventDateCreated ,
+                programID,
+                programName ,
+                eventName ,
+                eventDate ,
+                eventStartTime ,
+                eventFinishTime ,
+                eventLocationTypeID,
+                eventLocationTypeName ,
+                healthAreaOfFocusID,
+                healthAreaOfFocusName ,
+                eventTypeID,
+                eventTypeName],
+          };
+          db
+            .query(query)
+            .then((response) =>{
+              console.log(response)
+              res.json({
+                data: response.rowCount,
+                status: 200,
+              })
+            }
+            )
+          
+        } catch (error) {
+          res.send(e.stack)
+          console.log("error message:", error);
+        }
+      },
 }
