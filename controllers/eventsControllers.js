@@ -90,7 +90,8 @@ module.exports= {
     },
     updateEvent: async (req, res) => {
         let {
-            eventid,userID ,
+            eventid,
+            userID ,
             eventDateCreated ,
             programID,
             programName ,
@@ -107,7 +108,6 @@ module.exports= {
  
         try {
           const query = await {
-            name: "update-user",
             text: `update events set 
             userID ,
         eventDateCreated ,
@@ -123,7 +123,9 @@ module.exports= {
         healthAreaOfFocusName ,
         eventTypeID,
         eventTypeName where id=$1`,
-            values: [eventid,userID ,
+            values: [
+                eventid,
+                userID ,
                 eventDateCreated ,
                 programID,
                 programName ,
@@ -136,7 +138,7 @@ module.exports= {
                 healthAreaOfFocusID,
                 healthAreaOfFocusName ,
                 eventTypeID,
-                eventTypeName],
+                eventTypeName]
           };
           db
             .query(query)
