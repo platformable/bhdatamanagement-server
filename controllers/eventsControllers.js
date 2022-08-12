@@ -110,21 +110,22 @@ module.exports= {
  
         try {
           const query = await {
-            text: `update events set 
-            userID ,
-        eventDateCreated ,
-        programID,
-        programName ,
-        eventName ,
-        eventDate ,
-        eventStartTime ,
-        eventFinishTime ,
-        eventLocationTypeID,
-        eventLocationTypeName ,
-        healthAreaOfFocusID,
-        healthAreaOfFocusName ,
-        eventTypeID,
-        eventTypeName where id=$1`,
+            text: `update events set
+            eventid=$1, 
+            userID=$2 ,
+        eventDateCreated=$3 ,
+        programID=$4,
+        programName=$5 ,
+        eventName=$6 ,
+        eventDate=$7 ,
+        eventStartTime=$8 ,
+        eventFinishTime=$9 ,
+        eventLocationTypeID=$10,
+        eventLocationTypeName=$11,
+        healthAreaOfFocusID=$12,
+        healthAreaOfFocusName=$13,
+        eventTypeID=$14,
+        eventTypeName=$15 where id=$1`,
             values: [
                 eventid,
                 userID ,
@@ -152,7 +153,6 @@ module.exports= {
               })
             }
             )
-          
         } catch (error) {
           res.send(e.stack)
           console.log("error message:", error);
