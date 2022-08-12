@@ -105,6 +105,8 @@ module.exports= {
             healthAreaOfFocusName ,
             eventTypeID,
             eventTypeName} = req.body;
+
+            console.log("req.body",req.body)
  
         try {
           const query = await {
