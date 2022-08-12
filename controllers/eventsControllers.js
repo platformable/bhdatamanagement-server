@@ -105,27 +105,24 @@ module.exports= {
             healthAreaOfFocusName ,
             eventTypeID,
             eventTypeName} = req.body;
-
-            console.log("req.body",req.body)
  
         try {
           const query = await {
             text: `update events set
-
             userID=$1 ,
         eventDateCreated=$2 ,
         programID=$3,
-        programName=$4 ,
-        eventName=$5 ,
-        eventDate=$6 ,
-        eventStartTime=$9 ,
-        eventFinishTime=$10 ,
-        eventLocationTypeID=$11,
-        eventLocationTypeName=$12,
-        healthAreaOfFocusID=$13,
-        healthAreaOfFocusName=$14,
-        eventTypeID=$15,
-        eventTypeName=$16 where id=$1`,
+        programName=$4,
+        eventName=$5,
+        eventDate=$6,
+        eventStartTime=$7,
+        eventFinishTime=$8,
+        eventLocationTypeID=$9,
+        eventLocationTypeName=$10,
+        healthAreaOfFocusID=$11,
+        healthAreaOfFocusName=$12,
+        eventTypeID=$13,
+        eventTypeName=$14 where id=$1`,
             values: [
                 eventid,
                 userID ,
