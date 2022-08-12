@@ -145,8 +145,8 @@ module.exports= {
             .then((response) =>{
               console.log(response)
               res.json({
-                data: response.rowCount,
-                status: 200,
+                message: "Updated successfully",
+                statustext:'OK'
               })
             }
             )
