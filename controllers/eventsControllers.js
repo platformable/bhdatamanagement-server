@@ -81,7 +81,7 @@ module.exports= {
 
             const allData = await db.query(text,values);
             const response = allData.rows;
-            res.status(200).json({"message":"Event saved successfully", "statusText":"OK"});
+            res.status(200).json({"message":"Event saved successfully"});
 
         } catch(e){
             console.log("error",e)
