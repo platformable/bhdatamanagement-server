@@ -146,7 +146,7 @@ module.exports= {
               console.log(response)
               res.json({
                 message: "Updated successfully",
-                statustext:'OK'
+                statusText:'OK'
               })
             }
             )
