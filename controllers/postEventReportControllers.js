@@ -1491,7 +1491,7 @@ try {
            
     
 } catch (error) {
-    res.send({"message":"an error occurred, try again later"})
+    res.status(400).send({"message":"an error occurred, try again later"})
     console.log("create Event_output error:",error)
 }
     }
