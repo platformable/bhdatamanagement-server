@@ -1112,7 +1112,8 @@ try {
                     $364,
                     $365,
                     $366,
-                    $367
+                    $367,
+                    $368
             ) RETURNING *`;
             const values = [
                 eventID,
