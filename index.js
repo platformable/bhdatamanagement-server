@@ -48,6 +48,9 @@ app.use('/events', eventsRoute)
 const eventTypeRoute = require('./routes/eventType.js')
 app.use('/event_type', eventTypeRoute)
 
+const postEventRoute = require('./routes/postEventReport.js')
+app.use('/post_event_report', postEventRoute)
+
 
 /* PORT */
 
