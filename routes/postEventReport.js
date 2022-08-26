@@ -4,5 +4,6 @@ const controller= require("../controllers/postEventReportControllers")
 
 
 router.post("/create",controller.createPostEventReport)
+router.get("/",controller.getAllPostEventReports)
 
 module.exports = router

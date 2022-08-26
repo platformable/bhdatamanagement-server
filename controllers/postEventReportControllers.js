@@ -1,6 +1,17 @@
 const db = require("../dbConnect")
 
 module.exports={
+
+    getAllPostEventReports:async (req,res)=>{
+        try {
+            const allData = await db.query("select * from events_output");
+            const response = allData.rows;
+            res.send(response);
+          } catch (e) {
+            res.send("an error ocurred");
+            console.log("error",e)
+          }
+    },
     createPostEventReport: async (req,res)=>{
 
         console.log("post event")
@@ -375,7 +386,7 @@ module.exports={
             otherSexualOrientationDeclinedToAnswer
         }= req.body
 
-        console.log("req.body post event report",req.body)
+
 try {
     const text = `insert into events_output (
             eventID,
@@ -1489,6 +1500,7 @@ try {
             const allData = await db.query(text,values);
             const response = allData.rows;
             res.status(200).send({"message":"Event_output saved successfully",'statusText':'OK'});
+            console.log("sucess post event report")
            
     
 } catch (error) {
