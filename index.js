@@ -70,9 +70,8 @@ app.use('/event_type', eventTypeRoute)
 const postEventRoute = require('./routes/postEventReport.js')
 app.use('/post_event_report', postEventRoute)
 
-
-
-
+const accessToken = require('./routes/dropboxAccessToken')
+app.use('/access_token',accessToken)
 
 
 

@@ -37,7 +37,7 @@ const clientIdSecretEncoded = buffer.from(`${DBXCLIENT_ID}:${CLIENT_SECRET}`).to
       body: urlencoded,
       redirect: 'follow'
   };
- return fetch("https://api.dropbox.com/oauth2/token", requestOptions)
+      return fetch("https://api.dropbox.com/oauth2/token", requestOptions)
       .then(response => response.json())
       .then(result => newAccessToken = result)
       .then(accessTokenResult => {
@@ -45,39 +45,22 @@ const clientIdSecretEncoded = buffer.from(`${DBXCLIENT_ID}:${CLIENT_SECRET}`).to
          return createMainFolder(tokenFromRefresh,programName,eventName,eventDate)
       })
       .then(res=>{
-      
-         mainFolder=res.mainFolderUrl
+        mainFolder=res.mainFolderUrl
         folderPath=res.folderPath
         console.log(mainFolder)
-        }
-        )
-   
-        .then(response => {
-          
-          return createImagesFolder(tokenFromRefresh,programName,eventName,eventDate)
-      })
-      .then(res=>{
-       
-        imagesFolderUrl=res.imagesFolderUrl
-        // imagesFolder=res.imagesFolderUrl
         })
-      
- 
-      .catch(error => console.log('error from connectDropboxAndCreateFolders', error))
+        .then(response => {  return createImagesFolder(tokenFromRefresh,programName,eventName,eventDate) })
+        .then(res=>{ imagesFolderUrl=res.imagesFolderUrl })
+        .catch(error => console.log('error from connectDropboxAndCreateFolders', error))
 }
 
 
 const createMainFolder =  async (token,programName,eventName,eventDate) => {
   return await createFolder.createMainFolder(token,programName,eventName,eventDate)
-  //await createFolder.createImagesFolder(token,programName,eventName,eventDate)
 }
 
 const createImagesFolder =  async (token,programName,eventName,eventDate) => {
-  setTimeout(()=>{
-    return  createFolder.createImagesFolder(token,programName,eventName,eventDate)
-  },10000)
-
-   //await createFolder.createImagesFolder(token,programName,eventName,eventDate)
+    return  await createFolder.createImagesFolder(token,programName,eventName,eventDate)
  }
 
 
