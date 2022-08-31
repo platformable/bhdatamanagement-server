@@ -13,20 +13,21 @@ const sendMessageToSubscriber =(name,email)=>{
   })
 
   let details = {
-    from:"accounts@platformable.com",
+    from:process.env.NODEMAILEREMAIL,
     //to: clientHCWEmail,
     to:[email],
     subject:"Please complete your registration to BH Data app",
     text:`Hi ${name}
 
-Melissa Baker at Black Health has created a new account for you so you can access the Black Health Data Management App.
-The next step is for you to register your email and set a password. Please visit: https://bh.platformable.com
+MMelissa Baker at Black Health has created a new account for you so you can access the Black Health Data Management App.
 
-Choose “Sign Up” in the input box and enter your email and choose a password. Then click Sign Up and your account will be created.
+The next step for you is to complete the registration by setting up your password. 
 
-You can also consult our training materials at any time for further help, or book in for a 1:1 support call.
+To do this, visit https://bh.platformable.com
 
-Welcome! 
+Choose “Sign Up” in the input box and enter your email and choose a password. Then click Sign Up and this will complete your registration.
+
+The app is currently being developed and your feedback is valuable to us! Please feel free to reply to this email address or email adrienne@platformable.com with any enquiries or suggestions.
 `
   }
 
@@ -54,12 +55,6 @@ module.exports = {
     },
     post: async (req,res)=>{
         let {name,lastname,role,email,isactive} = req.body
-
-       /*  if(isactive==="true"){
-          isactive="Active"
-        } else {
-          isactive="No Active"
-        } */
 
          if(isactive==="true"){
           isactive="Active"

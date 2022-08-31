@@ -12,6 +12,38 @@ module.exports={
             console.log("error",e)
           }
     },
+    getNysEventsOutput:async (req,res)=>{
+        const text=`select events_output.*, 
+        events.userid,
+        users.name,
+        users.lastname,users.userid
+        from events_output 
+        join events on  events_output.eventid = events.id 
+        join users on  events.userid = users.userid
+        where events.programname='NYS CMP'`
+        try {
+            const allData = await db.query(text);
+            const response = allData.rows;
+            console.log("response",response)
+            res.send(response);
+          } catch (e) {
+            res.send("an error ocurredx");
+            console.log("error",e)
+          }
+    },
+    getPostEventReport:async (req,res)=>{
+        let {id}=req.params
+        const text="select * from events_output where id=$1"
+       const values=[id]
+        try {
+            const allData = await db.query(text,values);
+            const response = allData.rows;
+            res.send(response);
+          } catch (e) {
+            res.send("an error ocurredxxxxxx2222");
+            console.log("error",e)
+          }
+    },
     createPostEventReport: async (req,res)=>{
 
         console.log("post event")
@@ -385,6 +417,8 @@ module.exports={
             otherSexualOrientationUnknown,
             otherSexualOrientationDeclinedToAnswer
         }= req.body
+
+        console.log("req.body",req.body)
 
 
 try {
