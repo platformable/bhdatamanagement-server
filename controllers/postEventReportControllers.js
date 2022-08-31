@@ -261,7 +261,7 @@ module.exports={
             hepCBisexual,
             hepCQueer,
             hepCQuestioningOrNotSure,
-            hepCSexualOrietnationUnknown,
+            hepCSexualOrientationUnknown,
             hepCSexualOrientationDeclinedToAnswer,
             bloodPressureTestingAgency,
             bloodPressureTestedTotal,
@@ -324,7 +324,7 @@ module.exports={
             cholesterolGenderNonConforming,
             cholesterolNonBinary,
             cholesterolOtherGenderIdentity,
-            cholesterolOtherGenderDeclinedToAnswer,
+            cholesterolGenderDeclinedToAnswer,
             cholesterolUnder15,
             cholesterol16_19,
             cholesterol20_24,
@@ -636,7 +636,7 @@ try {
             hepCBisexual,
             hepCQueer,
             hepCQuestioningOrNotSure,
-            hepCSexualOrietnationUnknown,
+            hepCSexualOrientationUnknown,
             hepCSexualOrientationDeclinedToAnswer,
             bloodPressureTestingAgency,
             bloodPressureTestedTotal,
@@ -1374,7 +1374,7 @@ try {
                 hepCBisexual,
                 hepCQueer,
                 hepCQuestioningOrNotSure,
-                hepCSexualOrietnationUnknown,
+                hepCSexualOrientationUnknown,
                 hepCSexualOrientationDeclinedToAnswer,
                 bloodPressureTestingAgency,
                 bloodPressureTestedTotal,
@@ -1437,7 +1437,7 @@ try {
                 cholesterolGenderNonConforming,
                 cholesterolNonBinary,
                 cholesterolOtherGenderIdentity,
-                cholesterolOtherGenderDeclinedToAnswer,
+                cholesterolGenderDeclinedToAnswer,
                 cholesterolUnder15,
                 cholesterol16_19,
                 cholesterol20_24,
@@ -1538,7 +1538,7 @@ try {
            
     
 } catch (error) {
-    res.status(400).send({"message":"an error occurred, try again later"})
+    res.status(400).send({"message":"an error occurred, try again later","error":error})
     console.log("create Event_output error:",error)
 }
     }
