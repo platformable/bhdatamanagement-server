@@ -13,7 +13,7 @@ const sendMessageToSubscriber =(name,email)=>{
   })
 
   let details = {
-    from:process.env.NODEMAILEREMAIL,
+    from:'Black Health Data App',
     //to: clientHCWEmail,
     to:[email],
     subject:"Please complete your registration to BH Data app",
