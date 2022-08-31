@@ -27,7 +27,7 @@ module.exports={
             console.log("response",response)
             res.send(response);
           } catch (e) {
-            res.send("an error ocurredx");
+            res.send("an error ocurred");
             console.log("error",e)
           }
     },
@@ -40,7 +40,7 @@ module.exports={
             const response = allData.rows;
             res.send(response);
           } catch (e) {
-            res.send("an error ocurredxxxxxx2222");
+            res.send("an error ocurred");
             console.log("error",e)
           }
     },

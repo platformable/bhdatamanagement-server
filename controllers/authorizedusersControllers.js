@@ -19,7 +19,7 @@ const sendMessageToSubscriber =(name,email)=>{
     subject:"Please complete your registration to BH Data app",
     text:`Hi ${name}
 
-MMelissa Baker at Black Health has created a new account for you so you can access the Black Health Data Management App.
+Melissa Baker at Black Health has created a new account for you so you can access the Black Health Data Management App.
 
 The next step for you is to complete the registration by setting up your password. 
 
