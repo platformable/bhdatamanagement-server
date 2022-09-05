@@ -5,10 +5,13 @@ const { URLSearchParams } = require('node:url');
 const buffer = require('buffer/').Buffer;
 const createFolder = require('./createEventsFolders')
 const fetch = require('node-fetch');
+var QRCode = require('qrcode')
 
 let tokenFromRefresh; //
 let mainFolder;
 let folderPath;
+let generatedCode;
+let eventId;
 
 const DBXCLIENT_ID = process.env.DBX_CLIENT_ID;
 const CLIENT_SECRET = process.env.DBX_CLIENT_SECRET;
@@ -63,7 +66,46 @@ const createImagesFolder =  async (token,programName,eventName,eventDate) => {
     return  await createFolder.createImagesFolder(token,programName,eventName,eventDate)
  }
 
+const createQrCode = async (id)=>{
+  var opts = {
+    errorCorrectionLevel: 'H',
+    type: 'image/jpeg',
+    quality: 1,
+    margin: 1,
+    scale:15
+  }
+  const createCode=  QRCode.toDataURL(`http://www.bh.platformable.com/events/${id}/participant_survey`, opts,function (err, url) {
 
+     return generatedCode=url
+  })
+
+  return  createCode
+
+
+}
+
+const updateEventWithQrCode= async(eventId,generatedCode) =>{
+  try {
+    const query = await {
+      text: `update events set qrcode=$2 where id=$1`,
+      values: [eventId,generatedCode]
+    };
+    console.log("eventid",eventId)
+    console.log("generatedCode",generatedCode)
+    db
+      .query(query)
+      .then((response) =>{
+        console.log(response)
+   /*      res.json({
+          message: "Updated successfully",
+          statusText:'OK'
+        }) */
+      }
+      )
+  } catch (error) {
+    console.log("error",error)
+  }
+}
 
 
 module.exports= {
@@ -102,6 +144,8 @@ module.exports= {
         } = req.body;
         console.log("req.body",req.body)
 
+       
+
         const folders = await  connectDropboxAndCreateFolders(DBXCLIENT_ID,programName,eventName,eventDate)
         
         try {
@@ -117,7 +161,9 @@ module.exports= {
       
           if(mainFolder!=="" || mainFolder!==null || mainFolder !==undefined){
             const allData = await db.query(text,values);
-            //const response = await allData.rows;
+            const response = await allData.rows;
+            eventId= response[0].id
+            const generatedQRCode = await createQrCode(eventId).then(code=>setTimeout(()=>{updateEventWithQrCode(eventId,generatedCode)},8000))
             res.status(200).send({"message":"Event saved successfully",'statusText':'OK'});
           }
 
@@ -199,6 +245,22 @@ module.exports= {
       },
       createeventtest:async(req,res)=>{
 
-        connectDropboxAndCreateFolders(res,DBXCLIENT_ID,'A6131G')
+        var opts = {
+          errorCorrectionLevel: 'H',
+          type: 'image/jpeg',
+          quality: 1,
+          margin: 1,
+          scale:15
+        }
+       await QRCode.toDataURL('http://www.platformable.com', opts,function (err, url) {
+          console.log(url)
+          qrcode=url
+        })
+
+        /* QRCode.toString('I am a pony!',{type:'terminal'}, function (err, url) {
+          console.log(typeof url)
+          console.log(url)
+        }) */
+       // connectDropboxAndCreateFolders(res,DBXCLIENT_ID,'A6131G')
       }
 }
