@@ -74,7 +74,7 @@ const createQrCode = async (id)=>{
     margin: 1,
     scale:15
   }
-  const createCode=  QRCode.toDataURL(`http://www.bh.platformable.com/events/${id}/participant_survey`, opts,function (err, url) {
+  const createCode= await QRCode.toDataURL(`http://www.bh.platformable.com/events/${id}/participant_survey`, opts,function (err, url) {
 
      return generatedCode=url
   })
@@ -245,22 +245,28 @@ module.exports= {
       },
       createeventtest:async(req,res)=>{
 
-        var opts = {
-          errorCorrectionLevel: 'H',
-          type: 'image/jpeg',
-          quality: 1,
-          margin: 1,
-          scale:15
+       /*  const getQrCode =async ()=>{
+          const code= new Promise((res,rej)=>{
+            var opts = {
+              errorCorrectionLevel: 'H',
+              type: 'image/jpeg',
+              quality: 1,
+              margin: 1,
+              scale:15
+            }
+             res( await QRCode.toDataURL('http://www.platformable.com', opts,function (err, url) {
+              generatedCode=url
+            }))
+            rej(console.log("errrorrr"))
+          })
         }
-       await QRCode.toDataURL('http://www.platformable.com', opts,function (err, url) {
-          console.log(url)
-          qrcode=url
-        })
+ */
+  
+        
 
-        /* QRCode.toString('I am a pony!',{type:'terminal'}, function (err, url) {
-          console.log(typeof url)
-          console.log(url)
-        }) */
-       // connectDropboxAndCreateFolders(res,DBXCLIENT_ID,'A6131G')
+        const result = await console.log("codex",code)
+
+        return result
+
       }
 }
