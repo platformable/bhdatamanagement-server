@@ -77,20 +77,3 @@ exports.createImagesFolder = async (token,programName,eventName,eventDate) => {
 }
 
 
-/* const addClientFolder = async (url, folderName, clientID) => {
-    console.log("url en addClientFolder", url)
-    console.log("folder en addClientFolder", folderName)
-    console.log("id en addClientFolder", clientID)
-       try {
-         const query = await {
-           text: `update clients set ${folderName}_folder_url=$1 where clientid=$2`,
-           values: [url, clientID.toUpperCase()],
-         };
-         db
-           .query(query)
-           .then((response) => console.log("update client sucess",response.rowCount))
-           .catch((e) => console.log(e));
-       } catch (error) {
-         console.log("error message de addClientFolder:", error);
-       }
-} */

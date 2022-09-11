@@ -74,6 +74,7 @@ const createQrCode = async (id)=>{
     margin: 1,
     scale:15
   }
+  
   const createCode= await QRCode.toDataURL(`http://www.bh.platformable.com/events/${id}/participant_survey`, opts,function (err, url) {
 
      return generatedCode=url
@@ -245,28 +246,43 @@ module.exports= {
       },
       createeventtest:async(req,res)=>{
 
-       /*  const getQrCode =async ()=>{
-          const code= new Promise((res,rej)=>{
-            var opts = {
-              errorCorrectionLevel: 'H',
-              type: 'image/jpeg',
-              quality: 1,
-              margin: 1,
-              scale:15
-            }
-             res( await QRCode.toDataURL('http://www.platformable.com', opts,function (err, url) {
-              generatedCode=url
-            }))
-            rej(console.log("errrorrr"))
-          })
+        let code;
+        const f1= async ()=>{
+          console.log("1")
+          let id=1
+          var opts = {
+            errorCorrectionLevel: 'H',
+            type: 'image/jpeg',
+            quality: 1,
+            margin: 1,
+            scale:15
+          }
+
+           code = await QRCode.toDataURL(`http://www.bh.platformable.com/events/${id}/participant_survey`, opts)
+           return code
         }
- */
-  
+
+
+        const f2= async (code,res)=>{
+          console.log("generatedCode",code)
+          res.send(code)
         
+        }
 
-        const result = await console.log("codex",code)
+        async function all (){
+            console.time("time")
+            const res1= await f1()
+            const res2= await f2(code,res)
+//            console.log("res2",res2)
+            console.timeEnd("time")
+        }
+        
+        all()
 
-        return result
+  
 
-      }
+            }
+        
+         
+               
 }
