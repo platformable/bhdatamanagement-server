@@ -278,8 +278,26 @@ module.exports= {
         }
         
         all()
+            },
+            deleteEvent: async (req,res)=>{
+              let {id} = req.body
+              console.log(req.body)
 
-  
+              const query = {
+                text: "DELETE from events where id=$1",
+                values: [id],
+              };
+              // promise
+              db.query(query)
+                .then((data) => {
+                  if ((data.rowCount = 1)) {
+                    res.send({
+                      statusText: "OK",
+                      response: "Event deleted",
+                    })
+                  }
+                })
+                .catch((e) => console.error(e.stack));
 
             }
         
