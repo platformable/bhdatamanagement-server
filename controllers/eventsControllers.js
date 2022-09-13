@@ -141,7 +141,7 @@ module.exports= {
             eventDate,eventStartTime,eventFinishTime ,
             eventLocationTypeID=Number(eventLocationTypeID) ,
             eventLocationTypeName,healthAreaOfFocusID=Number(eventLocationTypeID),healthAreaOfFocusName,
-            eventTypeID=Number(eventTypeID),eventTypeName
+            eventTypeID=Number(eventTypeID),eventTypeName,nysActivity,nysActivityOther
         } = req.body;
         console.log("req.body",req.body)
 
@@ -154,11 +154,11 @@ module.exports= {
       `INSERT INTO events 
       (userID,eventDateCreated,programID,programName,eventName,eventDate,eventStartTime,eventFinishTime,
           eventLocationTypeID,eventLocationTypeName,healthAreaOfFocusID,healthAreaOfFocusName,
-          eventTypeID ,eventTypeName,folderUrl,folderPath) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16) RETURNING *`;
+          eventTypeID ,eventTypeName,folderUrl,folderPath,nysActivity,nysActivityOther) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18) RETURNING *`;
       const values = [
       userID,eventDateCreated,programID,programName,eventName,
       eventDate,eventStartTime,eventFinishTime ,eventLocationTypeID,eventLocationTypeName,
-      healthAreaOfFocusID,healthAreaOfFocusName,eventTypeID,eventTypeName,mainFolder,folderPath];
+      healthAreaOfFocusID,healthAreaOfFocusName,eventTypeID,eventTypeName,mainFolder,folderPath,nysActivity,nysActivityOther];
       
           if(mainFolder!=="" || mainFolder!==null || mainFolder !==undefined){
             const allData = await db.query(text,values);
