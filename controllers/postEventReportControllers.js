@@ -46,7 +46,6 @@ module.exports={
     },
     createPostEventReport: async (req,res)=>{
 
-        console.log("post event")
         const {
             eventID,
             programName,
@@ -415,7 +414,32 @@ module.exports={
             otherQueer,
             otherQuestioningOrNotSure,
             otherSexualOrientationUnknown,
-            otherSexualOrientationDeclinedToAnswer
+            otherSexualOrientationDeclinedToAnswer,
+
+            nysPrimaryRiskGroup,
+            maleCondoms,
+            femaleCondoms,
+            lubricant,
+            referralLists,
+            dentalDam,
+            promotionalMaterial,
+            reminderPostEvaluationSurvy,
+            hivGenderNotSureQuestioning,
+            altAgeHivUnder13,
+            altAgeHiv13_18,
+            altAgeHiv19_24,
+            hivMoreThanOneRace,
+            stiGenderNotSureQuestioning,
+            altAgeStiUnder13,
+            altAgeSti13_18,
+            altAgeSti19_24,
+            stiMoreThanOneRace,
+            hepCGenderNotSureQuestioning,
+            altAgeHepCUnder13,
+            altAgeHepC13_18,
+            altAgeHepC19_24,
+            hepCMoreThanOneRace
+
         }= req.body
 
         console.log("req.body",req.body)
@@ -790,7 +814,32 @@ try {
             otherQueer,
             otherQuestioningOrNotSure,
             otherSexualOrientationUnknown,
-            otherSexualOrientationDeclinedToAnswer) VALUES (
+            otherSexualOrientationDeclinedToAnswer,
+            
+            nysPrimaryRiskGroup,
+            maleCondoms,
+            femaleCondoms,
+            lubricant,
+            referralLists,
+            dentalDam,
+            promotionalMaterial,
+            reminderPostEvaluationSurvy,
+            hivGenderNotSureQuestioning,
+            altAgeHivUnder13,
+            altAgeHiv13_18,
+            altAgeHiv19_24,
+            hivMoreThanOneRace,
+            stiGenderNotSureQuestioning,
+            altAgeStiUnder13,
+            altAgeSti13_18,
+            altAgeSti19_24,
+            stiMoreThanOneRace,
+            hepCGenderNotSureQuestioning,
+            altAgeHepCUnder13,
+            altAgeHepC13_18,
+            altAgeHepC19_24,
+            hepCMoreThanOneRace
+            ) VALUES (
                     $1,
                     $2,
                     $3,
@@ -1158,7 +1207,31 @@ try {
                     $365,
                     $366,
                     $367,
-                    $368
+                    $368,
+                    $369,
+                    $370,
+                    $371,
+                    $372,
+                    $373,
+                    $374,
+                    $375,
+                    $376,
+                    $377,
+                    $378,
+                    $379,
+                    $380,
+                    $381,
+                    $382,
+                    $383,
+                    $384,
+                    $385,
+                    $386,
+                    $387,
+                    $388,
+                    $389,
+                    $390,
+                    $391
+                    
             ) RETURNING *`;
             const values = [
                 eventID,
@@ -1529,6 +1602,30 @@ try {
                 otherQuestioningOrNotSure,
                 otherSexualOrientationUnknown,
                 otherSexualOrientationDeclinedToAnswer,
+
+                nysPrimaryRiskGroup,
+            maleCondoms,
+            femaleCondoms,
+            lubricant,
+            referralLists,
+            dentalDam,
+            promotionalMaterial,
+            reminderPostEvaluationSurvy,
+            hivGenderNotSureQuestioning,
+            altAgeHivUnder13,
+            altAgeHiv13_18,
+            altAgeHiv19_24,
+            hivMoreThanOneRace,
+            stiGenderNotSureQuestioning,
+            altAgeStiUnder13,
+            altAgeSti13_18,
+            altAgeSti19_24,
+            stiMoreThanOneRace,
+            hepCGenderNotSureQuestioning,
+            altAgeHepCUnder13,
+            altAgeHepC13_18,
+            altAgeHepC19_24,
+            hepCMoreThanOneRace
             ]
 
             const allData = await db.query(text,values);

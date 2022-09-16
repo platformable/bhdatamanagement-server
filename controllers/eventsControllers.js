@@ -141,7 +141,12 @@ module.exports= {
             eventDate,eventStartTime,eventFinishTime ,
             eventLocationTypeID=Number(eventLocationTypeID) ,
             eventLocationTypeName,healthAreaOfFocusID=Number(eventLocationTypeID),healthAreaOfFocusName,
-            eventTypeID=Number(eventTypeID),eventTypeName,nysActivity,nysActivityOther
+            eventTypeID=Number(eventTypeID),eventTypeName,nysActivity,nysActivityOther,onlineInPersonEventType,
+            inPersonEventTypeID,
+            inPersonEventTypeName,
+            onlineEventTypeID,
+            onlineEventTypeName,
+            eventDescription
         } = req.body;
         console.log("req.body",req.body)
 
@@ -154,11 +159,19 @@ module.exports= {
       `INSERT INTO events 
       (userID,eventDateCreated,programID,programName,eventName,eventDate,eventStartTime,eventFinishTime,
           eventLocationTypeID,eventLocationTypeName,healthAreaOfFocusID,healthAreaOfFocusName,
-          eventTypeID ,eventTypeName,folderUrl,folderPath,nysActivity,nysActivityOther) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18) RETURNING *`;
+          eventTypeID ,eventTypeName,folderUrl,folderPath,nysActivity,nysActivityOther,onlineInPersonEventType,
+          inPersonEventTypeID,
+          inPersonEventTypeName,
+          onlineEventTypeID,
+          onlineEventTypeName,eventDescription) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24) RETURNING *`;
       const values = [
       userID,eventDateCreated,programID,programName,eventName,
       eventDate,eventStartTime,eventFinishTime ,eventLocationTypeID,eventLocationTypeName,
-      healthAreaOfFocusID,healthAreaOfFocusName,eventTypeID,eventTypeName,mainFolder,folderPath,nysActivity,nysActivityOther];
+      healthAreaOfFocusID,healthAreaOfFocusName,eventTypeID,eventTypeName,mainFolder,folderPath,nysActivity,nysActivityOther,onlineInPersonEventType,
+      inPersonEventTypeID,
+      inPersonEventTypeName,
+      onlineEventTypeID,
+      onlineEventTypeName,eventDescription];
       
           if(mainFolder!=="" || mainFolder!==null || mainFolder !==undefined){
             const allData = await db.query(text,values);
@@ -193,7 +206,17 @@ module.exports= {
             healthAreaOfFocusID,
             healthAreaOfFocusName ,
             eventTypeID,
-            eventTypeName} = req.body;
+            eventTypeName,
+          
+            eventDescription,
+            onlineInPersonEventType,
+        inPersonEventTypeID,
+        inPersonEventTypeName,
+        onlineEventTypeID,
+        onlineEventTypeName,
+          nysActivity,
+          nysActivityOther
+          } = req.body;
  
         try {
           const query = await {
@@ -211,7 +234,17 @@ module.exports= {
         healthAreaOfFocusID=$12,
         healthAreaOfFocusName=$13,
         eventTypeID=$14,
-        eventTypeName=$15 where id=$1`,
+        eventTypeName=$15,
+        
+        eventDescription=$16,
+            onlineInPersonEventType=$17,
+        inPersonEventTypeID=$18,
+        inPersonEventTypeName=$19,
+        onlineEventTypeID=$20,
+        onlineEventTypeName=$21,
+        nysActivity=$22,
+          nysActivityOther =$23
+        where id=$1`,
             values: [
                 eventid,
                 userID ,
@@ -227,7 +260,13 @@ module.exports= {
                 healthAreaOfFocusID,
                 healthAreaOfFocusName ,
                 eventTypeID,
-                eventTypeName]
+                eventTypeName,
+                eventDescription,
+                onlineInPersonEventType,
+            inPersonEventTypeID,
+            inPersonEventTypeName,
+            onlineEventTypeID,
+            onlineEventTypeName,nysActivity,nysActivityOther]
           };
           db
             .query(query)
