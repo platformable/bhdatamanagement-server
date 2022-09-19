@@ -124,7 +124,9 @@ module.exports= {
 
         const query = {
 
-          text:`select * from events where id=$1`,
+          text:`select events.*,users."name" as username ,users.lastname as userlastname from events 
+          join users on events.userid = users.userid 
+          where events.id=$1`,
           values: [id],
         };
         try {
