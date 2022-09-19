@@ -33,7 +33,7 @@ module.exports={
     },
     getPostEventReport:async (req,res)=>{
         let {id}=req.params
-        const text="select * from events_output where id=$1"
+        const text="select * from events_output where eventid=$1"
        const values=[id]
         try {
             const allData = await db.query(text,values);
@@ -44,6 +44,22 @@ module.exports={
             console.log("error",e)
           }
     },
+    getPostEventReportById:async (req,res)=>{
+      let {id}=req.params
+      const text=`select events.*,events_output.*,users."name" as username,users.lastname as userlastname from events
+      join events_output on  events.id = events_output.eventid
+      join users on events.userid = users.userid
+      where  eventid=$1`
+     const values=[id]
+      try {
+          const allData = await db.query(text,values);
+          const response = allData.rows;
+          res.send(response);
+        } catch (e) {
+          res.send("an error ocurred");
+          console.log("error",e)
+        }
+  },
     createPostEventReport: async (req,res)=>{
 
         const {
