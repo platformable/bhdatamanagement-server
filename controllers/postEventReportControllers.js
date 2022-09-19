@@ -461,7 +461,7 @@ module.exports={
         console.log("req.body",req.body)
 
 
-/* try {
+try {
     const text = `insert into events_output (
             eventID,
             programName,
@@ -1653,7 +1653,7 @@ module.exports={
 } catch (error) {
     res.status(400).send({"message":"an error occurred, try again later","error":error})
     console.log("create Event_output error:",error)
-} */
+}
     },
     updatePostEventReport:async(req,res) =>{
       console.log("post event report update")
@@ -2447,7 +2447,7 @@ module.exports={
     altAgeHepC13_18=$389,
     altAgeHepC19_24=$390,
     hepCMoreThanOneRace=$391
-    where eventid=$1
+    where eventID=$1
           `,
           values:[
             eventID,
