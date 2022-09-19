@@ -112,7 +112,8 @@ const updateEventWithQrCode= async(eventId,generatedCode) =>{
 module.exports= {
     getEvents: async (req,res)=>{
         try {
-            const allData = await db.query("select * from events");
+            const allData = await db.query(`select events.*,events_output.id as posteventreportid from events
+            full outer join events_output on events_output.eventid = events.id where events.id IS NOT NULL`);
             const response = allData.rows;
             res.send(response);
           } catch (e) {
