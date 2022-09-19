@@ -454,7 +454,8 @@ module.exports={
             altAgeHepCUnder13,
             altAgeHepC13_18,
             altAgeHepC19_24,
-            hepCMoreThanOneRace
+            hepCMoreThanOneRace,
+            mainRoleOther
 
         }= req.body
 
@@ -854,7 +855,8 @@ try {
             altAgeHepCUnder13,
             altAgeHepC13_18,
             altAgeHepC19_24,
-            hepCMoreThanOneRace
+            hepCMoreThanOneRace,
+            mainRoleOther
             ) VALUES (
                     $1,
                     $2,
@@ -1246,7 +1248,8 @@ try {
                     $388,
                     $389,
                     $390,
-                    $391
+                    $391,
+                    $392
                     
             ) RETURNING *`;
             const values = [
@@ -1641,7 +1644,8 @@ try {
             altAgeHepCUnder13,
             altAgeHepC13_18,
             altAgeHepC19_24,
-            hepCMoreThanOneRace
+            hepCMoreThanOneRace,
+            mainRoleOther
             ]
 
             const allData = await db.query(text,values);
@@ -2049,7 +2053,8 @@ try {
     altAgeHepCUnder13,
     altAgeHepC13_18,
     altAgeHepC19_24,
-    hepCMoreThanOneRace
+    hepCMoreThanOneRace,
+    mainRoleOther
       } = req.body
 
       try {
@@ -2446,7 +2451,8 @@ try {
     altAgeHepCUnder13=$388,
     altAgeHepC13_18=$389,
     altAgeHepC19_24=$390,
-    hepCMoreThanOneRace=$391
+    hepCMoreThanOneRace=$391,
+    mainRoleOther=$392
     where eventID=$1
           `,
           values:[
@@ -2841,7 +2847,8 @@ try {
     altAgeHepCUnder13,
     altAgeHepC13_18,
     altAgeHepC19_24,
-    hepCMoreThanOneRace
+    hepCMoreThanOneRace,
+    mainRoleOther
           ]
         }
           db
