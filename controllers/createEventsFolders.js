@@ -23,6 +23,7 @@ exports.createMainFolder = async (token,programName,eventName,eventDate) => {
         })
 
         const dataResponse = await getData;
+        console.log("dataResponse",dataResponse)
         const folderUrl={mainFolderUrl:dataResponse.data.preview_url,folderPath:dataResponse.data.path_lower}
 
       //  console.log("success main folder")

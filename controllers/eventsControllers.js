@@ -50,7 +50,7 @@ const clientIdSecretEncoded = buffer.from(`${DBXCLIENT_ID}:${CLIENT_SECRET}`).to
       .then(res=>{
         mainFolder=res.mainFolderUrl
         folderPath=res.folderPath
-        console.log(mainFolder)
+        console.log("mainFolder",mainFolder)
         })
         .then(response => {  return createImagesFolder(tokenFromRefresh,programName,eventName,eventDate) })
         .then(res=>{ imagesFolderUrl=res.imagesFolderUrl })
@@ -290,7 +290,6 @@ module.exports= {
         }
       },
       createeventtest:async(req,res)=>{
-
         let code;
         const f1= async ()=>{
           console.log("1")
