@@ -149,7 +149,8 @@ module.exports= {
             inPersonEventTypeName,
             onlineEventTypeID,
             onlineEventTypeName,
-            eventDescription
+            eventDescription,
+            additionalMaterials
         } = req.body;
         console.log("req.body",req.body)
 
@@ -166,7 +167,7 @@ module.exports= {
           inPersonEventTypeID,
           inPersonEventTypeName,
           onlineEventTypeID,
-          onlineEventTypeName,eventDescription) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24) RETURNING *`;
+          onlineEventTypeName,eventDescription,additionalMaterials) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25) RETURNING *`;
       const values = [
       userID,eventDateCreated,programID,programName,eventName,
       eventDate,eventStartTime,eventFinishTime ,eventLocationTypeID,eventLocationTypeName,
@@ -174,7 +175,7 @@ module.exports= {
       inPersonEventTypeID,
       inPersonEventTypeName,
       onlineEventTypeID,
-      onlineEventTypeName,eventDescription];
+      onlineEventTypeName,eventDescription,additionalMaterials];
       
           if(mainFolder!=="" || mainFolder!==null || mainFolder !==undefined){
             const allData = await db.query(text,values);
@@ -218,7 +219,8 @@ module.exports= {
         onlineEventTypeID,
         onlineEventTypeName,
           nysActivity,
-          nysActivityOther
+          nysActivityOther,
+          additionalMaterials
           } = req.body;
  
         try {
@@ -246,7 +248,8 @@ module.exports= {
         onlineEventTypeID=$20,
         onlineEventTypeName=$21,
         nysActivity=$22,
-          nysActivityOther =$23
+          nysActivityOther =$23,
+          additionalMaterials=$24
         where id=$1`,
             values: [
                 eventid,
@@ -269,7 +272,7 @@ module.exports= {
             inPersonEventTypeID,
             inPersonEventTypeName,
             onlineEventTypeID,
-            onlineEventTypeName,nysActivity,nysActivityOther]
+            onlineEventTypeName,nysActivity,nysActivityOther,additionalMaterials]
           };
           db
             .query(query)
@@ -300,7 +303,7 @@ module.exports= {
             scale:15
           }
 
-           code = await QRCode.toDataURL(`http://www.bh.platformable.com/events/${id}/participant_survey`, opts)
+           code = await QRCode.toDataURL(`http://www.bh.platformable.com/events/${id}/participant-survey/survey`, opts)
            return code
         }
 
