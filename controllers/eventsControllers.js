@@ -124,10 +124,10 @@ module.exports= {
         let { id } = await req.params;
 
         const query = {
-
-          text:`select events.*,users."name" as username ,users.lastname as userlastname from events 
+          text:`select * from events where events.id=$1`,
+          /* text:`select events.*,users."name" as username ,users.lastname as userlastname from events 
           join users on events.userid = users.userid 
-          where events.id=$1`,
+          where events.id=$1`, */
           values: [id],
         };
         try {
@@ -150,7 +150,9 @@ module.exports= {
             onlineEventTypeID,
             onlineEventTypeName,
             eventDescription,
-            additionalMaterials
+            additionalMaterials,
+            createdByName,
+            createdByLastname
         } = req.body;
         console.log("req.body",req.body)
 
@@ -167,7 +169,10 @@ module.exports= {
           inPersonEventTypeID,
           inPersonEventTypeName,
           onlineEventTypeID,
-          onlineEventTypeName,eventDescription,additionalMaterials) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25) RETURNING *`;
+          onlineEventTypeName,eventDescription,additionalMaterials,
+          createdByName,
+            createdByLastname
+          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27) RETURNING *`;
       const values = [
       userID,eventDateCreated,programID,programName,eventName,
       eventDate,eventStartTime,eventFinishTime ,eventLocationTypeID,eventLocationTypeName,
@@ -175,7 +180,8 @@ module.exports= {
       inPersonEventTypeID,
       inPersonEventTypeName,
       onlineEventTypeID,
-      onlineEventTypeName,eventDescription,additionalMaterials];
+      onlineEventTypeName,eventDescription,additionalMaterials,createdByName,
+      createdByLastname];
       
           if(mainFolder!=="" || mainFolder!==null || mainFolder !==undefined){
             const allData = await db.query(text,values);
