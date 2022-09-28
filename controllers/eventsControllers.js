@@ -75,7 +75,7 @@ const createQrCode = async (id)=>{
     scale:15
   }
   
-  const createCode= await QRCode.toDataURL(`http://www.bh.platformable.com/events/${id}/participant-survey/survey`, opts,function (err, url) {
+  const createCode= await QRCode.toDataURL(`https://www.bh.platformable.com/events/${id}/participant-survey/survey`, opts,function (err, url) {
 
      return generatedCode=url
   })
