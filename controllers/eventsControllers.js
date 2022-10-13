@@ -287,6 +287,7 @@ eventZipCode,
         .json({
           message: "an error ocurred, please try again",
           statusText: "FAIL",
+          error:e
         });
     }
   },
