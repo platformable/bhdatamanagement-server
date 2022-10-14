@@ -152,7 +152,7 @@ const sendMessageToSubscriber =(eventName,eventDate,workArea,icsUrlFile)=>{
     to:['garban.valdeon@gmail.com'],
     subject:"A new event has been registered for the NYS CMP program",
     attachments:[{ 
-      filename:`event-${eventName.trim()}.ics`,
+      filename:`event-${eventName}.ics`,
       path:icsUrlFile,
       encoding: 'base64'
   },],
