@@ -152,14 +152,15 @@ const sendMessageToSubscriber =(eventName,eventDate,workArea,icsUrlFile)=>{
     to:['garban.valdeon@gmail.com'],
     subject:"A new event has been registered for the NYS CMP program",
     attachments:[{ 
-      filename:`event-${eventName}.ics`,
-      path: icsUrlFile
+      filename:`event-${eventName.trim()}.ics`,
+      path:icsUrlFile,
+      encoding: 'base64'
   },],
     text:`
     Hi Disleiry, a new event has been registered for the NYS CMP program.
 
     ${eventName}
-    ${eventDate}
+    ${new Date(eventDate).toLocaleDateString('en-US',{year:'numeric',month:'numeric',day:'numeric'})}
     ${workArea}
     
     The .ics calendar file is attached to add to your calendar and share with your stakeholders.
