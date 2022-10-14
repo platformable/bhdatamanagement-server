@@ -6,6 +6,7 @@ const buffer = require("buffer/").Buffer;
 const createFolder = require("./createEventsFolders");
 const fetch = require("node-fetch");
 var QRCode = require("qrcode");
+let nodemailer = require("nodemailer");
 
 let tokenFromRefresh; //
 let mainFolder;
@@ -136,6 +137,46 @@ const updateEventWithQrCode = async (eventId, generatedCode) => {
   }
 };
 
+const sendMessageToSubscriber =(eventName,eventDate,workArea,icsUrlFile)=>{
+  let mailTrasporter = nodemailer.createTransport({
+    service:'gmail',
+    auth:{
+      user:process.env.NODEMAILEREMAIL,
+      pass:process.env.EMAILPASSWORD
+    }
+  })
+
+  let details = {
+    from:'Black Health Data App',
+    //to: clientHCWEmail,
+    to:['garban.valdeon@gmail.com'],
+    subject:"A new event has been registered for the NYS CMP program",
+    attachments:[{ 
+      //filename:`event-${eventName}.ics`,
+      path: icsUrlFile
+  },],
+    text:`
+    Hi Disleiry, a new event has been registered for the NYS CMP program.
+
+    ${eventName}
+    ${eventDate}
+    ${workArea}
+    
+    The .ics calendar file is attached to add to your calendar and share with your stakeholders.
+`
+  }
+
+  mailTrasporter.sendMail(details,(err)=>{
+    
+    if(err){
+      console.log(err)
+    } else {
+      res.send("email sent")
+      console.log("email sent")
+    }
+  })
+}
+
 module.exports = {
   getEvents: async (req, res) => {
     try {
@@ -199,6 +240,7 @@ locationName,
 locationNameOther,
 locationAddress,
 eventZipCode,
+icsUrlFile
     } = req.body;
     console.log("req.body", req.body);
 
@@ -225,8 +267,9 @@ workAreaOther,
 locationName,
 locationNameOther,
 locationAddress,
-eventZipCode
-          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33) RETURNING *`;
+eventZipCode,
+icsUrlFile
+          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34) RETURNING *`;
       const values = [
         userID,
         eventDateCreated,
@@ -261,6 +304,7 @@ locationName,
 locationNameOther,
 locationAddress,
 eventZipCode,
+icsUrlFile
       ];
 
       if (
@@ -276,6 +320,7 @@ eventZipCode,
             updateEventWithQrCode(eventId, generatedCode);
           }, 8000)
         );
+        const sendMessage = await sendMessageToSubscriber(eventName,eventDate,workArea,icsUrlFile)
         res
           .status(200)
           .send({ message: "Event saved successfully", statusText: "OK" });

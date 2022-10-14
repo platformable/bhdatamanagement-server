@@ -10,7 +10,7 @@ const port = process.env.PORT || 3500
 const axios = require('axios')
 const db = require("./dbConnect");
 const { Pool,Client } = require('pg')
-
+let nodemailer = require("nodemailer");
 
 
 const { Dropbox } = require("dropbox");
@@ -142,6 +142,53 @@ app.post("/token", (req, res) => {
 
 })
 
+
+app.get('/email', async (req,res)=>{
+
+
+  const sendMessageToSubscriber =(name,email,eventName,eventDate,workArea)=>{
+    let mailTrasporter = nodemailer.createTransport({
+      service:'gmail',
+      auth:{
+        user:process.env.NODEMAILEREMAIL,
+        pass:process.env.EMAILPASSWORD
+      }
+    })
+  
+    let details = {
+      from:'Black Health Data App',
+      //to: clientHCWEmail,
+      to:[email],
+      subject:"A new event has been registered for the NYS CMP program",
+      attachments:[{ 
+        filename:"calendar.txt",
+        path: 'data:text/plain;base64,aGVsbG8gd29ybGQ='
+    },],
+      text:`
+      Hi ${name}
+  
+      [eventName]
+      [eventDate]
+      [workArea]
+      
+      The .ics calendar file is attached to add to your calendar and share with your stakeholders.
+  `
+    }
+  
+    mailTrasporter.sendMail(details,(err)=>{
+      
+      if(err){
+        console.log(err)
+      } else {
+        res.send("email sent")
+        console.log("email sent")
+      }
+    })
+  }
+  sendMessageToSubscriber('Maria','garban.valdeon@gmail.com')
+
+
+})
 
 
 
