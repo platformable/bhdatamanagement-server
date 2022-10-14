@@ -149,7 +149,7 @@ const sendMessageToSubscriber =(eventName,eventDate,workArea,icsUrlFile)=>{
   let details = {
     from:'Black Health Data App',
     //to: clientHCWEmail,
-    to:['alexei@platformable.com','adrianne@platformable.com'],
+    to:['alexei@platformable.com','adrienne@platformable.com'],
     subject:"A new event has been registered for the NYS CMP program",
     attachments:[{ 
       filename:`event-${eventName}.ics`,
