@@ -166,7 +166,7 @@ const sendMessageToSubscriber =(eventName,eventDate,workArea,icsUrlFile)=>{
   icalEvent: {
     filename: `${eventName}.ics`,
     method: 'PUBLISH',
-    content: icsMSG,
+    content: icsUrlFile,
 },
     text:`
     Hi Disleiry, a new event has been registered for the NYS CMP program.
