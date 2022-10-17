@@ -15,6 +15,14 @@ module.exports={
     getNysEventsOutput:async (req,res)=>{
         const text=`select events_output.*, 
         events.userid,
+        events.eventdescription,
+        events.additionalmaterials,
+        events.onlineinpersoneventtype,
+        events.inpersoneventtypeid,
+        events.inpersoneventtypename,
+        events.eventlocationtypeid,
+        events.onlineeventtypeid,
+        events.onlineeventtypename,
         users.name,
         users.lastname,users.userid
         from events_output 
