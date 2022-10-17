@@ -26,7 +26,7 @@ const connectDropbox = async () => {
     }
   };
 
-  const createAllFolders = async (client) => {
+  const createAllFolders = async (eventName) => {
     console.log("tokenFromRefresh",tokenFromRefresh)
   try {
     const getData = axios({
@@ -40,16 +40,8 @@ const connectDropbox = async () => {
         autorename: false,
         force_async: false,
         paths: [
-          `/Datagovernance/${client}/folder1`,
-          `/Datagovernance/${client}/folder2`,
-          `/Datagovernance/${client}/folder3`,
-          `/Datagovernance/${client}/folder4`,
-          `/Datagovernance/${client}/folder5`,
-          `/Datagovernance/${client}/folder6`,
-          `/Datagovernance/${client}/folder7`,
-          `/Datagovernance/${client}/folder8`,
-          `/Datagovernance/${client}/folder9`,
-          `/Datagovernance/${client}/folder10`,
+          `/Datagovernance/${eventName}-${eventDate}/`,
+          `/Datagovernance/${eventName}-${eventDate}/Images`,
         ],
       },
     });

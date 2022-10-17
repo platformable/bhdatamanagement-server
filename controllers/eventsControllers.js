@@ -154,7 +154,7 @@ const sendMessageToSubscriber =(eventName,eventDate,workArea,icsUrlFile)=>{
     attachments:[{ 
       filename:`event-${eventName}.ics`,
       path:icsUrlFile,
-      encoding: 'base64'
+      encoding: 'text/calendar'
   },],
     text:`
     Hi Disleiry, a new event has been registered for the NYS CMP program.
