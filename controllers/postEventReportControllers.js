@@ -23,6 +23,7 @@ module.exports={
         events.eventlocationtypeid,
         events.onlineeventtypeid,
         events.onlineeventtypename,
+        events.borough,
         users.name,
         users.lastname,users.userid
         from events_output 
