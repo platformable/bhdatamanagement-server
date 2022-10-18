@@ -261,7 +261,8 @@ locationName,
 locationNameOther,
 locationAddress,
 eventZipCode,
-icsUrlFile
+icsUrlFile,
+borough
     } = req.body;
     console.log("req.body", req.body);
 
@@ -289,8 +290,9 @@ locationName,
 locationNameOther,
 locationAddress,
 eventZipCode,
-icsUrlFile
-          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34) RETURNING *`;
+icsUrlFile,
+borough
+          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35) RETURNING *`;
       const values = [
         userID,
         eventDateCreated,
@@ -325,7 +327,8 @@ locationName,
 locationNameOther,
 locationAddress,
 eventZipCode,
-icsUrlFile
+icsUrlFile,
+borough
       ];
 
       if (
