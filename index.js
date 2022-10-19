@@ -175,33 +175,57 @@ END:VEVENT
 END:VCALENDAR`
 
 
+const today= new Date()
+const newDate = today.toISOString()
+  const created = newDate.replace("-","").replace("-","").replace(":","").replace(":","").replace(".","")
+
+  function convertDate(date, time) {
+    const dateParts = date.split("T")[0]
+    const dateString = dateParts.split("-").join("")
+    const timeString = time.split(":").join("") 
+
+    return dateString + "T" + timeString+00+'Z'
+  }
+
 const calendarDatax=`BEGIN:VCALENDAR
-PRODID:-//Google Inc//Google Calendar 70.9054//EN
 VERSION:2.0
+PRODID:-//Black Health v1.0//EN
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
+X-WR-CALNAME:Events - Black Health
+X-MS-OLK-FORCEINSPECTOROPEN:TRUE
+BEGIN:VTIMEZONE
+TZID:America/New_York
+TZURL:http://tzurl.org/zoneinfo-outlook/America/New_York
+X-LIC-LOCATION:America/New_York
+BEGIN:DAYLIGHT
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0400
+TZNAME:CEST
+DTSTART:19700329T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:-0400
+TZOFFSETTO:-0500
+TZNAME:CET
+DTSTART:19701025T030000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+END:VTIMEZONE
 BEGIN:VEVENT
-DTSTART:20221026T190000Z
-DTEND:20221026T193000Z
-DTSTAMP:20221018T183400Z
-ORGANIZER;CN=garban.valdeon@gmail.com:mailto:garban.valdeon@gmail.com
-UID:040000008200E00074C5B7101A82E00800000000075A112B20E3D801000000000000000
-  0100000004DA3D07F3F730C42AF345B2822C2A149
-ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
-  TRUE;CN=alexei@platformable.com;X-NUM-GUESTS=0:mailto:alexei@platformable.c
-  om
-X-MICROSOFT-CDO-OWNERAPPTID:-1529295295
-CREATED:20221018T183351Z
-LOCATION:215 W. 125th Street
-URL:https://nblch.org/
-DESCRIPTION:This is a test note
-LAST-MODIFIED:20221018T183356Z
-LOCATION:215 W. 125th Street
-SEQUENCE:0
-URL:https://nblch.org/
+DTSTAMP:${created}
+DTSTART:${convertDate(eventDate,eventStartTime)}
+DTEND:${convertDate(eventDate,eventFinnishTime)}
 STATUS:CONFIRMED
-SUMMARY:alexei outlook test 2
-TRANSP:OPAQUE
+SUMMARY:Alexei Calendar
+DESCRIPTION:Online - Meeting - calendarcalendarcalendarcalendarcalendar
+ORGANIZER;CN=Black Health:MAILTO:info@meetup.com
+CLASS:PUBLIC
+LOCATION:215 W. 125th Street, Other, 11467
+URL:https://nblch.org
+SEQUENCE:2
+UID:event_283355921@black_health_data_app_management
 END:VEVENT
 END:VCALENDAR`
 
@@ -221,7 +245,7 @@ END:VCALENDAR`
       subject:"A new event has been registered for the NYS CMP program",
       icalEvent: {
         method: 'PUBLISH',
-        content: calendarData,
+        content: calendarDatax,
     },
       text:`
       Hi ${name}
