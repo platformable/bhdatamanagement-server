@@ -144,7 +144,66 @@ app.post("/token", (req, res) => {
 
 
 app.get('/email', async (req,res)=>{
+  const calendarData=`BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+DTSTART:20221026T190000Z
+DTEND:20221026T193000Z
+DTSTAMP:20221018T183400Z
+ORGANIZER;CN=garban.valdeon@gmail.com:mailto:garban.valdeon@gmail.com
+UID:040000008200E00074C5B7101A82E00800000000075A112B20E3D801000000000000000
+  0100000004DA3D07F3F730C42AF345B2822C2A149
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+  TRUE;CN=alexei@platformable.com;X-NUM-GUESTS=0:mailto:alexei@platformable.c
+  om
+X-MICROSOFT-CDO-OWNERAPPTID:-1529295295
+CREATED:20221018T183351Z
+LOCATION:215 W. 125th Street
+URL:https://nblch.org/
+DESCRIPTION:This is a test note
+LAST-MODIFIED:20221018T183356Z
+LOCATION:215 W. 125th Street
+SEQUENCE:0
+URL:https://nblch.org/
+STATUS:CONFIRMED
+SUMMARY:alexei outlook test 2
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR`
 
+
+const calendarDatax=`BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+DTSTART:20221026T190000Z
+DTEND:20221026T193000Z
+DTSTAMP:20221018T183400Z
+ORGANIZER;CN=garban.valdeon@gmail.com:mailto:garban.valdeon@gmail.com
+UID:040000008200E00074C5B7101A82E00800000000075A112B20E3D801000000000000000
+  0100000004DA3D07F3F730C42AF345B2822C2A149
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+  TRUE;CN=alexei@platformable.com;X-NUM-GUESTS=0:mailto:alexei@platformable.c
+  om
+X-MICROSOFT-CDO-OWNERAPPTID:-1529295295
+CREATED:20221018T183351Z
+LOCATION:215 W. 125th Street
+URL:https://nblch.org/
+DESCRIPTION:This is a test note
+LAST-MODIFIED:20221018T183356Z
+LOCATION:215 W. 125th Street
+SEQUENCE:0
+URL:https://nblch.org/
+STATUS:CONFIRMED
+SUMMARY:alexei outlook test 2
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR`
 
   const sendMessageToSubscriber =(name,email,eventName,eventDate,workArea)=>{
     let mailTrasporter = nodemailer.createTransport({
@@ -160,10 +219,10 @@ app.get('/email', async (req,res)=>{
       //to: clientHCWEmail,
       to:[email],
       subject:"A new event has been registered for the NYS CMP program",
-      attachments:[{ 
-        filename:"calendar.txt",
-        path: 'data:text/plain;base64,aGVsbG8gd29ybGQ='
-    },],
+      icalEvent: {
+        method: 'PUBLISH',
+        content: calendarData,
+    },
       text:`
       Hi ${name}
   
