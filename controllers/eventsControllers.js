@@ -265,7 +265,7 @@ END:VCALENDAR`
   icalEvent: {
     filename: `${eventName}.ics`,
     method: 'PUBLISH',
-    content: calendarData,
+    content: calendarString,
 },
     text:`
     Hi Disleiry, a new event has been registered for the NYS CMP program.
