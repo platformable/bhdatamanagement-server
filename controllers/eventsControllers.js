@@ -252,8 +252,8 @@ END:VCALENDAR`
   let details = {
     from:'Black Health Data App',
     //to: clientHCWEmail,
-    // to:['DBenitez@nblch.org'],
-    to:['alexei@platformable.com','leon@platformable.com'],
+    to:['DBenitez@nblch.org'],
+    // to:['alexei@platformable.com','leon@platformable.com'],
     subject:"A new event has been registered for the NYS CMP program",
    /*  attachments:[{ 
       filename:`event-${eventName}.ics`,
@@ -265,7 +265,7 @@ END:VCALENDAR`
   icalEvent: {
     filename: `${eventName}.ics`,
     method: 'PUBLISH',
-    content: calendarString,
+    content: calendarData,
 },
     text:`
     Hi Disleiry, a new event has been registered for the NYS CMP program.

@@ -187,7 +187,7 @@ const newDate = today.toISOString()
     return dateString + "T" + timeString+00+'Z'
   }
 
-const calendarDatax=`BEGIN:VCALENDAR
+/* const calendarDatax=`BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Black Health v1.0//EN
 CALSCALE:GREGORIAN
@@ -218,16 +218,63 @@ DTSTAMP:${created}
 DTSTART:${convertDate(eventDate,eventStartTime)}
 DTEND:${convertDate(eventDate,eventFinnishTime)}
 STATUS:CONFIRMED
-SUMMARY:Alexei Calendar
-DESCRIPTION:Online - Meeting - calendarcalendarcalendarcalendarcalendar
-ORGANIZER;CN=Black Health:MAILTO:info@meetup.com
+SUMMARY:${eventName}
+DESCRIPTION:${onlineInPersonEventType}-${eventDescription}
+ORGANIZER;CN=Black Health:MAILTO:nblchevents@nblch.org
 CLASS:PUBLIC
 LOCATION:215 W. 125th Street, Other, 11467
 URL:https://nblch.org
 SEQUENCE:2
 UID:event_283355921@black_health_data_app_management
 END:VEVENT
-END:VCALENDAR`
+END:VCALENDAR` */
+
+
+/* const testData=`
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Meetup//Meetup Events v1.0//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Events - Life Drawing Barcelona
+X-MS-OLK-FORCEINSPECTOROPEN:TRUE
+BEGIN:VTIMEZONE
+TZID:Europe/Madrid
+TZURL:http://tzurl.org/zoneinfo-outlook/Europe/Madrid
+X-LIC-LOCATION:Europe/Madrid
+BEGIN:DAYLIGHT
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+TZNAME:CEST
+DTSTART:19700329T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+TZNAME:CET
+DTSTART:19701025T030000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTAMP:20220129T115020Z
+DTSTART;TZID=Europe/Madrid:20220130T180000
+DTEND;TZID=Europe/Madrid:20220130T200000
+STATUS:CONFIRMED
+SUMMARY:Nude Life Drawing @fem.fatigue at Studio
+DESCRIPTION:Life Drawing Barcelona\nSunday\, January 30 at 6:00 PM\nDibujaremos a @fem.fatigue Material de dibujo incluido Snacks & drinks MEDIDAS COVID:Distancia entre sillas o caballete de 1'5 m.Limpiar las manos ant...\n\nPrice: 10.00 EUR https://www.meetup.com/Life-Drawing/events/283355921/
+ORGANIZER;CN=Meetup Reminder:MAILTO:info@meetup.com
+CLASS:PUBLIC
+CREATED:20220119T120306Z
+GEO:41.40;2.17
+LOCATION:art club barcelona (bou de sant pere 8 bajos\, Barcelona\, Spain)
+URL:https://www.meetup.com/Life-Drawing/events/283355921/
+SEQUENCE:2
+LAST-MODIFIED:20220119T120306Z
+UID:event_283355921@meetup.com
+END:VEVENT
+END:VCALENDAR` */
 
   const sendMessageToSubscriber =(name,email,eventName,eventDate,workArea)=>{
     let mailTrasporter = nodemailer.createTransport({
@@ -245,7 +292,7 @@ END:VCALENDAR`
       subject:"A new event has been registered for the NYS CMP program",
       icalEvent: {
         method: 'PUBLISH',
-        content: calendarDatax,
+        content: testData,
     },
       text:`
       Hi ${name}
