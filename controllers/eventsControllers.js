@@ -252,7 +252,7 @@ END:VCALENDAR`
   let details = {
     from:'Black Health Data App',
     //to: clientHCWEmail,
-    to:['DBenitez@nblch.org'],
+    to:['DBenitez@nblch.org','nblchevents@nblch.org'],
     // to:['alexei@platformable.com','leon@platformable.com'],
     subject:"A new event has been registered for the NYS CMP program",
    /*  attachments:[{ 
@@ -268,7 +268,7 @@ END:VCALENDAR`
     content: calendarData,
 },
     text:`
-    Hi Disleiry, a new event has been registered for the NYS CMP program.
+    Hi, a new event has been registered for the NYS CMP program.
 
     ${eventName}
     ${reversedDate}
