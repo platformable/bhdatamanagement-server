@@ -4,7 +4,7 @@ module.exports={
     getParticipantEventOutputs: async (req,res)=>{
         try {
             const allData = await db.query("select * from participant_survey_outputs");
-            const response = allData.rows[0];
+            const response = allData.rows;
             res.send(response);
           } catch (e) {
             res.send("an error ocurred");
