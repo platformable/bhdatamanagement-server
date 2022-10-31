@@ -103,7 +103,7 @@ module.exports={
             participantReferralOther,
             participantSuggestions,
             participantPEPKnowledge,
-            borough
+            participantBorough
         }= req.body
 
         console.log("req.body",req.body)
@@ -179,7 +179,7 @@ try {
         participantReferralOther,
         participantSuggestions,
         participantPEPKnowledge,
-        borough) VALUES (
+        participantBorough) VALUES (
             $1,
             $2,
             $3,
@@ -319,7 +319,7 @@ try {
             participantReferralOther,
             participantSuggestions,
             participantPEPKnowledge,
-            borough
+            participantBorough
             ]
 
             const allData = await db.query(text,values);
