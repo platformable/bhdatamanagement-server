@@ -102,7 +102,8 @@ module.exports={
             participantReferral,
             participantReferralOther,
             participantSuggestions,
-            participantPEPKnowledge
+            participantPEPKnowledge,
+            borough
         }= req.body
 
         console.log("req.body",req.body)
@@ -177,7 +178,8 @@ try {
         participantReferral,
         participantReferralOther,
         participantSuggestions,
-        participantPEPKnowledge) VALUES (
+        participantPEPKnowledge,
+        borough) VALUES (
             $1,
             $2,
             $3,
@@ -245,7 +247,8 @@ try {
             $65,
             $66,
             $67,
-            $68
+            $68,
+            $69
             ) RETURNING *`;
             const values = [
                 eventID,
@@ -315,7 +318,8 @@ try {
             participantReferral,
             participantReferralOther,
             participantSuggestions,
-            participantPEPKnowledge
+            participantPEPKnowledge,
+            borough
             ]
 
             const allData = await db.query(text,values);
