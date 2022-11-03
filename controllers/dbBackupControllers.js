@@ -78,8 +78,8 @@ const connectDropboxAndCreateFolders=(DBXCLIENT_ID,res)=>{
 
 	.then(async (response) => {
 
-//		res.send("yes")
-uploadDbBackupToDropbox(res)
+
+    uploadDbBackupToDropbox(res)
 	}).catch(err => {
 		res.json({message:"an error courred",error:err})
 		console.log("error",err);
@@ -89,8 +89,7 @@ uploadDbBackupToDropbox(res)
 
 const  uploadDbBackupToDropbox = async (res)=>{
 
-	/* const form = new FormData();
-    form.append('file', fileName); */
+
 	const fileToUpload = fs.readFileSync(fileName);
 	axios({
 		method: 'post',
@@ -102,7 +101,7 @@ const  uploadDbBackupToDropbox = async (res)=>{
 		data:fileToUpload
 	  })
 	  .then(response=>{
-        fs.unlinkSync(fileName)
+        fs.unlinkSync(`./${fileName}`)
 		console.log(response)
 		res.status(200).json({
 		message:"File Uploaded success",
@@ -111,11 +110,10 @@ const  uploadDbBackupToDropbox = async (res)=>{
         path_display:response.data.path_display,
         file_id:response.data.id,
         access_token:tokenFromRefresh
-
 	  })})
 	  .catch(error=>{
 		res.status(400).json({message:"error"})	
-		console.log("error from dropbox upload")
+		console.log("error from dropbox upload",error)
 	})
     
 }
@@ -131,8 +129,8 @@ module.exports = {
      autoBackup:async(req,res)=>{
 
         console.log("starting backup")
-        cron.schedule('0 14 * * *', () => {
-        console.log('running a task every two minutes');
+        cron.schedule('0 13 * * *', () => {
+        console.log('running a task every day at 1pm europe');
         connectDropboxAndCreateFolders(DBXCLIENT_ID,res)
         backup(res)
         },
