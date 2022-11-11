@@ -11,6 +11,8 @@ const axios = require('axios')
 const db = require("./dbConnect");
 const { Pool,Client } = require('pg')
 let nodemailer = require("nodemailer");
+const cron = require('node-cron')
+const  autoBackup = require('./controllers/dbBackupControllers')
 
 
 const { Dropbox } = require("dropbox");
@@ -79,40 +81,52 @@ app.use('/access_token',accessToken)
 const dbBackup = require('./routes/dbBackup')
 app.use('/backup',dbBackup)
 
+//AUTOBACKUP
+
+var task = cron.schedule('50 9 * * *', () =>  {
+  console.log('running a task every day at 9am europe');
+  autoBackup.createBackupFromClientSide()
+}, {
+  scheduled: false,
+  timezone:'Europe/Madrid'
+});
+
+task.start();
+
 
 //ROUTE TO OBTAIN  THE ENDPOINT oauth2/authorize WITH token_access_type= "offline" (IN ORDER TO GET THE REEFRESH TOKEN)
-app.get('/', (req, res) => {
-  dbx.auth.getAuthenticationUrl(redirectUri, null, 'code', 'offline', null, 'none', false)
-    .then((authUrl) => {
-      console.log("authUrl",authUrl)
-      res.writeHead(302, { Location: authUrl});
-      //res.end();
-    });
-});
+// app.get('/', (req, res) => {
+//   dbx.auth.getAuthenticationUrl(redirectUri, null, 'code', 'offline', null, 'none', false)
+//     .then((authUrl) => {
+//       console.log("authUrl",authUrl)
+//       res.writeHead(302, { Location: authUrl});
+//       //res.end();
+//     });
+// });
 
 //HERE, WE GET THE ACCESS-TOKEN AND THE REFRESH TOKEN, THE REFRESH TOKEN WAS COPIED AND SAVE AS AN ENVIROMENTAL VARIABLE
-app.get('/auth', (req, res) => {
-    const { code } = req.query;
-  console.log("code",code)
-console.log("/auth")
-    dbx.auth.getAccessTokenFromCode(redirectUri, code)
-        .then((token) => {
-          console.log(token)
-            console.log(`Token Result:${JSON.stringify(token)}`);
-            dbx.auth.setRefreshToken(token.result.refresh_token)
+// app.get('/auth', (req, res) => {
+//     const { code } = req.query;
+//   console.log("code",code)
+// console.log("/auth")
+//     dbx.auth.getAccessTokenFromCode(redirectUri, code)
+//         .then((token) => {
+//           console.log(token)
+//             console.log(`Token Result:${JSON.stringify(token)}`);
+//             dbx.auth.setRefreshToken(token.result.refresh_token)
 
-            dbx.usersGetCurrentAccount()
-                .then((response) => {
-                    console.log('response', response);
-                })
-                .catch((error) => {
-                    console.error(error);
-                })
-        })
-        .catch((error) => {
-            console.log(error);
-        })
-});
+//             dbx.usersGetCurrentAccount()
+//                 .then((response) => {
+//                     console.log('response', response);
+//                 })
+//                 .catch((error) => {
+//                     console.error(error);
+//                 })
+//         })
+//         .catch((error) => {
+//             console.log(error);
+//         })
+// });
 
 
 //>>> 
