@@ -26,11 +26,11 @@ module.exports = {
     }
   },
   createUser: async (req, res) => {
-    const {userid, name, lastname, role, email, dateaccountactivated,isactive } = req.body;
+    const {userid, name, lastname, role, email, dateaccountactivated,isactive,userFbo,userAccessiblePrograms } = req.body;
   
     const text =
-      "INSERT INTO users(userid,name,lastname,role,email,dateaccountactivated,isactive) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *";
-    const values = [userid,name, lastname, role, email, dateaccountactivated,isactive];
+      "INSERT INTO users(userid,name,lastname,role,email,dateaccountactivated,isactive,userFbo,userAccessiblePrograms) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *";
+    const values = [userid,name, lastname, role, email, dateaccountactivated,isactive,userFbo,userAccessiblePrograms];
     // callback
     db.query(text, values, (err, res) => {
       if (err) {
@@ -88,7 +88,7 @@ module.exports = {
     }
   },
   updateUser: async (req, res) => {
-    let { name,lastname,role,email,isactive} = req.body;
+    let { name,lastname,role,email,isactive,userFbo,userAccessiblePrograms} = req.body;
 
  /*    if(useractivestatus==="true"){
       useractivestatus="Active"
@@ -99,8 +99,8 @@ module.exports = {
     try {
       const query = await {
         name: "update-user",
-        text: `update users set name=$1,lastname=$2,role=$3,email=$4 ,isactive =$5 where email=$6`,
-        values: [name,lastname,role,email,isactive,email],
+        text: `update users set name=$1,lastname=$2,role=$3,email=$4 ,isactive =$5 userFbo=$6,userAccessiblePrograms=$7 where email=$4`,
+        values: [name,lastname,role,email,isactive,userFbo,userAccessiblePrograms],
       };
       db
         .query(query)
