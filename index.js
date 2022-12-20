@@ -81,6 +81,9 @@ app.use('/access_token',accessToken)
 const dbBackup = require('./routes/dbBackup')
 app.use('/backup',dbBackup)
 
+const fbos = require('./routes/fbos')
+app.use('/fbos',fbos)
+
 //AUTOBACKUP
 
 var task = cron.schedule('50 9 * * *', () =>  {

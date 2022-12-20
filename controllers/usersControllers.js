@@ -10,6 +10,21 @@ module.exports = {
       res.send("an error ocurred");
     }
   },
+  getUserById:async(req, res) => {
+    const {id} = req.params
+    try {
+      const data = await db.query("select * from users  where id = $1", [id]);
+      
+      if (data.rowCount < 1) {
+        return res.status(404).send('User not found')
+      }
+      const response = data.rows[0];
+      console.log(response)
+      res.send(response);
+    }catch(error) {
+      return res.status(500).send('An error ocurred')
+    }
+  },
   createUser: async (req, res) => {
     const {userid, name, lastname, role, email, dateaccountactivated,isactive } = req.body;
   
