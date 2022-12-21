@@ -99,7 +99,7 @@ module.exports = {
     try {
       const query = await {
         name: "update-user",
-        text: `update users set name=$1,lastname=$2,role=$3,email=$4 ,isactive =$5 userFbo=$6,userAccessiblePrograms=$7 where email=$4`,
+        text: `update users set name=$1,lastname=$2,role=$3,email=$4 ,isactive =$5, userFbo=$6,userAccessiblePrograms=$7 where email=$4`,
         values: [name,lastname,role,email,isactive,userFbo,userAccessiblePrograms],
       };
       db
