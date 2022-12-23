@@ -10,6 +10,16 @@ module.exports = {
       res.send("an error ocurred");
     }
   },
+  getFboById: async (req, res) => {
+    let {id} = req.params
+    try {
+      const allData = await db.query(`select * from fbos where id=${id}`);
+      const response = allData.rows;
+      res.send(response);
+    } catch (e) {
+      res.send("an error ocurred");
+    }
+  },
   createFbo: async (req, res) => {
     let {
       nameFBO,
