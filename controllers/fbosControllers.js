@@ -115,13 +115,13 @@ module.exports = {
       const query = await {
         name: "update-fbo",
         text: `update fbos set 
-      nameFBO=$1
-      addressFBO=$2
-      boroughFBO=$3
-      zipcodeFBO=$4	
-      nameReligiousLeader=$5	
-      emailReligionsLeader=$6	
-      phoneReligionsLeader=$7	
+      nameFBO=$1,
+      addressFBO=$2,
+      boroughFBO=$3,
+      zipcodeFBO=$4,	
+      nameReligiousLeader=$5,	
+      emailReligionsLeader=$6,	
+      phoneReligionsLeader=$7,	
       nameKeyContact=$8,	
       phoneKeyContact=$9 ,	
       emailKeyContact=$10 ,	
