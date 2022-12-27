@@ -12,10 +12,11 @@ module.exports = {
   },
   getFboById: async (req, res) => {
     let {id} = req.params
+    console.log("id",id)
     try {
-      const allData = await db.query(`select * from fbos where id=${id}`);
+      const allData = await db.query(`select * from fbos where numberfbo=${id}`);
       const response = allData.rows;
-      res.send(response);
+      res.send(response[0]);
     } catch (e) {
       res.send("an error ocurred");
     }
