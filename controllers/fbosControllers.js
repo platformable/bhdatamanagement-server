@@ -16,7 +16,7 @@ module.exports = {
     try {
       const allData = await db.query(`select * from fbos where numberfbo=${id}`);
       const response = allData.rows;
-      res.send(response[0]);
+      res.send(response);
     } catch (e) {
       res.send("an error ocurred");
     }
