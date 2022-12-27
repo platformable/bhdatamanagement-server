@@ -131,9 +131,8 @@ module.exports = {
       fboDropboxFolder=$14 ,	
       fboNotes=$15 ,	
       linkedAccounts=$16 ,	
-      fboActive=$17 where numberfbo=$0`,
+      fboActive=$17 where numberfbo=$18`,
         values: [
-          numberfbo,
           nameFBO,
           addressFBO,
           boroughFBO,
@@ -151,6 +150,7 @@ module.exports = {
           fboNotes,
           linkedAccounts,
           fboActive,
+          numberfbo
         ],
       };
       db.query(query).then((response) =>
