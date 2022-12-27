@@ -115,24 +115,23 @@ module.exports = {
       const query = await {
         name: "update-fbo",
         text: `update fbos set 
-      numberfbo=$1,
-      nameFBO=$2,
-      addressFBO=$3,
-      boroughFBO=$4,
-      zipcodeFBO=$5,	
-      nameReligiousLeader=$6,	
-      emailReligionsLeader=$7,	
-      phoneReligionsLeader=$8,	
-      nameKeyContact=$9 ,	
-      phoneKeyContact=$10 ,	
-      emailKeyContact=$11 ,	
-      nameAlternateContact=$12 ,	
-      phoneAlternateContact=$13 ,	
-      emailAlternateContact=$14 ,	
-      fboDropboxFolder=$15 ,	
-      fboNotes=$16 ,	
-      linkedAccounts=$17 ,	
-      fboActive=$18 where numberfbo=$1`,
+      nameFBO=$1
+      addressFBO=$2
+      boroughFBO=$3
+      zipcodeFBO=$4	
+      nameReligiousLeader=$5	
+      emailReligionsLeader=$6	
+      phoneReligionsLeader=$7	
+      nameKeyContact=$8,	
+      phoneKeyContact=$9 ,	
+      emailKeyContact=$10 ,	
+      nameAlternateContact=$11 ,	
+      phoneAlternateContact=$12 ,	
+      emailAlternateContact=$13 ,	
+      fboDropboxFolder=$14 ,	
+      fboNotes=$15 ,	
+      linkedAccounts=$16 ,	
+      fboActive=$17 where numberfbo=$1`,
         values: [
           numberfbo,
           nameFBO,
@@ -167,5 +166,29 @@ module.exports = {
       res.json("an error ocurred");
       console.log("error message:", error);
     }
+  },
+  deleteFbo: async (req, res) => {
+    const { numberfbo } = req.body;
+    console.log("users req.body",req.body)
+    const query = {
+      text: "DELETE from fbos where numberfbo=$1",
+      values: [numberfbo],
+    };
+    // promise
+    db.query(query)
+      .then((data) => {
+        if ((data.rowCount = 1)) {
+          res.send({
+            status: "OK",
+            response: "Fbo deleted",
+          });
+        } else {
+          res.send({
+            status: "FAIL",
+            response: "An error ocurred",
+          });
+        }
+      })
+      .catch((e) => console.error(e.stack));
   },
 };
