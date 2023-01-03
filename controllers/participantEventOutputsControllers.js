@@ -332,6 +332,120 @@ try {
     res.status(400).send({"message":"an error occurred, try again later","error":error})
     console.log("create participant event error:",error)
 }
-    }
+    },
+
+
+
+
+
+// CREATE OEF PARTICIPANT EVENT OUTPUT
+
+createOefParticipantEventOutputs: async (req,res)=>{
+
+    console.log("oef participant event")
+    const {
+        fbo,
+programName,
+eventDate,
+programID,
+participantZipCode,
+ageID,
+participantAgeRange,
+raceID,
+participantRace,
+ethnicityID,
+participantEthnicity,
+genderID,
+participantGender,
+orientationID,
+participantOrientation,
+participantOrientationOther,
+participantReferral,
+participantReferralOther,
+participantSuggestions,
+    }= req.body
+
+    console.log("req.body oef participan event output",req.body)
+
+
+try {
+const text = `insert into participant_survey_outputs (
+    fbo,
+programName,
+eventDate,
+programID,
+participantZipCode,
+ageID,
+participantAgeRange,
+raceID,
+participantRace,
+ethnicityID,
+participantEthnicity,
+genderID,
+participantGender,
+orientationID,
+participantOrientation,
+participantOrientationOther,
+participantReferral,
+participantReferralOther,
+participantSuggestions) VALUES (
+    $1,
+    $2,
+    $3,
+    $4,
+    $5,
+    $6,
+    $7,
+    $8,
+    $9,
+    $10,
+    $11,
+    $12,
+    $13,
+    $14,
+    $15,
+    $16,
+    $17,
+    $18,
+    $19
+        ) RETURNING *`;
+        const values = [
+            fbo,
+programName,
+eventDate,
+programID,
+participantZipCode,
+ageID,
+participantAgeRange,
+raceID,
+participantRace,
+ethnicityID,
+participantEthnicity,
+genderID,
+participantGender,
+orientationID,
+participantOrientation,
+participantOrientationOther,
+participantReferral,
+participantReferralOther,
+participantSuggestions,
+        ]
+
+const allData = await db.query(text,values);
+const response = allData.rows;
+res.status(200).send({"message":"oef participant event outputs saved successfully",'statusText':'OK'});
+console.log("sucess post event report")
+       
+
+} catch (error) {
+res.status(400).send({"message":"an error occurred, try again later","error":error})
+console.log("create participant event error:",error)
+}
+}
+
+
+
+
+
 }
 
