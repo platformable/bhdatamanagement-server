@@ -344,7 +344,7 @@ createOefParticipantEventOutputs: async (req,res)=>{
 
     console.log("oef participant event")
     const {
-        fbo,
+        deliveryPartner,
 programName,
 eventDate,
 programID,
@@ -370,7 +370,7 @@ participantSuggestions,
 
 try {
 const text = `insert into participant_survey_outputs (
-    fbo,
+    deliveryPartner,
 programName,
 eventDate,
 programID,
@@ -410,7 +410,7 @@ participantSuggestions) VALUES (
     $19
         ) RETURNING *`;
         const values = [
-            fbo,
+            deliveryPartner,
 programName,
 eventDate,
 programID,

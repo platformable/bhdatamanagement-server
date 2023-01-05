@@ -1,6 +1,7 @@
 const db = require("../dbConnect");
 const axios = require("axios");
-const { Dropbox } = require("dropbox");
+//const { Dropbox } = require("dropbox");
+const dropbox = require('../utils/dropbox')
 const { URLSearchParams } = require("node:url");
 const buffer = require("buffer/").Buffer;
 const createFolder = require("./createEventsFolders");
@@ -21,7 +22,7 @@ const config = {
   clientId: DBXCLIENT_ID,
   clientSecret: CLIENT_SECRET,
 };
-const dbx = new Dropbox(config);
+//const dbx = new Dropbox(config);
 
 const connectDropboxAndCreateFolders = (
   DBXCLIENT_ID,
@@ -579,7 +580,7 @@ eventZipCode=$30
         scale: 15,
       };
 
-      code = await QRCode.toDataURL(
+      code = QRCode.toDataURL(
         `http://www.bh.platformable.com/events/${id}/participant-survey/survey`,
         opts
       );
@@ -588,14 +589,17 @@ eventZipCode=$30
 
     const f2 = async (code, res) => {
       console.log("generatedCode", code);
-      res.send(code);
+
+      return code
     };
 
     async function all() {
       console.time("time");
       const res1 = await f1();
       const res2 = await f2(code, res);
-      //            console.log("res2",res2)
+    //            console.log("res2",res2)
+      const res3= await res2
+      res.send(res3)
       console.timeEnd("time");
     }
 
@@ -620,5 +624,92 @@ eventZipCode=$30
         }
       })
       .catch((e) => console.error(e.stack));
+  },
+  getDropbox:async (req,res)=>{
+    res.send("getDropbox")
+  },
+
+
+  createOefEvent: async (req, res) => {
+    const {
+      eventDateCreated,
+      programID,
+      programName,
+      eventName,
+      eventDate,
+      eventStartTime,
+      eventFinishTime,
+      healthAreaOfFocusID,
+      healthAreaOfFocusName,
+      createdByName,
+      createdByLastname,
+      eventZipCode,
+      borough,
+      oefEventEmail,
+      deliveryPartner,
+    } = req.body;
+    console.log("req.body from create oef event", req.body);
+const submissionStatus='Submitted'
+    try {
+      const text = `INSERT INTO events 
+      (
+eventDateCreated,
+programID,
+programName,
+eventName,
+eventDate,
+eventStartTime,
+eventFinishTime,
+healthAreaOfFocusID,
+healthAreaOfFocusName,
+createdByName,
+createdByLastname,
+eventZipCode,
+borough,
+oefEventEmail,
+deliveryPartner,
+submissionStatus) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16) RETURNING *`;
+      const values = [
+eventDateCreated,
+programID,
+programName,
+eventName,
+eventDate,
+eventStartTime,
+eventFinishTime,
+healthAreaOfFocusID,
+healthAreaOfFocusName,
+createdByName,
+createdByLastname,
+eventZipCode,
+borough,
+oefEventEmail,
+deliveryPartner,
+submissionStatus
+      ];
+
+
+        const saveData = await db.query(text, values);
+        const response = saveData.rows;
+        const eventId=response[0].id
+        console.log("eventId",eventId)
+        const getRefreshToken= await dropbox.connectToDropbox()
+        const token=await getRefreshToken
+        //console.log("token",token)
+        const createFolders= await dropbox.createAllFolders(token,programName,eventName,eventDate)
+        const shareDocumentFolder= await dropbox.shareFolder(token,programName,eventName,eventDate,'Documents')
+        const shareDocumentsResults= shareDocumentFolder
+        console.log("shareDocumentsFolder",shareDocumentsResults)
+        res.status(200).send({ message: "Event saved successfully", statusText: "OK" });
+    } catch (e) {
+      console.log("error", e);
+      res
+        .status(400)
+        .json({
+          message: "an error ocurred, please try again",
+          statusText: "FAIL",
+          error:e
+        });
+    }
   },
 };
