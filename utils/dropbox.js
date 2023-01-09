@@ -73,8 +73,10 @@ try {
 }
 };
 
-exports.shareFolder = async (tokenFromRefresh,programName,eventName,eventDate,folder) => {
-  console.log("tokenFromRefresh share",tokenFromRefresh)
+
+
+exports.shareMainFolder = async (tokenFromRefresh,programName,eventName,eventDate) => {
+  
   try {
       const getData = axios({
           method: 'post',
@@ -94,16 +96,17 @@ exports.shareFolder = async (tokenFromRefresh,programName,eventName,eventDate,fo
       })
 
       const dataResponse = await getData;
-      console.log(dataResponse)
-      console.log(">>>FOLDER<<<<");
+      //console.log(dataResponse)
+     /*  console.log(">>>FOLDER<<<<");
       console.log('dataResponse.data.name: ', dataResponse.data.name);
       console.log("dataResponse.data.path_lower", dataResponse.data.path_lower);
       console.log('dataResponse.data.shared_folder_id: ', dataResponse.data.shared_folder_id);
-      console.log('dataResponse.data.preview_url: ', dataResponse.data.preview_url);
-      const data = await {
+      console.log('dataResponse.data.preview_url: ', dataResponse.data.preview_url); */
+      const data =  {
           url : dataResponse.data.preview_url,
-          folderName: dataResponse.data.name ,
+          folderPath: dataResponse.data.path_lower ,
       }
+      return dataResponse
       //const dataStatus = await dataResponse.statusText==='OK' && addClientFolder(data.url,data.folderName,clientId)
       // const dataStatus = await dataResponse.statusText==='OK' ? addClientFolder(data.url,data.folderName,clientId): createClientSharedMainFolder(clientId,data.folderName)
   } catch (e) {
@@ -111,21 +114,93 @@ exports.shareFolder = async (tokenFromRefresh,programName,eventName,eventDate,fo
   }
 }
 
-exports.addClientFolder = async (url, folderName, clientID) => {
-  console.log("url desde add client", url);
-  console.log("folder desde add client", folderName);
-  console.log("id desde add client", clientID);
+
+
+
+
+
+exports.shareFolder = async (tokenFromRefresh,programName,eventName,eventDate,folder) => {
+  
+  try {
+      const getData = axios({
+          method: 'post',
+          url: 'https://api.dropboxapi.com/2/sharing/share_folder',
+          headers: {
+              'Content-Type': 'application/json',
+              authorization: `Bearer ${tokenFromRefresh}`,
+          },
+          data: {
+              "access_inheritance": "inherit",
+              "acl_update_policy": "editors",
+              "force_async": false,
+              "member_policy": "anyone",
+              "path": `/Data Governance App/Events/${programName}/${eventName}-${eventDate}/${folder}`,
+              "shared_link_policy": "anyone"
+          }
+      })
+
+      const dataResponse = await getData;
+      //console.log(dataResponse)
+     /*  console.log(">>>FOLDER<<<<");
+      console.log('dataResponse.data.name: ', dataResponse.data.name);
+      console.log("dataResponse.data.path_lower", dataResponse.data.path_lower);
+      console.log('dataResponse.data.shared_folder_id: ', dataResponse.data.shared_folder_id);
+      console.log('dataResponse.data.preview_url: ', dataResponse.data.preview_url); */
+      const data = await {
+          url : dataResponse.data.preview_url,
+          folderName: dataResponse.data.name ,
+      }
+      return dataResponse
+      //const dataStatus = await dataResponse.statusText==='OK' && addClientFolder(data.url,data.folderName,clientId)
+      // const dataStatus = await dataResponse.statusText==='OK' ? addClientFolder(data.url,data.folderName,clientId): createClientSharedMainFolder(clientId,data.folderName)
+  } catch (e) {
+      console.log("an error ocurred sharing ", e)
+  }
+}
+
+exports.addFoldersToEvent = async (folderurl, folderpath, eventid) => {
+  // console.log("url desde add client", url);
+  // console.log("folder desde add client", folderName);
+  // console.log("id desde add client", clientID);
   try {
     const query = await {
-      text: `update clients set ${folderName}_folder_url=$1 where clientid=$2`,
-      values: [url, clientID.toUpperCase()],
+      text: `update events set folderurl=$1,folderpath=$2 where id=$3`,
+      values: [folderurl, folderpath, eventid],
     };
     db.query(query)
       .then((response) =>
-        console.log("update client sucess", response.rowCount)
+        console.log("update event sucess", response.rowCount)
       )
       .catch((e) => console.log(e));
   } catch (error) {
     console.log("error message de addClientFolder:", error);
   }
+};
+
+
+
+
+exports.getFolderUrl = async (tokenFromRefresh,asyncJobID) => {
+  console.log("getFolderUrl Starting")
+  console.log("asyncJobID",asyncJobID)
+try {
+  const getData = axios({
+    method: "post",
+    url: "https://api.dropboxapi.com/2/sharing/check_share_job_status",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${tokenFromRefresh}`,
+    },
+    data: {
+      "async_job_id": asyncJobID
+    },
+  });
+
+  const dataResponse = await getData;
+ // console.log("dataResponse de getFolderUrl",dataResponse)
+  return dataResponse
+  //console.log("dataResponse", dataResponse.status);
+} catch (e) {
+  console.log("an error ocurred sharing ", e);
+}
 };

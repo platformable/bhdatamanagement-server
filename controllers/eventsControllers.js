@@ -697,10 +697,53 @@ submissionStatus
         const token=await getRefreshToken
         //console.log("token",token)
         const createFolders= await dropbox.createAllFolders(token,programName,eventName,eventDate)
-        const shareDocumentFolder= await dropbox.shareFolder(token,programName,eventName,eventDate,'Documents')
-        const shareDocumentsResults= shareDocumentFolder
-        console.log("shareDocumentsFolder",shareDocumentsResults)
-        res.status(200).send({ message: "Event saved successfully", statusText: "OK" });
+        //const shareDocumentFolder= await dropbox.shareFolder(token,programName,eventName,eventDate,'Documents')
+        const shareDocumentFolder= await dropbox.shareMainFolder(token,programName,eventName,eventDate)
+        console.log('shareDocumentFolder',shareDocumentFolder)
+        const DocumentsFolderAsyncJobId= await shareDocumentFolder.data.async_job_id
+        let inProgress = false
+        let mainFolderUrl={}
+        while (inProgress === false) {
+          console.log("while")
+          console.log("INPROGRESS",inProgress)
+          const getDocumentsFolderUrl= await dropbox.getFolderUrl(token,DocumentsFolderAsyncJobId);
+
+          if (getDocumentsFolderUrl.data['.tag'] === 'in_progress') {
+            
+            inProgress = false
+            
+          } else {
+            inProgress = true
+            console.log("TERMINO**--------****", getDocumentsFolderUrl.data)
+            mainFolderUrl.url= await getDocumentsFolderUrl.data.preview_url
+            mainFolderUrl.path= await getDocumentsFolderUrl.data.path_lower
+             
+          }
+          console.log("inprogress despues", inProgress)
+        }
+        // inProgress = false
+        // let ImagesForlderUrl
+        // const shareImagesFolder= await dropbox.shareFolder(token,programName,eventName,eventDate,'Images')
+        // const ImagesFolderAsyncJobId= await shareDocumentFolder.data.async_job_id
+        // while (inProgress === false) {
+        //   console.log("while")
+        //   console.log("INPROGRESS",inProgress)
+        //   const getImagesFolderUrl= await dropbox.getFolderUrl(token,DocumentsFolderAsyncJobId);
+
+        //   if (getImagesFolderUrl.data['.tag'] === 'in_progress') {
+        //     inProgress = false
+        //   } else {
+        //     inProgress = true
+        //     ImagesForlderUrl=getImagesFolderUrl.data.preview_url
+        //     console.log("TERMINO**--------****", getImagesFolderUrl.data) 
+        //   }
+        //   console.log("inprogress images despues", inProgress)
+        // }
+        console.log("MainFolderUrl",mainFolderUrl)
+        //console.log("ImagesFolderUrl",ImagesForlderUrl)
+        const addSharedFolderToEvent=await dropbox.addFoldersToEvent(mainFolderUrl.url, mainFolderUrl.path, eventId)
+        console.log("success")
+        res.status(200).send({ message: "Event saved successfully", statusText: "OK", createdEventId:eventId });
     } catch (e) {
       console.log("error", e);
       res
