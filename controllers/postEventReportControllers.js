@@ -3793,7 +3793,7 @@ try {
           nameGuestSpeakers,
           id
     } = req.body
-
+console.log("req.body update oef post event report",req.body)
     try {
       const query = {
         text:`update events_output set
