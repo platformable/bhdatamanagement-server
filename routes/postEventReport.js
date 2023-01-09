@@ -10,6 +10,7 @@ router.get("/:id",controller.getPostEventReport)
 router.get("/event/:id",controller.getPostEventReportById)
 router.put("/update",controller.updatePostEventReport)
 router.post("/oef/create",controller.createOEFPostEventReport)
+router.get("/oef/event/:id",controller.getOefPostEventReportById)
 
 
 module.exports = router
