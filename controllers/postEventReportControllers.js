@@ -3807,6 +3807,10 @@ try {
           datePostEventSurvey,
           guestSpeakers,
           nameGuestSpeakers,
+          eventName,
+          eventDate,
+          eventStartTime,
+          eventFinishTime,
           id
     } = req.body
 console.log("req.body update oef post event report",req.body)
@@ -3969,8 +3973,12 @@ console.log("req.body update oef post event report",req.body)
           hepCMoreThanOneRace=$154,
           datePostEventSurvey=$155,
           guestSpeakers=$156,
-          nameGuestSpeakers=$157
-  where id=$158`,
+          nameGuestSpeakers=$157,
+          eventName=$158,
+          eventDate=$159,
+          eventStartTime=$160,
+          eventFinishTime=$161
+  where id=$162`,
         values:[
           isClusterEvent,
           cluster,
@@ -4129,6 +4137,10 @@ console.log("req.body update oef post event report",req.body)
           datePostEventSurvey,
           guestSpeakers,
           nameGuestSpeakers,
+          eventName,
+          eventDate,
+          eventStartTime,
+          eventFinishTime,
           id
         ]
       }
