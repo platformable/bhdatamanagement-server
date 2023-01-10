@@ -8,6 +8,7 @@ router.get("/:id",controller.getEventById)
 router.post("/",controller.createEvent)
 router.post("/createeventtest",controller.createeventtest)
 router.post("/oef/create",controller.createOefEvent)
+router.put("/oef/update",controller.updateOefEvent)
 router.put("/",controller.updateEvent)
 router.delete("/delete",controller.deleteEvent)
 

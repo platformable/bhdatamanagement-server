@@ -755,4 +755,76 @@ submissionStatus
         });
     }
   },
+  updateOefEvent: async (req, res) => {
+    let {
+      id,
+      eventDateCreated,
+      programID,
+      programName,
+      eventName,
+      eventDate,
+      eventStartTime,
+      eventFinishTime,
+      healthAreaOfFocusID,
+      healthAreaOfFocusName,
+      createdByName,
+      createdByLastname,
+      eventZipCode,
+      borough,
+      oefEventEmail,
+      deliveryPartner,
+    } = req.body;
+
+    console.log(req.body)
+
+    try {
+      const query = await {
+        text: `update events set
+        eventDateCreated=$1,
+        programID=$2,
+        programName=$3,
+        eventName=$4,
+        eventDate=$5,
+        eventStartTime=$6,
+        eventFinishTime=$7,
+        healthAreaOfFocusID=$8,
+        healthAreaOfFocusName=$9,
+        createdByName=$10,
+        createdByLastname=$11,
+        eventZipCode=$12,
+        borough=$13,
+        oefEventEmail=$14,
+        deliveryPartner=$15
+        where id=$16`,
+        values: [
+          eventDateCreated,
+      programID,
+      programName,
+      eventName,
+      eventDate,
+      eventStartTime,
+      eventFinishTime,
+      healthAreaOfFocusID,
+      healthAreaOfFocusName,
+      createdByName,
+      createdByLastname,
+      eventZipCode,
+      borough,
+      oefEventEmail,
+      deliveryPartner,
+          id
+        ],
+      };
+      db.query(query).then((response) => {
+        console.log(response);
+        res.json({
+          message: "Updated  oef event successfully",
+          statusText: "OK",
+        });
+      });
+    } catch (error) {
+      res.send(e.stack);
+      console.log("error message:", error);
+    }
+  },
 };
