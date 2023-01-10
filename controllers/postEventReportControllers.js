@@ -3122,6 +3122,10 @@ try {
       datePostEventSurvey,
       guestSpeakers,
       nameGuestSpeakers,
+      eventName,
+      eventDate,
+      eventStartTime,
+      eventFinishTime
       } = req.body;
   
   
@@ -3283,7 +3287,11 @@ try {
           hepCMoreThanOneRace,
           datePostEventSurvey,
           guestSpeakers,
-          nameGuestSpeakers
+          nameGuestSpeakers,
+          eventName,
+          eventDate,
+          eventStartTime,
+          eventFinishTime
             ) VALUES (
               $1,
               $2,
@@ -3441,7 +3449,11 @@ try {
               $154,
               $155,
               $156,
-              $157
+              $157,
+              $158,
+              $159,
+              $160,
+              $161
             ) RETURNING *`;
         const values = [
           isClusterEvent,
@@ -3600,7 +3612,11 @@ try {
           hepCMoreThanOneRace,
           datePostEventSurvey,
           guestSpeakers,
-          nameGuestSpeakers
+          nameGuestSpeakers,
+          eventName,
+          eventDate,
+          eventStartTime,
+          eventFinishTime
         ];
   
         const allData = await db.query(text, values);
