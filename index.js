@@ -84,6 +84,9 @@ app.use('/backup',dbBackup)
 const fbos = require('./routes/fbos')
 app.use('/fbos',fbos)
 
+const technicalAssistance = require('./routes/technicalAssistance')
+app.use('/technical_assistance',technicalAssistance)
+
 //AUTOBACKUP
 
 var task = cron.schedule('50 9 * * *', () =>  {
