@@ -827,4 +827,37 @@ submissionStatus
       console.log("error message:", error);
     }
   },
+  updateOefEventFromEventsOuput: async (req, res) => {
+    let {
+      id,
+     submissionStatus,
+     submissionNotes
+    } = req.body;
+
+    console.log(req.body)
+
+    try {
+      const query = await {
+        text: `update events set
+        submissionStatus=$1,
+     submissionNotes=$2
+        where id=$3`,
+        values: [
+          submissionStatus,
+          submissionNotes,
+          id
+        ],
+      };
+      db.query(query).then((response) => {
+        console.log(response);
+        res.json({
+          message: "Updated  oef event successfully",
+          statusText: "OK",
+        });
+      });
+    } catch (error) {
+      res.send(e.stack);
+      console.log("error message:", error);
+    }
+  },
 };
