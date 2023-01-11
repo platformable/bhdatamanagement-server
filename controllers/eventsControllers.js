@@ -831,7 +831,8 @@ submissionStatus
     let {
       id,
      submissionStatus,
-     submissionNotes
+     submissionNotes,
+     oefEventEmail
     } = req.body;
 
     console.log(req.body)
@@ -848,7 +849,8 @@ submissionStatus
           id
         ],
       };
-      db.query(query).then((response) => {
+      db.query(query)
+      .then((response) => {
         console.log(response);
         res.json({
           message: "Updated  oef event successfully",
