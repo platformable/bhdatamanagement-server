@@ -2,6 +2,7 @@ const db = require("../dbConnect");
 const axios = require("axios");
 //const { Dropbox } = require("dropbox");
 const dropbox = require('../utils/dropbox')
+const sendEmail=require('../utils/sendEmail')
 const { URLSearchParams } = require("node:url");
 const buffer = require("buffer/").Buffer;
 const createFolder = require("./createEventsFolders");
@@ -856,7 +857,8 @@ submissionStatus
           message: "Updated  oef event successfully",
           statusText: "OK",
         });
-      });
+      })
+      .then(res=>sendEmail.sendEmailToUser(oefEventEmail))
     } catch (error) {
       res.send(e.stack);
       console.log("error message:", error);
