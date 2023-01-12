@@ -2,6 +2,19 @@ const db = require("../dbConnect");
 
 module.exports = {
 
+  getAllTechnicalAssitance:async(req,res)=>{
+
+try {
+  const allData = await db.query("select * from technical_assistance");
+  const response = allData.rows;
+  res.send(response)
+} catch (e) {
+  res.send("an error ocurred");
+  console.log("an error ocurrer on technical assistance get all ta")
+}
+
+  },
+
   createTechnicallAssistance: async (req, res) => {
     let {
         taType,
@@ -51,7 +64,7 @@ module.exports = {
         taFbo,
         taFboOther,
         taDateSubmitted,
-        taStatus,
+        taStatus='Submitted',
         taStatusCompleteDate,
         taCompleteBhStaff,
         taNotesBhStaff,
