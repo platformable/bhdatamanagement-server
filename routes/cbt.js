@@ -5,7 +5,7 @@ const controller = require('../controllers/cbtControllers')
 
 router.get("/",controller.getAllCbts)
 router.get("/:id",controller.getCbtById)
-router.post("/",controller.createCBTEvent)
+router.post("/create",controller.createCBTEvent)
 
 
 module.exports = router
