@@ -142,7 +142,7 @@ module.exports ={
         }
       },
 createCBTEvent: async (req, res) => {
-    const {
+    let {
         eventName,
         eventDate,
         eventStartTime,
@@ -165,7 +165,7 @@ const submissionStatus='Submitted'
         healthAreaOfFocusName,
         onlineInPersonEventType,
         eventDescription) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *`;
-      const values = [
+      let values = [
         eventName,
         eventDate,
         eventStartTime,
