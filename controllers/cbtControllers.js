@@ -147,7 +147,7 @@ createCBTEvent: async (req, res) => {
         eventDate,
         eventStartTime,
         eventFinishTime,
-        healthAreaOfFocusId,
+        healthAreaOfFocusID,
         healthAreaOfFocusName,
         onlineInPersonEventType,
         eventDescription,
@@ -161,7 +161,7 @@ const submissionStatus='Submitted'
         eventDate,
         eventStartTime,
         eventFinishTime,
-        healthAreaOfFocusId,
+        healthAreaOfFocusID,
         healthAreaOfFocusName,
         onlineInPersonEventType,
         eventDescription) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *`;
@@ -170,7 +170,7 @@ const submissionStatus='Submitted'
         eventDate,
         eventStartTime,
         eventFinishTime,
-        healthAreaOfFocusId,
+        healthAreaOfFocusID,
         healthAreaOfFocusName,
         onlineInPersonEventType,
         eventDescription
