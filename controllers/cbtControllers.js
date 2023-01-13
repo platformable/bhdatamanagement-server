@@ -162,7 +162,7 @@ const submissionStatus='Submitted'
         eventStartTime,
         eventFinishTime,
         healthAreaOfFocusId,
-        healtAreaOfFocusName,
+        healthAreaOfFocusName,
         onlineInPersonEventType,
         eventDescription) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *`;
       const values = [
