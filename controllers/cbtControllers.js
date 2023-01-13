@@ -95,7 +95,7 @@ const sendMessageToSubscriber = async (eventName,eventDate,workArea,eventDescrip
       content: calendarData,
   },
       text:`
-      Hi, a new event has been registered for the OEF program.
+      Hi, a new event has been registered for the OEF CBT program.
   
       ${eventName}
       ${reversedDate}
@@ -148,7 +148,7 @@ createCBTEvent: async (req, res) => {
         eventStartTime,
         eventFinishTime,
         healthAreaOfFocusId,
-        healtAreaOfFocusName,
+        healthAreaOfFocusName,
         onlineInPersonEventType,
         eventDescription,
     } = req.body;
@@ -171,7 +171,7 @@ const submissionStatus='Submitted'
         eventStartTime,
         eventFinishTime,
         healthAreaOfFocusId,
-        healtAreaOfFocusName,
+        healthAreaOfFocusName,
         onlineInPersonEventType,
         eventDescription
       ];
