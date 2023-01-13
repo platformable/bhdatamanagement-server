@@ -94,21 +94,12 @@ exports.shareMainFolder = async (tokenFromRefresh,programName,eventName,eventDat
               "shared_link_policy": "anyone"
           }
       })
-
       const dataResponse = await getData;
-      //console.log(dataResponse)
-     /*  console.log(">>>FOLDER<<<<");
-      console.log('dataResponse.data.name: ', dataResponse.data.name);
-      console.log("dataResponse.data.path_lower", dataResponse.data.path_lower);
-      console.log('dataResponse.data.shared_folder_id: ', dataResponse.data.shared_folder_id);
-      console.log('dataResponse.data.preview_url: ', dataResponse.data.preview_url); */
       const data =  {
           url : dataResponse.data.preview_url,
           folderPath: dataResponse.data.path_lower ,
       }
       return dataResponse
-      //const dataStatus = await dataResponse.statusText==='OK' && addClientFolder(data.url,data.folderName,clientId)
-      // const dataStatus = await dataResponse.statusText==='OK' ? addClientFolder(data.url,data.folderName,clientId): createClientSharedMainFolder(clientId,data.folderName)
   } catch (e) {
       console.log("an error ocurred sharing ", e)
   }
@@ -158,13 +149,10 @@ exports.shareFolder = async (tokenFromRefresh,programName,eventName,eventDate,fo
   }
 }
 
-exports.addFoldersToEvent = async (folderurl, folderpath, eventid) => {
-  // console.log("url desde add client", url);
-  // console.log("folder desde add client", folderName);
-  // console.log("id desde add client", clientID);
+exports.addFoldersToEvent = async (folderurl, folderpath, eventid,tableToUpdateName) => {
   try {
     const query = await {
-      text: `update events set folderurl=$1,folderpath=$2 where id=$3`,
+      text: `update ${tableToUpdateName} set folderurl=$1,folderpath=$2 where id=$3`,
       values: [folderurl, folderpath, eventid],
     };
     db.query(query)

@@ -205,48 +205,6 @@ UID:event_283355921@black_health_data_app_management
 END:VEVENT
 END:VCALENDAR`
 
-const calendarDelFront=`BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//Black Health v1.0//EN
-CALSCALE:GREGORIAN
-METHOD:PUBLISH
-X-WR-CALNAME:Events - Black Health
-X-MS-OLK-FORCEINSPECTOROPEN:TRUE
-BEGIN:VTIMEZONE
-TZID:America/New_York
-TZURL:http://tzurl.org/zoneinfo-outlook/America/New_York
-X-LIC-LOCATION:America/New_York
-BEGIN:DAYLIGHT
-TZOFFSETFROM:-0500
-TZOFFSETTO:-0400
-TZNAME:CEST
-DTSTART:19700329T020000
-RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
-END:DAYLIGHT
-BEGIN:STANDARD
-TZOFFSETFROM:-0400
-TZOFFSETTO:-0500
-TZNAME:CET
-DTSTART:19701025T030000
-RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
-END:STANDARD
-END:VTIMEZONE
-BEGIN:VEVENT
-DTSTAMP:${created}
-DTSTART:${convertDate(eventDate, eventStartTime)}
-DTEND:${convertDate(eventDate,eventFinishTime)}
-STATUS:CONFIRMED
-SUMMARY: ${eventName}
-DESCRIPTION:${eventDescription}
-ORGANIZER;CN=Black Health:MAILTO:nblchevents@nblch.org
-CLASS:PUBLIC
-LOCATION:${locationAddress}
-URL:https://nblch.org
-SEQUENCE:2
-UID:event_283355921@black_health_data_app_management
-END:VEVENT
-END:VCALENDAR`
-
 
   const reverse = eventDate.split('-')
   const reversedDate=reverse[1]+'/'+reverse[2]+'/'+reverse[0]
@@ -254,23 +212,15 @@ END:VCALENDAR`
   let details = {
     from:'Black Health Data App',
     //to: clientHCWEmail,
-    to:['DBenitez@nblch.org','nblchevents@nblch.org'],
-    // to:['alexei@platformable.com','leon@platformable.com'],
-    subject:"A new event has been registered for the NYS CMP program",
-   /*  attachments:[{ 
-      filename:`event-${eventName}.ics`,
-      method:'PUBLISH',
-      path:icsMSG,
-      content:icsMSG,
-      encoding:'base64'
-  },], */
+    to:['alexei@platformable.com','leon@platformable.com'],
+    subject:"A new event has been registered for the OEF program",
   icalEvent: {
     filename: `${eventName}.ics`,
     method: 'PUBLISH',
     content: calendarData,
 },
     text:`
-    Hi, a new event has been registered for the NYS CMP program.
+    Hi, a new event has been registered for the OEF program.
 
     ${eventName}
     ${reversedDate}
@@ -742,7 +692,7 @@ submissionStatus
         // }
         console.log("MainFolderUrl",mainFolderUrl)
         //console.log("ImagesFolderUrl",ImagesForlderUrl)
-        const addSharedFolderToEvent=await dropbox.addFoldersToEvent(mainFolderUrl.url, mainFolderUrl.path, eventId)
+        const addSharedFolderToEvent=await dropbox.addFoldersToEvent(mainFolderUrl.url, mainFolderUrl.path, eventId,'events')
         console.log("success")
         res.status(200).send({ message: "Event saved successfully", statusText: "OK", createdEventId:eventId });
     } catch (e) {

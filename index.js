@@ -87,6 +87,9 @@ app.use('/fbos',fbos)
 const technicalAssistance = require('./routes/technicalAssistance')
 app.use('/technical_assistance',technicalAssistance)
 
+const cbt = require('./routes/cbt')
+app.use('/cbt',cbt)
+
 //AUTOBACKUP
 
 var task = cron.schedule('50 9 * * *', () =>  {
