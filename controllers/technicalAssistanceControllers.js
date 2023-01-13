@@ -15,6 +15,18 @@ try {
 
   },
 
+  getTechnicalAssitanceById:async(req,res)=>{
+let {id}=req.params
+    try {
+      const allData = await db.query(`select * from technical_assistance where id=${id}`);
+      const response = allData.rows;
+      res.send(response)
+    } catch (e) {
+      res.send("an error ocurred");
+      console.log("an error ocurrer on technical assistance get all ta")
+    }
+    
+      },
   createTechnicallAssistance: async (req, res) => {
     let {
         taType,
@@ -78,90 +90,83 @@ try {
       .then((response) => console.log("Technical asssistance created"))
       .catch((e) => console.error(e.stack))
   },
-  updateFbo: async (req, res) => {
+  updateTechnicalAssistance: async (req, res) => {
     let {
-      numberfbo,
-      nameFBO,
-      addressFBO,
-      boroughFBO,
-      zipcodeFBO,
-      nameReligiousLeader,
-      emailReligionsLeader,
-      phoneReligionsLeader,
-      nameKeyContact,
-      phoneKeyContact,
-      emailKeyContact,
-      nameAlternateContact,
-      phoneAlternateContact,
-      emailAlternateContact,
-      fboDropboxFolder,
-      fboNotes,
-      linkedAccounts,
-      fboActive,
+        taType,
+        taTypeOther,
+        taReason,
+        taContactName,
+        taEmail,
+        taPhone,
+        taFbo,
+        taFboOther,
+        taDateSubmitted,
+        taStatus,
+        taStatusCompleteDate,
+        taCompleteBhStaff,
+        taNotesBhStaff,
+        programId,
+        programName,
+        id
     } = req.body;
 
     try {
       const query = await {
-        name: "update-fbo",
-        text: `update fbos set 
-      nameFBO=$1,
-      addressFBO=$2,
-      boroughFBO=$3,
-      zipcodeFBO=$4,	
-      nameReligiousLeader=$5,	
-      emailReligionsLeader=$6,	
-      phoneReligionsLeader=$7,	
-      nameKeyContact=$8,	
-      phoneKeyContact=$9 ,	
-      emailKeyContact=$10 ,	
-      nameAlternateContact=$11 ,	
-      phoneAlternateContact=$12 ,	
-      emailAlternateContact=$13 ,	
-      fboDropboxFolder=$14 ,	
-      fboNotes=$15 ,	
-      linkedAccounts=$16 ,	
-      fboActive=$17 where numberfbo=$18`,
+        name: "update-TA",
+        text: `update technical_assistance set 
+        taType=$1,
+        taTypeOther=$2,
+        taReason=$3,
+        taContactName=$4,
+        taEmail=$5,
+        taPhone=$6,
+        taFbo=$7,
+        taFboOther=$8,
+        taDateSubmitted=$9,
+        taStatus=$10,
+        taStatusCompleteDate=$11,
+        taCompleteBhStaff=$12,
+        taNotesBhStaff=$13,
+        programId=$14,
+        programName=$15 where id=$16`,
         values: [
-          nameFBO,
-          addressFBO,
-          boroughFBO,
-          zipcodeFBO,
-          nameReligiousLeader,
-          emailReligionsLeader,
-          phoneReligionsLeader,
-          nameKeyContact,
-          phoneKeyContact,
-          emailKeyContact,
-          nameAlternateContact,
-          phoneAlternateContact,
-          emailAlternateContact,
-          fboDropboxFolder,
-          fboNotes,
-          linkedAccounts,
-          fboActive,
-          numberfbo
+          taType,
+          taTypeOther,
+          taReason,
+          taContactName,
+          taEmail,
+          taPhone,
+          taFbo,
+          taFboOther,
+          taDateSubmitted,
+          taStatus,
+          taStatus==='Complete'?taStatusCompleteDate===new Date():null,
+          taCompleteBhStaff,
+          taNotesBhStaff,
+          programId,
+          programName,
+          id
         ],
       };
       db.query(query).then((response) =>
-        res
-          .json({
-            data: response.rowCount,
-            status: 200,
-          })
-          .then((response) => console.log("fbo updated"))
-      );
+      res.status(200).send({
+        data: response.rowCount,
+        status: 200,
+        statusText:'OK'
+      })
+      ).then((response) => console.log("TA updated"))
       //.catch((e) => res.send(e.stack));
     } catch (error) {
       res.json("an error ocurred");
       console.log("error message:", error);
     }
   },
-  deleteFbo: async (req, res) => {
-    const { numberfbo } = req.body;
+  deleteTechnicalAssistance: async (req, res) => {
+    const { id } = req.body;
     console.log("users req.body",req.body)
     const query = {
-      text: "DELETE from fbos where numberfbo=$1",
-      values: [numberfbo],
+      text: "DELETE from technical_assistance where id=$1",
+      values: [id],
     };
     // promise
     db.query(query)
@@ -169,7 +174,7 @@ try {
         if ((data.rowCount = 1)) {
           res.send({
             status: "OK",
-            response: "Fbo deleted",
+            response: "TA deleted",
           });
         } else {
           res.send({
