@@ -363,6 +363,10 @@ participantOrientationOther,
 participantReferral,
 participantReferralOther,
 participantSuggestions,
+
+participantRaceOther,
+    participantEthnicityOther,
+    participantSexualIdentityOther
     }= req.body
 
     console.log("req.body oef participan event output",req.body)
@@ -388,7 +392,10 @@ participantOrientation,
 participantOrientationOther,
 participantReferral,
 participantReferralOther,
-participantSuggestions) VALUES (
+participantSuggestions,
+participantRaceOther,
+    participantEthnicityOther,
+    participantSexualIdentityOther) VALUES (
     $1,
     $2,
     $3,
@@ -407,7 +414,7 @@ participantSuggestions) VALUES (
     $16,
     $17,
     $18,
-    $19
+    $19,$20,$21,$22
         ) RETURNING *`;
         const values = [
             deliveryPartner,
@@ -429,6 +436,9 @@ participantOrientationOther,
 participantReferral,
 participantReferralOther,
 participantSuggestions,
+participantRaceOther,
+    participantEthnicityOther,
+    participantSexualIdentityOther
         ]
 
 const allData = await db.query(text,values);

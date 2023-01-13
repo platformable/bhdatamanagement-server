@@ -858,7 +858,7 @@ submissionStatus
           statusText: "OK",
         });
       })
-      .then(res=>sendEmail.sendEmailToUser(oefEventEmail))
+      //.then(res=>sendEmail.sendEmailToUser(oefEventEmail))
     } catch (error) {
       res.send(e.stack);
       console.log("error message:", error);
