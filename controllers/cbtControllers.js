@@ -87,7 +87,7 @@ END:VCALENDAR`
     let details = {
       from:'Black Health Data App',
       //to: clientHCWEmail,
-      to:['alexei@platformable.com','leon@platformable.com'],
+      to:['alexei@platformable.com'],
       subject:"A new event has been registered for the OEF CBT program",
     icalEvent: {
       filename: `${eventName}.ics`,
