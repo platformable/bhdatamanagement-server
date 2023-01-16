@@ -993,7 +993,7 @@ const submissionStatus='Submitted'
         }
         console.log("MainFolderUrl",mainFolderUrl)
         //console.log("ImagesFolderUrl",ImagesForlderUrl)
-        const addSharedFolderToEvent=await dropbox.addFoldersToEvent(mainFolderUrl.url, mainFolderUrl.path, eventId,'cbt')
+        const addSharedFolderToEvent=await dropbox.addFoldersToEvent(mainFolderUrl.url, mainFolderUrl.path, eventId,'events')
         const sendMessage= await sendMessageToOEFCBTSubscriber(eventName,eventDate,workArea='',eventDescription,locationAddress='New York City',onlineInPersonEventType='Online',eventStartTime,eventFinishTime)
         console.log("success")
         res.status(200).send({ message: "Event saved successfully", statusText: "OK", createdEventId:eventId });
