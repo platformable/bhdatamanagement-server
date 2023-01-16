@@ -928,7 +928,8 @@ submissionStatus
         eventDescription,
         surveyName,
         programID,
-        programName
+        programName,
+        eventDatecreated
     } = req.body;
     console.log("req.body from create oef cbt event", req.body);
 const submissionStatus='Submitted'
@@ -945,7 +946,8 @@ const submissionStatus='Submitted'
         eventDescription,
         surveyName,
         programID,
-        programName) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`;
+        programName,
+        eventDatecreated) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *`;
       let values = [
         eventName,
         eventDate,
@@ -957,7 +959,8 @@ const submissionStatus='Submitted'
         eventDescription,
         surveyName,
         programID,
-        programName
+        programName,
+        eventDatecreated
       ];
         const saveData = await db.query(text, values);
         const response = saveData.rows;
