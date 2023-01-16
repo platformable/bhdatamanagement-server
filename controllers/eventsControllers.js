@@ -933,7 +933,7 @@ submissionStatus
     console.log("req.body from create oef cbt event", req.body);
 const submissionStatus='Submitted'
     try {
-      const text = `INSERT INTO cbt 
+      const text = `INSERT INTO events 
       (
         eventName,
         eventDate,
