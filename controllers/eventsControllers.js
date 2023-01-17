@@ -1011,4 +1011,67 @@ const submissionStatus='Submitted'
         });
     }
   },
+  updateOefCbtEvent: async (req, res) => {
+    let {
+      id,
+      eventName,
+        eventDate,
+        eventStartTime,
+        eventFinishTime,
+        healthAreaOfFocusID,
+        healthAreaOfFocusName,
+        onlineInPersonEventType,
+        eventDescription,
+        surveyName,
+        programID,
+        programName,
+        eventDateCreated
+    } = req.body;
+
+    console.log(req.body)
+
+    try {
+      const query = await {
+        text: `update events set
+        eventName=$1,
+        eventDate=$2,
+        eventStartTime=$3,
+        eventFinishTime=$4,
+        healthAreaOfFocusID=$5,
+        healthAreaOfFocusName=$6,
+        onlineInPersonEventType=$7,
+        eventDescription=$8,
+        surveyName=$9,
+        programID=$10,
+        programName=$11,
+        eventDateCreated=$12
+        where id=$13`,
+        values: [
+      eventName,
+        eventDate,
+        eventStartTime,
+        eventFinishTime,
+        healthAreaOfFocusID,
+        healthAreaOfFocusName,
+        onlineInPersonEventType,
+        eventDescription,
+        surveyName,
+        programID,
+        programName,
+        eventDateCreated,
+          id
+        ],
+      };
+      db.query(query).then((response) => {
+        console.log(response);
+        res.json({
+          message: "Updated  oef cbt event successfully",
+          statusText: "OK",
+        });
+      });
+    } catch (error) {
+      res.status(400).send(e.stack);
+      console.log("error message:", error);
+    }
+  },
 };
