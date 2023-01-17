@@ -110,6 +110,8 @@ let {id}=req.params
         id
     } = req.body;
 
+    console.log("TA req.body",req.body)
+
     try {
       const query = await {
         name: "update-TA",
@@ -140,7 +142,7 @@ let {id}=req.params
           taFboOther,
           taDateSubmitted,
           taStatus,
-          taStatus==='Complete'?taStatusCompleteDate===new Date():null,
+          taStatusCompleteDate,
           taCompleteBhStaff,
           taNotesBhStaff,
           programId,
