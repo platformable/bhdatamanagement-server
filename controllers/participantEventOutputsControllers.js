@@ -451,6 +451,130 @@ console.log("sucess post event report")
 res.status(400).send({"message":"an error occurred, try again later","error":error})
 console.log("create participant event error:",error)
 }
+},
+
+
+
+createOefCbtParticipantEventOutputs: async (req,res)=>{
+
+    console.log("OEF CBT participant survey")
+    const {
+        eventID,
+        eventName,
+        eventDate,
+        ageID,
+        participantAgeRange,
+        raceID,
+        participantRace,
+        participantRaceOther,
+        ethnicityID,
+        participantEthnicity,
+        participantEthnicityOther,
+        genderID,
+        participantGender,
+        surveyname,
+        fboPosition,
+        participantGenderOther,
+        cbtChallenges,
+        cbtDealChallenges,
+        informationUseful,
+        canApply,
+        presenterExplainWell,
+        understoodTopics,
+        fbo,
+        participantSuggestions,
+        participantTools,
+    }= req.body
+
+    console.log("OEF CBT participant survey",req.body)
+
+
+try {
+const text = `insert into participant_survey_outputs (
+    eventID,
+eventName,
+eventDate,
+ageID,
+participantAgeRange,
+raceID,
+participantRace,
+participantRaceOther,
+ethnicityID,
+participantEthnicity,
+participantEthnicityOther,
+genderID,
+participantGender,
+surveyname,
+fboPosition,
+participantGenderOther,
+cbtChallenges,
+cbtDealChallenges,
+informationUseful,
+canApply,
+presenterExplainWell,
+understoodTopics,
+fbo,
+participantSuggestions,
+participantTools
+    ) VALUES (
+    $1,
+    $2,
+    $3,
+    $4,
+    $5,
+    $6,
+    $7,
+    $8,
+    $9,
+    $10,
+    $11,
+    $12,
+    $13,
+    $14,
+    $15,
+    $16,
+    $17,
+    $18,
+    $19,$20,$21,$22,$23,$24,$25
+        ) RETURNING *`;
+        const values = [
+            eventID,
+            eventName,
+            eventDate,
+            ageID,
+            participantAgeRange,
+            raceID,
+            participantRace,
+            participantRaceOther,
+            ethnicityID,
+            participantEthnicity,
+            participantEthnicityOther,
+            genderID,
+            participantGender,
+            surveyname,
+            fboPosition,
+            participantGenderOther,
+            cbtChallenges,
+            cbtDealChallenges,
+            informationUseful,
+            canApply,
+            presenterExplainWell,
+            understoodTopics,
+            fbo,
+            participantSuggestions,
+            participantTools
+        ]
+
+const allData = await db.query(text,values);
+const response = allData.rows;
+res.status(200).send({"message":"oef cbt participant event outputs saved successfully",'statusText':'OK'});
+console.log("sucess participant oef cbt survey")
+       
+
+} catch (error) {
+res.status(400).send({"message":"an error occurred, try again later","error":error})
+console.log("create participant event error:",error)
+}
 }
 
 
