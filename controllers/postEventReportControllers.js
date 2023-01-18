@@ -3655,6 +3655,29 @@ try {
           console.log("error",e)
         }
   },
+  getOefCbtPostEventReportById:async (req,res)=>{
+   
+    let {id}=req.params
+    console.log("get oef cbt",id)
+    const text=`select events.id as eventID,events.eventname as event_name,events.eventdate as event_date,events.folderpath,events.folderurl,events_output.* eventname from events
+     join events_output on  events.id = events_output.eventid
+    where eventid=$1 `
+   const values=[id]
+    try {
+        const allData = await db.query(text,values);
+        const response = allData.rows;
+        console.log("response",response)
+        if(response.length>0){
+          res.send(response);
+        }
+        else {
+          res.send({message:"Somenthing went wront, please try again", statusText:'FAIL',eventID:id})
+        }
+      } catch (e) {
+        res.send("an error ocurred");
+        console.log("error",e)
+      }
+},
   updateOefPostEventReport:async(req,res) =>{
     console.log("oef post event report update")
     let {
@@ -4158,6 +4181,240 @@ console.log("req.body update oef post event report",req.body)
             console.log(response)
             res.send({
               message: "oef event Updated successfully",
+              statusText:'OK'
+            })
+          }
+          )
+    } catch (error) {
+      console.log(error)
+      res.send(error)
+    }
+  },
+  createOEFCbtPostEventReport: async (req, res) => {
+    const {
+      eventID,
+      programid,
+      programname,
+      participantRegistrationForm,
+      eventStartedOnTime,
+      eventFinishedOnTime,
+      participantGreeted,
+      resourcesAvailable,
+      photoRelease,
+      handSanitizerAvailable,
+      reminderSafeSpace,
+      reminderPostEvaluationSurvey,
+      eventChecklistOther,
+      totalAttendees,
+      eventChallenges,
+      eventQuestions,
+      surveyname,
+      eventOrganization,
+      eventWorkedBest,
+      eventImprove,
+      eventDelivery,
+      eventResponsive,
+      engaged,
+      topicsFollowup,
+      leastEngaged,
+      improveEngagement,
+      organizerFeedback,
+      mainRoles,
+      mainRolesOther,
+      eventChecklistOtherText
+    } = req.body;
+
+
+    try {
+      const text = `insert into events_output (
+        eventID,
+        programid,
+        programname,
+        participantRegistrationForm,
+        eventStartedOnTime,
+        eventFinishedOnTime,
+        participantGreeted,
+        resourcesAvailable,
+        photoRelease,
+        handSanitizerAvailable,
+        reminderSafeSpace,
+        reminderPostEvaluationSurvey,
+        eventChecklistOther,
+        totalAttendees,
+        eventChallenges,
+        eventQuestions,
+        surveyname,
+        eventOrganization,
+        eventWorkedBest,
+        eventImprove,
+        eventDelivery,
+        eventResponsive,
+        engaged,
+        topicsFollowup,
+        leastEngaged,
+        improveEngagement,
+        organizerFeedback,
+        mainRoles,
+        mainRolesOther,
+        eventChecklistOtherText
+          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,
+            $16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30) RETURNING *`;
+      const values = [
+        eventID,
+        programid,
+        programname,
+        participantRegistrationForm,
+        eventStartedOnTime,
+        eventFinishedOnTime,
+        participantGreeted,
+        resourcesAvailable,
+        photoRelease,
+        handSanitizerAvailable,
+        reminderSafeSpace,
+        reminderPostEvaluationSurvey,
+        eventChecklistOther,
+        totalAttendees,
+        eventChallenges,
+        eventQuestions,
+        surveyname,
+        eventOrganization,
+        eventWorkedBest,
+        eventImprove,
+        eventDelivery,
+        eventResponsive,
+        engaged,
+        topicsFollowup,
+        leastEngaged,
+        improveEngagement,
+        organizerFeedback,
+        mainRoles,
+        mainRolesOther,
+        eventChecklistOtherText
+      ];
+
+      const allData = await db.query(text, values);
+      const response = allData.rows;
+      res
+        .status(200)
+        .send({ message: "oef cb Event_output saved successfully", statusText: "OK" });
+      console.log("sucess post event report");
+    } catch (error) {
+      res
+        .status(400)
+        .send({ message: "an error occurred, try again later", error: error });
+      console.log("create Event_output error:", error);
+    }
+  },
+  updateOefCbtPostEventReport:async(req,res) =>{
+    console.log("oef cbt post event report update")
+    let {
+      eventID,
+      programid,
+      programname,
+      participantRegistrationForm,
+      eventStartedOnTime,
+      eventFinishedOnTime,
+      participantGreeted,
+      resourcesAvailable,
+      photoRelease,
+      handSanitizerAvailable,
+      reminderSafeSpace,
+      reminderPostEvaluationSurvey,
+      eventChecklistOther,
+      totalAttendees,
+      eventChallenges,
+      eventQuestions,
+      surveyname,
+      eventOrganization,
+      eventWorkedBest,
+      eventImprove,
+      eventDelivery,
+      eventResponsive,
+      engaged,
+      topicsFollowup,
+      leastEngaged,
+      improveEngagement,
+      organizerFeedback,
+      mainRoles,
+      mainRolesOther,
+      eventChecklistOtherText,
+      id
+    } = req.body
+console.log("req.body update oef post event report",req.body)
+    try {
+      const query = {
+        text:`update events_output set
+        eventID=$1,
+      programid=$2,
+      programname=$3,
+      participantRegistrationForm=$4,
+      eventStartedOnTime=$5,
+      eventFinishedOnTime=$6,
+      participantGreeted=$7,
+      resourcesAvailable=$8,
+      photoRelease=$9,
+      handSanitizerAvailable=$10,
+      reminderSafeSpace=$11,
+      reminderPostEvaluationSurvey=$12,
+      eventChecklistOther=$13,
+      totalAttendees=$14,
+      eventChallenges=$15,
+      eventQuestions=$16,
+      surveyname=$17,
+      eventOrganization=$18,
+      eventWorkedBest=$19,
+      eventImprove=$20,
+      eventDelivery=$21,
+      eventResponsive=$22,
+      engaged=$23,
+      topicsFollowup=$24,
+      leastEngaged=$25,
+      improveEngagement=$26,
+      organizerFeedback=$27,
+      mainRoles=$28,
+      mainRolesOther=$29,
+      eventChecklistOtherText=$30
+  where id=$31`,
+        values:[
+          eventID,
+      programid,
+      programname,
+      participantRegistrationForm,
+      eventStartedOnTime,
+      eventFinishedOnTime,
+      participantGreeted,
+      resourcesAvailable,
+      photoRelease,
+      handSanitizerAvailable,
+      reminderSafeSpace,
+      reminderPostEvaluationSurvey,
+      eventChecklistOther,
+      totalAttendees,
+      eventChallenges,
+      eventQuestions,
+      surveyname,
+      eventOrganization,
+      eventWorkedBest,
+      eventImprove,
+      eventDelivery,
+      eventResponsive,
+      engaged,
+      topicsFollowup,
+      leastEngaged,
+      improveEngagement,
+      organizerFeedback,
+      mainRoles,
+      mainRolesOther,
+      eventChecklistOtherText,
+          id
+        ]
+      }
+        db
+          .query(query)
+          .then((response) =>{
+            console.log(response)
+            res.send({
+              message: "oef cbt event Updated successfully",
               statusText:'OK'
             })
           }
