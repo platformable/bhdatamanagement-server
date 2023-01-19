@@ -700,6 +700,7 @@ eventZipCode=$30
       borough,
       oefEventEmail,
       deliveryPartner,
+      surveyName
     } = req.body;
     console.log("req.body from create oef event", req.body);
 const submissionStatus='Submitted'
@@ -721,7 +722,8 @@ eventZipCode,
 borough,
 oefEventEmail,
 deliveryPartner,
-submissionStatus) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16) RETURNING *`;
+submissionStatus,
+surveyName) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17) RETURNING *`;
       const values = [
 eventDateCreated,
 programID,
@@ -738,7 +740,8 @@ eventZipCode,
 borough,
 oefEventEmail,
 deliveryPartner,
-submissionStatus
+submissionStatus,
+surveyName
       ];
 
 
