@@ -940,8 +940,6 @@ surveyName
         onlineEventTypeName,
         locationAddress,
         onlineEventTypeID,
-
-
     } = req.body;
     console.log("req.body from create oef cbt event", req.body);
 const submissionStatus='Submitted'
