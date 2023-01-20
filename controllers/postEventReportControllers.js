@@ -3298,14 +3298,7 @@ try {
           eventName,
           eventDate,
           eventStartTime,
-          eventFinishTime,
-
-          inPersonEventTypeName,
-        inPersonEventTypeNameOther,
-        inPersonEventTypeID,
-        onlineEventTypeName,
-        locationAddress,
-        onlineEventTypeID
+          eventFinishTime
             ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,
               $11,
               $12,
@@ -3457,14 +3450,7 @@ try {
               $158,
               $159,
               $160,
-              $161,
-              
-              $162,
-              $163,
-              $164,
-              $165,
-              $166,
-              $167
+              $161
             ) RETURNING *`;
         const values = [
           isClusterEvent,
@@ -3627,13 +3613,7 @@ try {
           eventName,
           eventDate,
           eventStartTime,
-          eventFinishTime,
-          inPersonEventTypeName,
-        inPersonEventTypeNameOther,
-        inPersonEventTypeID,
-        onlineEventTypeName,
-        locationAddress,
-        onlineEventTypeID
+          eventFinishTime
         ];
   
         const allData = await db.query(text, values);
@@ -3859,12 +3839,6 @@ try {
           eventDate,
           eventStartTime,
           eventFinishTime,
-          inPersonEventTypeName,
-        inPersonEventTypeNameOther,
-        inPersonEventTypeID,
-        onlineEventTypeName,
-        locationAddress,
-        onlineEventTypeID,
           id
     } = req.body
 console.log("req.body update oef post event report",req.body)
@@ -4031,15 +4005,8 @@ console.log("req.body update oef post event report",req.body)
           eventName=$158,
           eventDate=$159,
           eventStartTime=$160,
-          eventFinishTime=$161,
-
-          inPersonEventTypeName=$162,
-        inPersonEventTypeNameOther=$163,
-        inPersonEventTypeID=$164,
-        onlineEventTypeName=$165,
-        locationAddress=$166,
-        onlineEventTypeID=$167
-  where id=$168`,
+          eventFinishTime=$161
+  where id=$162`,
         values:[
           isClusterEvent,
           cluster,
@@ -4202,12 +4169,6 @@ console.log("req.body update oef post event report",req.body)
           eventDate,
           eventStartTime,
           eventFinishTime,
-          inPersonEventTypeName,
-        inPersonEventTypeNameOther,
-        inPersonEventTypeID,
-        onlineEventTypeName,
-        locationAddress,
-        onlineEventTypeID,
           id
         ]
       }

@@ -700,7 +700,13 @@ eventZipCode=$30
       borough,
       oefEventEmail,
       deliveryPartner,
-      surveyName
+      surveyName,
+      inPersonEventTypeName,
+        inPersonEventTypeNameOther,
+        inPersonEventTypeID,
+        onlineEventTypeName,
+        locationAddress,
+        onlineEventTypeID,
     } = req.body;
     console.log("req.body from create oef event", req.body);
 const submissionStatus='Submitted'
@@ -723,7 +729,13 @@ borough,
 oefEventEmail,
 deliveryPartner,
 submissionStatus,
-surveyName) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17) RETURNING *`;
+surveyName,
+inPersonEventTypeName,
+        inPersonEventTypeNameOther,
+        inPersonEventTypeID,
+        onlineEventTypeName,
+        locationAddress,
+        onlineEventTypeID) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17 , $18,$19,$20,$21,$22,$23) RETURNING *`;
       const values = [
 eventDateCreated,
 programID,
@@ -741,7 +753,13 @@ borough,
 oefEventEmail,
 deliveryPartner,
 submissionStatus,
-surveyName
+surveyName,
+inPersonEventTypeName,
+        inPersonEventTypeNameOther,
+        inPersonEventTypeID,
+        onlineEventTypeName,
+        locationAddress,
+        onlineEventTypeID,
       ];
 
 
@@ -829,6 +847,12 @@ surveyName
       borough,
       oefEventEmail,
       deliveryPartner,
+      inPersonEventTypeName,
+        inPersonEventTypeNameOther,
+        inPersonEventTypeID,
+        onlineEventTypeName,
+        locationAddress,
+        onlineEventTypeID,
     } = req.body;
 
     console.log(req.body)
@@ -850,8 +874,15 @@ surveyName
         eventZipCode=$12,
         borough=$13,
         oefEventEmail=$14,
-        deliveryPartner=$15
-        where id=$16`,
+        deliveryPartner=$15,
+
+        inPersonEventTypeName=$16,
+        inPersonEventTypeNameOther=$17,
+        inPersonEventTypeID=$18,
+        onlineEventTypeName=$19,
+        locationAddress=$20,
+        onlineEventTypeID=$21
+        where id=$22`,
         values: [
           eventDateCreated,
       programID,
@@ -868,6 +899,13 @@ surveyName
       borough,
       oefEventEmail,
       deliveryPartner,
+
+      inPersonEventTypeName,
+        inPersonEventTypeNameOther,
+        inPersonEventTypeID,
+        onlineEventTypeName,
+        locationAddress,
+        onlineEventTypeID,
           id
         ],
       };
