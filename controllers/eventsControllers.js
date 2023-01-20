@@ -1083,7 +1083,7 @@ const submissionStatus='Submitted'
         inPersonEventTypeID=$15,
         onlineEventTypeName=$16,
         locationAddress=$17,
-        onlineEventTypeID=$18,
+        onlineEventTypeID=$18
         where id=$19`,
         values: [
       eventName,
