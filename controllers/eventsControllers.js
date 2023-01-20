@@ -932,7 +932,16 @@ surveyName
         surveyName,
         programID,
         programName,
-        eventDateCreated
+        eventDateCreated,
+
+        inPersonEventTypeName,
+        inPersonEventTypeNameOther,
+        inPersonEventTypeID,
+        onlineEventTypeName,
+        locationAddress,
+        onlineEventTypeID,
+
+
     } = req.body;
     console.log("req.body from create oef cbt event", req.body);
 const submissionStatus='Submitted'
@@ -950,7 +959,13 @@ const submissionStatus='Submitted'
         surveyName,
         programID,
         programName,
-        eventDateCreated) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *`;
+        eventDateCreated,
+        inPersonEventTypeName,
+        inPersonEventTypeNameOther,
+        inPersonEventTypeID,
+        onlineEventTypeName,
+        locationAddress,
+        onlineEventTypeID,) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18) RETURNING *`;
       let values = [
         eventName,
         eventDate,
@@ -963,7 +978,14 @@ const submissionStatus='Submitted'
         surveyName,
         programID,
         programName,
-        eventDateCreated
+        eventDateCreated,
+
+        inPersonEventTypeName,
+        inPersonEventTypeNameOther,
+        inPersonEventTypeID,
+        onlineEventTypeName,
+        locationAddress,
+        onlineEventTypeID,
       ];
         const saveData = await db.query(text, values);
         const response = saveData.rows;
@@ -1028,7 +1050,14 @@ const submissionStatus='Submitted'
         surveyName,
         programID,
         programName,
-        eventDateCreated
+        eventDateCreated,
+
+        inPersonEventTypeName,
+        inPersonEventTypeNameOther,
+        inPersonEventTypeID,
+        onlineEventTypeName,
+        locationAddress,
+        onlineEventTypeID,
     } = req.body;
 
     console.log(req.body)
@@ -1047,8 +1076,15 @@ const submissionStatus='Submitted'
         surveyName=$9,
         programID=$10,
         programName=$11,
-        eventDateCreated=$12
-        where id=$13`,
+        eventDateCreated=$12,
+
+        inPersonEventTypeName=$13,
+        inPersonEventTypeNameOther=$14,
+        inPersonEventTypeID=$15,
+        onlineEventTypeName=$16,
+        locationAddress=$17,
+        onlineEventTypeID=$18,
+        where id=$19`,
         values: [
       eventName,
         eventDate,
@@ -1062,6 +1098,13 @@ const submissionStatus='Submitted'
         programID,
         programName,
         eventDateCreated,
+
+        inPersonEventTypeName,
+        inPersonEventTypeNameOther,
+        inPersonEventTypeID,
+        onlineEventTypeName,
+        locationAddress,
+        onlineEventTypeID,
           id
         ],
       };
