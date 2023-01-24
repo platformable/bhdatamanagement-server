@@ -90,6 +90,9 @@ app.use('/technical_assistance',technicalAssistance)
 const cbt = require('./routes/cbt')
 app.use('/cbt',cbt)
 
+const siteVisits = require('./routes/siteVisits')
+app.use('/site_visits',siteVisits)
+
 //AUTOBACKUP
 
 var task = cron.schedule('50 9 * * *', () =>  {
