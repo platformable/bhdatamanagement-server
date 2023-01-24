@@ -14,9 +14,9 @@ module.exports = {
     let {id} = req.params
     console.log("id",id)
     try {
-      const allData = await db.query(`select * from fbos where id=${id}`);
+      const allData = await db.query(`select * from site_visits where id=${id}`);
       const response = allData.rows;
-      res.send(response);
+      response.length>=1 ? res.status(200).send(response) : res.status(200).send({message:"There is no site visit with that ID"});
     } catch (e) {
       res.send("an error ocurred");
     }
