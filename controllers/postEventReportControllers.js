@@ -4539,7 +4539,7 @@ console.log("req.body update oef post event report",req.body)
         eventRole=$14,
         eventStartTime=$15,
         eventFinishTime=$16,
-        deliveryPartner=$17,
+        deliveryPartner=$17
   where id=$18`,
         values:[
           cluster,
