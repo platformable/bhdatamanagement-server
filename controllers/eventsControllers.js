@@ -1311,4 +1311,15 @@ const submissionStatus='Submitted'
       console.log("error message:", error);
     }
   },
+  getOefCabEvents:async(req,res) => {
+    try {
+      const allData =
+        await db.query(`select events.id,events.eventdate,events.submissionstatus,events.eventname  ,events_output.cluster from events
+        join events_output on  events.id = events_output.eventid where events.surveyname='oef-cab'`);
+      const response = allData.rows;
+      res.send(response);
+    } catch (e) {
+      res.send("an error ocurred");
+    }
+  }
 };
