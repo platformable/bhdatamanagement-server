@@ -1156,4 +1156,150 @@ const submissionStatus='Submitted'
       console.log("error message:", error);
     }
   },
+  createOefCabEvent: async (req, res) => {
+    let {
+      programId,
+      programName,
+      eventDate,
+      eventStartTime,
+      eventFinishTime,
+      healthAreaOfFocusId,
+      healthAreaOfFocusName,
+      createdByName,
+      createdByLastname,
+      oefEventEmail,
+      deliveryPartner,
+      submissionStatus,
+      submissionNotes,
+      eventRole,
+      eventName
+    } = req.body;
+    console.log("req.body from create oef cab event", req.body);
+
+    try {
+      const text = `INSERT INTO events 
+      (
+        programId,
+      programName,
+      eventDate,
+      eventStartTime,
+      eventFinishTime,
+      healthAreaOfFocusId,
+      healthAreaOfFocusName,
+      createdByName,
+      createdByLastname,
+      oefEventEmail,
+      deliveryPartner,
+      submissionStatus,
+      submissionNotes,
+      eventRole,
+      eventName
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) RETURNING *`;
+      let values = [
+        programId,
+        programName,
+        eventDate,
+        eventStartTime,
+        eventFinishTime,
+        healthAreaOfFocusId,
+        healthAreaOfFocusName,
+        createdByName,
+        createdByLastname,
+        oefEventEmail,
+        deliveryPartner,
+        submissionStatus,
+        submissionNotes,
+        eventRole,
+        eventName
+      ];
+        const saveData = await db.query(text, values);
+        const response = saveData.rows;
+        const eventId=response[0].id
+        console.log("eventId",eventId)
+       
+        console.log("cab Event saved successfully")
+        res.status(200).send({ message: "Event saved successfully", statusText: "OK", createdEventId:eventId });
+    } catch (e) {
+      console.log("error", e);
+      res
+        .status(400)
+        .json({
+          message: "an error ocurred, please try again",
+          statusText: "FAIL",
+          error:e
+        });
+    }
+  },
+  updateOefCabEvent: async (req, res) => {
+    let {
+      id,
+      programId,
+      programName,
+      eventDate,
+      eventStartTime,
+      eventFinishTime,
+      healthAreaOfFocusId,
+      healthAreaOfFocusName,
+      createdByName,
+      createdByLastname,
+      oefEventEmail,
+      deliveryPartner,
+      submissionStatus,
+      submissionNotes,
+      eventRole,
+      eventName
+    } = req.body;
+
+    console.log(req.body)
+
+    try {
+      const query = await {
+        text: `update events set
+        programId=$1,
+        programName=$2,
+        eventDate=$3,
+        eventStartTime=$4,
+        eventFinishTime=$5,
+        healthAreaOfFocusId=$6,
+        healthAreaOfFocusName=$7,
+        createdByName=$8,
+        createdByLastname=$9,
+        oefEventEmail=$10,
+        deliveryPartner=$11,
+        submissionStatus=$12,
+        submissionNotes=$13,
+        eventRole=$14,
+        eventName=$15
+        where id=$16`,
+        values: [
+          programId,
+          programName,
+          eventDate,
+          eventStartTime,
+          eventFinishTime,
+          healthAreaOfFocusId,
+          healthAreaOfFocusName,
+          createdByName,
+          createdByLastname,
+          oefEventEmail,
+          deliveryPartner,
+          submissionStatus,
+          submissionNotes,
+          eventRole,
+          eventName,
+          id
+        ],
+      };
+      db.query(query).then((response) => {
+        console.log(response);
+        res.json({
+          message: "Updated  oef cab event successfully",
+          statusText: "OK",
+        });
+      });
+    } catch (error) {
+      res.status(400).send(e.stack);
+      console.log("error message:", error);
+    }
+  },
 };
