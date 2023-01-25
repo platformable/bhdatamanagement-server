@@ -4500,23 +4500,14 @@ console.log("req.body update oef post event report",req.body)
   updateOefCabPostEventReport:async(req,res) =>{
     console.log("oef cab post event report update starting")
     let {
-      cluster,
-      clusterFbos,
-      eventQuestions,
-      eventHighlights,
-      eventID,
-      eventDateCreated,
-      programID,
-      programName,
-      eventName,
-      eventDate,
-      createdByName,
-      createdbyLastName,
-      oefEventEmail,
-      eventRole,
-      eventStartTime,
-      eventFinishTime,
-      deliveryPartner,
+
+cluster,
+clusterFbos,
+eventQuestions,
+eventHighlights,
+totalAttendees,
+programName,
+eventName,
       id
     } = req.body
 console.log("req.body update oef post event report",req.body)
@@ -4524,41 +4515,21 @@ console.log("req.body update oef post event report",req.body)
       const query = {
         text:`update events_output set
         cluster=$1,
-        clusterFbos=$2,
-        eventQuestions=$3,
-        eventHighlights=$4,
-        eventID=$5,
-        eventDateCreated=$6,
-        programID=$7,
-        programName=$8,
-        eventName=$9,
-        eventDate=$10,
-        createdByName=$11,
-        createdbyLastName=$12,
-        oefEventEmail=$13,
-        eventRole=$14,
-        eventStartTime=$15,
-        eventFinishTime=$16,
-        deliveryPartner=$17
-  where id=$18`,
+clusterFbos=$2,
+eventQuestions=$3,
+eventHighlights=$4,
+totalAttendees=$5,
+programName=$6,
+eventName=$7
+  where id=$8`,
         values:[
           cluster,
           clusterFbos,
           eventQuestions,
           eventHighlights,
-          eventID,
-          eventDateCreated,
-          programID,
+          totalAttendees,
           programName,
           eventName,
-          eventDate,
-          createdByName,
-          createdbyLastName,
-          oefEventEmail,
-          eventRole,
-          eventStartTime,
-          eventFinishTime,
-          deliveryPartner,
           id
         ]
       }
