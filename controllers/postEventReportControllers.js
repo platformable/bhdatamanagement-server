@@ -4462,7 +4462,7 @@ console.log("req.body update oef post event report",req.body)
         eventStartTime,
         eventFinishTime,
         deliveryPartner) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,
-            $16) RETURNING *`;
+            $16,$17) RETURNING *`;
       const values = [
         cluster,
         clusterFbos,
