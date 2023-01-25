@@ -1158,6 +1158,7 @@ const submissionStatus='Submitted'
   },
   createOefCabEvent: async (req, res) => {
     let {
+      eventDateCreated,
       programId,
       programName,
       eventDate,
@@ -1180,6 +1181,7 @@ const submissionStatus='Submitted'
     try {
       const text = `INSERT INTO events 
       (
+        eventDateCreated,
         programId,
       programName,
       eventDate,
@@ -1196,8 +1198,9 @@ const submissionStatus='Submitted'
       eventRole,
       eventName,
       surveyName
-        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15, $16) RETURNING *`;
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15, $16, $17) RETURNING *`;
       let values = [
+        eventDateCreated,
         programId,
         programName,
         eventDate,
@@ -1275,7 +1278,7 @@ const submissionStatus='Submitted'
         eventRole=$14,
         eventName=$15,
         surveyName=$16
-        where id=$17`,
+        where id=$18`,
         values: [
           programId,
           programName,
