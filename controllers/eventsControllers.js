@@ -1172,7 +1172,8 @@ const submissionStatus='Submitted'
       submissionStatus,
       submissionNotes,
       eventRole,
-      eventName
+      eventName,
+      surveyName
     } = req.body;
     console.log("req.body from create oef cab event", req.body);
 
@@ -1193,8 +1194,9 @@ const submissionStatus='Submitted'
       submissionStatus,
       submissionNotes,
       eventRole,
-      eventName
-        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) RETURNING *`;
+      eventName,
+      surveyName
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15, $16) RETURNING *`;
       let values = [
         programId,
         programName,
@@ -1210,7 +1212,8 @@ const submissionStatus='Submitted'
         submissionStatus,
         submissionNotes,
         eventRole,
-        eventName
+        eventName,
+        surveyName
       ];
         const saveData = await db.query(text, values);
         const response = saveData.rows;
@@ -1247,7 +1250,8 @@ const submissionStatus='Submitted'
       submissionStatus,
       submissionNotes,
       eventRole,
-      eventName
+      eventName,
+      surveyName
     } = req.body;
 
     console.log(req.body)
@@ -1269,8 +1273,9 @@ const submissionStatus='Submitted'
         submissionStatus=$12,
         submissionNotes=$13,
         eventRole=$14,
-        eventName=$15
-        where id=$16`,
+        eventName=$15,
+        surveyName=$16
+        where id=$17`,
         values: [
           programId,
           programName,
@@ -1287,6 +1292,7 @@ const submissionStatus='Submitted'
           submissionNotes,
           eventRole,
           eventName,
+          surveyName,
           id
         ],
       };
