@@ -4498,7 +4498,7 @@ console.log("req.body update oef post event report",req.body)
   },
 
   updateOefCabPostEventReport:async(req,res) =>{
-    console.log("oef cab post event report update")
+    console.log("oef cab post event report update starting")
     let {
       cluster,
       clusterFbos,
