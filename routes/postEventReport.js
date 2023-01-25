@@ -11,10 +11,12 @@ router.get("/event/:id",controller.getPostEventReportById)
 router.put("/update",controller.updatePostEventReport)
 router.post("/oef/create",controller.createOEFPostEventReport)
 router.post("/oef/cbt/create",controller.createOEFCbtPostEventReport)
+router.post("/oef/cab/create",controller.createOEFCabPostEventReport)
 router.get("/oef/event/:id",controller.getOefPostEventReportById)
 router.get("/oef/cbt/event/:id",controller.getOefCbtPostEventReportById)
 router.put("/oef/event/update",controller.updateOefPostEventReport)
 router.put("/oef/cbt/event/update",controller.updateOefCbtPostEventReport)
+router.put("/oef/cab/event/update",controller.updateOefCabPostEventReport)
 
 
 module.exports = router

@@ -4421,5 +4421,162 @@ console.log("req.body update oef post event report",req.body)
       res.send(error)
     }
   },
+  createOEFCabPostEventReport: async (req, res) => {
+    const {
+      cluster,
+      clusterFbos,
+      eventQuestions,
+      eventHighlights,
+      eventID,
+      eventDateCreated,
+      programID,
+      programName,
+      eventName,
+      eventDate,
+      createdByName,
+      createdbyLastName,
+      oefEventEmail,
+      eventRole,
+      eventStartTime,
+      eventFinishTime,
+      deliveryPartner,
+    } = req.body;
+
+
+    try {
+      const text = `insert into events_output (
+        cluster,
+        clusterFbos,
+        eventQuestions,
+        eventHighlights,
+        eventID,
+        eventDateCreated,
+        programID,
+        programName,
+        eventName,
+        eventDate,
+        createdByName,
+        createdbyLastName,
+        oefEventEmail,
+        eventRole,
+        eventStartTime,
+        eventFinishTime,
+        deliveryPartner) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,
+            $16) RETURNING *`;
+      const values = [
+        cluster,
+        clusterFbos,
+        eventQuestions,
+        eventHighlights,
+        eventID,
+        eventDateCreated,
+        programID,
+        programName,
+        eventName,
+        eventDate,
+        createdByName,
+        createdbyLastName,
+        oefEventEmail,
+        eventRole,
+        eventStartTime,
+        eventFinishTime,
+        deliveryPartner
+      ];
+
+      const allData = await db.query(text, values);
+      const response = allData.rows;
+      res
+        .status(200)
+        .send({ message: "oef cb Event_output saved successfully", statusText: "OK" });
+      console.log("sucess post event report");
+    } catch (error) {
+      res
+        .status(400)
+        .send({ message: "an error occurred, try again later", error: error });
+      console.log("create Event_output error:", error);
+    }
+  },
+
+  updateOefCabPostEventReport:async(req,res) =>{
+    console.log("oef cab post event report update")
+    let {
+      cluster,
+      clusterFbos,
+      eventQuestions,
+      eventHighlights,
+      eventID,
+      eventDateCreated,
+      programID,
+      programName,
+      eventName,
+      eventDate,
+      createdByName,
+      createdbyLastName,
+      oefEventEmail,
+      eventRole,
+      eventStartTime,
+      eventFinishTime,
+      deliveryPartner,
+      id
+    } = req.body
+console.log("req.body update oef post event report",req.body)
+    try {
+      const query = {
+        text:`update events_output set
+        cluster=$1,
+        clusterFbos=$2,
+        eventQuestions=$3,
+        eventHighlights=$4,
+        eventID=$5,
+        eventDateCreated=$6,
+        programID=$7,
+        programName=$8,
+        eventName=$9,
+        eventDate=$10,
+        createdByName=$11,
+        createdbyLastName=$12,
+        oefEventEmail=$13,
+        eventRole=$14,
+        eventStartTime=$15,
+        eventFinishTime=$16,
+        deliveryPartner=$17,
+  where id=$18`,
+        values:[
+          cluster,
+          clusterFbos,
+          eventQuestions,
+          eventHighlights,
+          eventID,
+          eventDateCreated,
+          programID,
+          programName,
+          eventName,
+          eventDate,
+          createdByName,
+          createdbyLastName,
+          oefEventEmail,
+          eventRole,
+          eventStartTime,
+          eventFinishTime,
+          deliveryPartner,
+          id
+        ]
+      }
+        db
+          .query(query)
+          .then((response) =>{
+            console.log(response)
+            res.send({
+              message: "oef cab event Updated successfully",
+              statusText:'OK'
+            })
+          }
+          )
+    } catch (error) {
+      console.log(error)
+      res.send(error)
+    }
+  },
+
 }
 
