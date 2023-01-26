@@ -256,11 +256,14 @@ module.exports = {
         surveyName,
         programId,
         programName,
+        id
     } = req.body;
+
+    console.log("req.body from SV Updates")
 
     try {
       const query = await {
-        name: "update-fbo",
+        name: "update-site-visits",
         text: `update site_visits set 
         userId=$1,
         eventDate=$2,
@@ -350,17 +353,12 @@ module.exports = {
             id
         ],
       };
-      db.query(query).then((response) =>
-        res
-          .json({
-            data: response.rowCount,
-            status: 200,
-          })
-          .then((response) => console.log("site visit updated"))
-      );
+      db.query(query)
+      .then((response) =>res.send({ data: response.rowCount,status: 200, }))
+      .then(response => console.log("site visit updated"))
       //.catch((e) => res.send(e.stack));
     } catch (error) {
-      res.json("an error ocurred");
+      res.json("an error ocurred while updating sv");
       console.log("error message:", error);
     }
   },

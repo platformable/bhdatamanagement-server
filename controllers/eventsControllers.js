@@ -1278,7 +1278,7 @@ const submissionStatus='Submitted'
         eventRole=$14,
         eventName=$15,
         surveyName=$16
-        where id=$18`,
+        where id=$17`,
         values: [
           programId,
           programName,
