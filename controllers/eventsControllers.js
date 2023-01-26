@@ -971,7 +971,6 @@ inPersonEventTypeName,
         programID,
         programName,
         eventDateCreated,
-
         inPersonEventTypeName,
         inPersonEventTypeNameOther,
         inPersonEventTypeID,
@@ -1030,9 +1029,9 @@ const submissionStatus='Submitted'
         const getRefreshToken= await dropbox.connectToDropbox()
         const token=await getRefreshToken
         //console.log("token",token)
-        const createFolders= await dropbox.createAllFolders(token,'OEF/CBT',eventName,eventDate)
+        const createFolders= await dropbox.createAllFolders(token,'OEF CBT',eventName,eventDate)
         //const shareDocumentFolder= await dropbox.shareFolder(token,programName,eventName,eventDate,'Documents')
-        const shareDocumentFolder= await dropbox.shareMainFolder(token,'OEF/CBT',eventName,eventDate)
+        const shareDocumentFolder= await dropbox.shareMainFolder(token,'OEF CBT',eventName,eventDate)
         console.log('shareDocumentFolder',shareDocumentFolder)
         const DocumentsFolderAsyncJobId= await shareDocumentFolder.data.async_job_id
         let inProgress = false
