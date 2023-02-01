@@ -4548,6 +4548,29 @@ eventName=$7
       res.send(error)
     }
   },
+  getOefCabPostEventReportById:async (req,res)=>{
+    let {id}=req.params
+    const text=`select events.*,events_output.* from events
+    join events_output on  events.id = events_output.eventid
+    where eventid=$1`
+
+    const getEventIdQuery=`select * from events where id=$1`
+   const values=[id]
+    try {
+        const allData = await db.query(text,values);
+        const response = allData.rows;
+        console.log("response",response)
+        if(response.length>0){
+          res.send(response[0]);
+        }
+        else {
+          res.send({message:"This event was not completed correctly,you are going to be redirected to complete the event", statusText:'FAIL',eventID:id})
+        }
+      } catch (e) {
+        res.send("an error ocurred");
+        console.log("error",e)
+      }
+},
 
 }
 

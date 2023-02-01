@@ -133,7 +133,10 @@ app.post("/token", (req, res) => {
 })
 
 
-
+app.get('/test', (req,res)=>{
+  console.log("req",req.headers)
+  res.send("success")
+})
 
 
 /* PORT */
