@@ -930,7 +930,9 @@ inPersonEventTypeName,
       id,
      submissionStatus,
      submissionNotes,
-     oefEventEmail
+     oefEventEmail,
+     onelineDescription,
+     oefEventPresentationTopic
     } = req.body;
 
     console.log(req.body)
@@ -939,11 +941,15 @@ inPersonEventTypeName,
       const query = await {
         text: `update events set
         submissionStatus=$1,
-     submissionNotes=$2
-        where id=$3`,
+     submissionNotes=$2,
+     onelineDescription=$3,
+     oefEventPresentationTopic=$4
+        where id=$5`,
         values: [
           submissionStatus,
           submissionNotes,
+          onelineDescription,
+     oefEventPresentationTopic,
           id
         ],
       };

@@ -3132,9 +3132,7 @@ try {
         inPersonEventTypeID,
         onlineEventTypeName,
         locationAddress,
-        onlineEventTypeID,
-        oefEventOneLine,
-        oefEventPresentationTopic
+        onlineEventTypeID
       } = req.body;
   
   
@@ -3300,9 +3298,7 @@ try {
           eventName,
           eventDate,
           eventStartTime,
-          eventFinishTime,
-          oefEventOneLine,
-        oefEventPresentationTopic
+          eventFinishTime
             ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,
               $11,
               $12,
@@ -3619,9 +3615,7 @@ try {
           eventName,
           eventDate,
           eventStartTime,
-          eventFinishTime,
-          oefEventOneLine,
-        oefEventPresentationTopic
+          eventFinishTime
         ];
   
         const allData = await db.query(text, values);
@@ -3847,8 +3841,6 @@ try {
           eventDate,
           eventStartTime,
           eventFinishTime,
-          oefEventOneLine,
-        oefEventPresentationTopic,
           id
     } = req.body
 console.log("req.body update oef post event report",req.body)
@@ -4015,10 +4007,8 @@ console.log("req.body update oef post event report",req.body)
           eventName=$158,
           eventDate=$159,
           eventStartTime=$160,
-          eventFinishTime=$161,
-          oefEventOneLine=$162,
-        oefEventPresentationTopic=$163
-  where id=$164`,
+          eventFinishTime=$161
+          where id=$162`,
         values:[
           isClusterEvent,
           cluster,
@@ -4181,8 +4171,6 @@ console.log("req.body update oef post event report",req.body)
           eventDate,
           eventStartTime,
           eventFinishTime,
-          oefEventOneLine,
-        oefEventPresentationTopic,
           id
         ]
       }
