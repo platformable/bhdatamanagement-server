@@ -3132,7 +3132,9 @@ try {
         inPersonEventTypeID,
         onlineEventTypeName,
         locationAddress,
-        onlineEventTypeID
+        onlineEventTypeID,
+        oefEventOneLine,
+        oefEventPresentationTopic
       } = req.body;
   
   
@@ -3298,7 +3300,9 @@ try {
           eventName,
           eventDate,
           eventStartTime,
-          eventFinishTime
+          eventFinishTime,
+          oefEventOneLine,
+        oefEventPresentationTopic
             ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,
               $11,
               $12,
@@ -3450,7 +3454,9 @@ try {
               $158,
               $159,
               $160,
-              $161
+              $161,
+              $162,
+              $163
             ) RETURNING *`;
         const values = [
           isClusterEvent,
@@ -3613,7 +3619,9 @@ try {
           eventName,
           eventDate,
           eventStartTime,
-          eventFinishTime
+          eventFinishTime,
+          oefEventOneLine,
+        oefEventPresentationTopic
         ];
   
         const allData = await db.query(text, values);
@@ -3839,6 +3847,8 @@ try {
           eventDate,
           eventStartTime,
           eventFinishTime,
+          oefEventOneLine,
+        oefEventPresentationTopic,
           id
     } = req.body
 console.log("req.body update oef post event report",req.body)
@@ -4005,8 +4015,10 @@ console.log("req.body update oef post event report",req.body)
           eventName=$158,
           eventDate=$159,
           eventStartTime=$160,
-          eventFinishTime=$161
-  where id=$162`,
+          eventFinishTime=$161,
+          oefEventOneLine=$162,
+        oefEventPresentationTopic=$163
+  where id=$164`,
         values:[
           isClusterEvent,
           cluster,
@@ -4169,6 +4181,8 @@ console.log("req.body update oef post event report",req.body)
           eventDate,
           eventStartTime,
           eventFinishTime,
+          oefEventOneLine,
+        oefEventPresentationTopic,
           id
         ]
       }
