@@ -111,6 +111,8 @@ module.exports = {
       fboActive,
     } = req.body;
 
+
+    console.log("req.body",req.body)
     try {
       const query = await {
         name: "update-fbo",
@@ -153,14 +155,14 @@ module.exports = {
           numberfbo
         ],
       };
-      db.query(query).then((response) =>
-        res
-          .json({
+      db.query(query).then((response) =>{
+      console.log("fbo updated",response)
+        res.send({
             data: response.rowCount,
             status: 200,
-          })
-          .then((response) => console.log("fbo updated"))
-      );
+          })}
+          
+      )
       //.catch((e) => res.send(e.stack));
     } catch (error) {
       res.json("an error ocurred");
