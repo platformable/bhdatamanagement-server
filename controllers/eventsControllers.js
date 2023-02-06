@@ -1,6 +1,8 @@
 const db = require("../dbConnect");
 const axios = require("axios");
-const { Dropbox } = require("dropbox");
+//const { Dropbox } = require("dropbox");
+const dropbox = require('../utils/dropbox')
+const {sendEmail,sendMessageToCBTSubscriber}=require('../utils/sendEmail')
 const { URLSearchParams } = require("node:url");
 const buffer = require("buffer/").Buffer;
 const createFolder = require("./createEventsFolders");
@@ -21,7 +23,7 @@ const config = {
   clientId: DBXCLIENT_ID,
   clientSecret: CLIENT_SECRET,
 };
-const dbx = new Dropbox(config);
+//const dbx = new Dropbox(config);
 
 const connectDropboxAndCreateFolders = (
   DBXCLIENT_ID,
@@ -203,7 +205,67 @@ UID:event_283355921@black_health_data_app_management
 END:VEVENT
 END:VCALENDAR`
 
-const calendarDelFront=`BEGIN:VCALENDAR
+
+  const reverse = eventDate.split('-')
+  const reversedDate=reverse[1]+'/'+reverse[2]+'/'+reverse[0]
+
+  let details = {
+    from:'Black Health Data App',
+    //to: clientHCWEmail,
+    to:['alexei@platformable.com','leon@platformable.com'],
+    subject:"A new event has been registered for the OEF program",
+  icalEvent: {
+    filename: `${eventName}.ics`,
+    method: 'PUBLISH',
+    content: calendarData,
+},
+    text:`
+    Hi, a new event has been registered for the OEF program.
+
+    ${eventName}
+    ${reversedDate}
+    ${workArea}
+    
+    The .ics calendar file is attached to add to your calendar and share with your stakeholders.
+`
+  }
+
+  mailTrasporter.sendMail(details,(err)=>{
+    
+    if(err){
+      console.log(err)
+    } else {
+      res.send("email sent")
+      console.log("email sent")
+    }
+  })
+}
+
+const sendMessageToOEFCBTSubscriber = async (eventName,eventDate,workArea,eventDescription,locationAddress,onlineInPersonEventType,eventStartTime,eventFinishTime)=>{
+  let mailTrasporter = nodemailer.createTransport({
+    service:'gmail',
+    auth:{
+      user:process.env.NODEMAILEREMAIL,
+      pass:process.env.EMAILPASSWORD
+    }
+  })
+
+  function convertDate(date, time) {
+    const dateParts = date.split("T")[0]
+    const dateString = dateParts.split("-").join("")
+    const timeString = time.split(":").join("") 
+
+    return dateString + "T" + timeString+'00'
+  }
+const today= new Date()
+const newDate = today.toISOString()
+  const created = newDate.replace("-","").replace("-","").replace(":","").replace(":","").replace(".","")
+
+
+  var icsMSG = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Meetup//Meetup Events v1.0//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nX-WR-CALNAME:Events - Life Drawing Barcelona\nX-MS-OLK-FORCEINSPECTOROPEN:TRUE\nBEGIN:VTIMEZONE\nTZID:Europe/Madrid\nTZURL:http://tzurl.org/zoneinfo-outlook/Europe/Madrid\nX-LIC-LOCATION:Europe/Madrid\nBEGIN:DAYLIGHT\nTZOFFSETFROM:+0100\nTZOFFSETTO:+0200\nTZNAME:CEST\nDTSTART:19700329T020000\nRRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU\nEND:DAYLIGHT\nBEGIN:STANDARD\nTZOFFSETFROM:+0200\nTZOFFSETTO:+0100\nTZNAME:CET\nDTSTART:19701025T030000\nRRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU\nEND:STANDARD\nEND:VTIMEZONE\nBEGIN:VEVENT\nDTSTAMP:20220129T115020Z\nDTSTART;TZID=Europe/Madrid:20220130T180000\nDTEND;TZID=Europe/Madrid:20220130T200000\nSTATUS:CONFIRMED\nSUMMARY:Nude Life Drawing @fem.fatigue at Studio\nDESCRIPTION:Life Drawing Barcelona\nSunday\, January 30 at 6:00 PM\n\nDib\nORGANIZER;CN=Meetup Reminder:MAILTO:info@meetup.com\nCLASS:PUBLIC\nCREATED:20220119T120306Z\nGEO:41.40;2.17\nLOCATION:art club barcelona (bou de sant pere 8 bajos\, Barcelona\, Spain\nURL:https://www.meetup.com/Life-Drawing/events/283355921/\nSEQUENCE:2\nLAST-MODIFIED:20220119T120306Z\nUID:event_283355921@meetup.com\nEND:VEVENT\nEND:VCALENDAR";
+  const calendarString= `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:Black Health//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nX-WR-CALNAME:Events - ${eventName}\nX-MS-OLK-FORCEINSPECTOROPEN:TRUE\nBEGIN:VTIMEZONE\nTZID:America/New_York\nTZURL:http://tzurl.org/zoneinfo-outlook/America/New_York\nX-LIC-LOCATION:America/New_York\nBEGIN:DAYLIGHT\nTZOFFSETFROM:+0100\nTZOFFSETTO:+0200\nTZNAME:CEST\nDTSTART:${convertDate(eventDate,eventStartTime)}Z\nRRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU\nEND:DAYLIGHT\nBEGIN:STANDARD\nTZOFFSETFROM:+0200\nTZOFFSETTO:+0100\nTZNAME:CET\nDTSTART:${eventDate}\nRRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU\nEND:STANDARD\nEND:VTIMEZONE\nBEGIN:VEVENT\nDTSTAMP:${created}\nDTSTART;TZID=America/New_York:${convertDate(eventDate,eventStartTime)}\nDTEND;TZID=America/New_York:${convertDate(eventDate,eventFinishTime)}\nSTATUS:CONFIRMED\nSUMMARY:${eventName}\nDESCRIPTION: ${onlineInPersonEventType}-${eventDescription}\n\nDib\nORGANIZER;CN=Meetup Reminder:MAILTO:blackhealthdata@gmail.com\nCLASS:PUBLIC\nCREATED:${created}\nGEO:41.40;2.17\nLOCATION:${locationAddress}\nURL:https://nblch.org/\nSEQUENCE:2\nLAST-MODIFIED:20220119T120306Z\nUID:blackhealthdata@gmail.com\nEND:VEVENT\nEND:VCALENDAR`
+
+const calendarData=`BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Black Health v1.0//EN
 CALSCALE:GREGORIAN
@@ -230,15 +292,15 @@ RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
 END:STANDARD
 END:VTIMEZONE
 BEGIN:VEVENT
-DTSTAMP:${created}
-DTSTART:${convertDate(eventDate, eventStartTime)}
+DTSTAMP:20220129T115020Z
+DTSTART:${convertDate(eventDate,eventStartTime)}
 DTEND:${convertDate(eventDate,eventFinishTime)}
 STATUS:CONFIRMED
-SUMMARY: ${eventName}
-DESCRIPTION:${eventDescription}
+SUMMARY:${eventName}
+DESCRIPTION:${onlineInPersonEventType}-${eventDescription}
 ORGANIZER;CN=Black Health:MAILTO:nblchevents@nblch.org
 CLASS:PUBLIC
-LOCATION:${locationAddress}
+LOCATION:215 W. 125th Street, Other, 11467
 URL:https://nblch.org
 SEQUENCE:2
 UID:event_283355921@black_health_data_app_management
@@ -252,23 +314,15 @@ END:VCALENDAR`
   let details = {
     from:'Black Health Data App',
     //to: clientHCWEmail,
-    to:['DBenitez@nblch.org','nblchevents@nblch.org'],
-    // to:['alexei@platformable.com','leon@platformable.com'],
-    subject:"A new event has been registered for the NYS CMP program",
-   /*  attachments:[{ 
-      filename:`event-${eventName}.ics`,
-      method:'PUBLISH',
-      path:icsMSG,
-      content:icsMSG,
-      encoding:'base64'
-  },], */
+    to:['alexei@platformable.com'],
+    subject:"A new event has been registered for the OEF CBT program",
   icalEvent: {
     filename: `${eventName}.ics`,
     method: 'PUBLISH',
     content: calendarData,
 },
     text:`
-    Hi, a new event has been registered for the NYS CMP program.
+    Hi, a new event has been registered for the OEF CBT program.
 
     ${eventName}
     ${reversedDate}
@@ -353,7 +407,8 @@ locationNameOther,
 locationAddress,
 eventZipCode,
 icsUrlFile,
-borough
+borough,
+eventLocationTypeNameOther,
     } = req.body;
     console.log("req.body", req.body);
 
@@ -382,8 +437,8 @@ locationNameOther,
 locationAddress,
 eventZipCode,
 icsUrlFile,
-borough
-          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35) RETURNING *`;
+borough,eventLocationTypeNameOther
+          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36) RETURNING *`;
       const values = [
         userID,
         eventDateCreated,
@@ -419,7 +474,8 @@ locationNameOther,
 locationAddress,
 eventZipCode,
 icsUrlFile,
-borough
+borough,
+eventLocationTypeNameOther
       ];
 
       if (
@@ -484,6 +540,7 @@ locationName,
 locationNameOther,
 locationAddress,
 eventZipCode,
+eventLocationTypeNameOther
     } = req.body;
 
     try {
@@ -518,7 +575,8 @@ workAreaOther=$26,
 locationName=$27,
 locationNameOther=$28,
 locationAddress=$29,
-eventZipCode=$30
+eventZipCode=$30,
+eventLocationTypeNameOther=$31
         where id=$1`,
         values: [
           eventid,
@@ -551,7 +609,7 @@ eventZipCode=$30
           locationNameOther,
           locationAddress,
           eventZipCode,
-          
+          eventLocationTypeNameOther
         ],
       };
       db.query(query).then((response) => {
@@ -579,7 +637,7 @@ eventZipCode=$30
         scale: 15,
       };
 
-      code = await QRCode.toDataURL(
+      code = QRCode.toDataURL(
         `http://www.bh.platformable.com/events/${id}/participant-survey/survey`,
         opts
       );
@@ -588,14 +646,17 @@ eventZipCode=$30
 
     const f2 = async (code, res) => {
       console.log("generatedCode", code);
-      res.send(code);
+
+      return code
     };
 
     async function all() {
       console.time("time");
       const res1 = await f1();
       const res2 = await f2(code, res);
-      //            console.log("res2",res2)
+    //            console.log("res2",res2)
+      const res3= await res2
+      res.send(res3)
       console.timeEnd("time");
     }
 
@@ -621,4 +682,653 @@ eventZipCode=$30
       })
       .catch((e) => console.error(e.stack));
   },
+  getDropbox:async (req,res)=>{
+    res.send("getDropbox")
+  },
+
+
+  createOefEvent: async (req, res) => {
+    const {
+      eventDateCreated,
+      programID,
+      programName,
+      eventName,
+      eventDate,
+      eventStartTime,
+      eventFinishTime,
+      healthAreaOfFocusID,
+      healthAreaOfFocusName,
+      createdByName,
+      createdByLastname,
+      eventZipCode,
+      borough,
+      oefEventEmail,
+      deliveryPartner,
+      surveyName,
+      inPersonEventTypeName,
+        inPersonEventTypeNameOther,
+        inPersonEventTypeID,
+        onlineEventTypeName,
+        locationAddress,
+        onlineEventTypeID,
+    } = req.body;
+    console.log("req.body from create oef event", req.body);
+const submissionStatus='Submitted'
+    try {
+      const text = `INSERT INTO events 
+      (
+eventDateCreated,
+programID,
+programName,
+eventName,
+eventDate,
+eventStartTime,
+eventFinishTime,
+healthAreaOfFocusID,
+healthAreaOfFocusName,
+createdByName,
+createdByLastname,
+eventZipCode,
+borough,
+oefEventEmail,
+deliveryPartner,
+submissionStatus,
+surveyName,
+inPersonEventTypeName,
+        inPersonEventTypeNameOther,
+        inPersonEventTypeID,
+        onlineEventTypeName,
+        locationAddress,
+        onlineEventTypeID) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17 , $18,$19,$20,$21,$22,$23) RETURNING *`;
+      const values = [
+eventDateCreated,
+programID,
+programName,
+eventName,
+eventDate,
+eventStartTime,
+eventFinishTime,
+healthAreaOfFocusID,
+healthAreaOfFocusName,
+createdByName,
+createdByLastname,
+eventZipCode,
+borough,
+oefEventEmail,
+deliveryPartner,
+submissionStatus,
+surveyName,
+inPersonEventTypeName,
+        inPersonEventTypeNameOther,
+        inPersonEventTypeID,
+        onlineEventTypeName,
+        locationAddress,
+        onlineEventTypeID,
+      ];
+
+
+        const saveData = await db.query(text, values);
+        const response = saveData.rows;
+        const eventId=response[0].id
+        console.log("eventId",eventId)
+        const getRefreshToken= await dropbox.connectToDropbox()
+        const token=await getRefreshToken
+        //console.log("token",token)
+        const createFolders= await dropbox.createAllFolders(token,programName,eventName,eventDate)
+        //const shareDocumentFolder= await dropbox.shareFolder(token,programName,eventName,eventDate,'Documents')
+        const shareDocumentFolder= await dropbox.shareMainFolder(token,programName,eventName,eventDate)
+        console.log('shareDocumentFolder',shareDocumentFolder)
+        const DocumentsFolderAsyncJobId= await shareDocumentFolder.data.async_job_id
+        let inProgress = false
+        let mainFolderUrl={}
+        while (inProgress === false) {
+          console.log("while")
+          console.log("INPROGRESS",inProgress)
+          const getDocumentsFolderUrl= await dropbox.getFolderUrl(token,DocumentsFolderAsyncJobId);
+
+          if (getDocumentsFolderUrl.data['.tag'] === 'in_progress') {
+            
+            inProgress = false
+            
+          } else {
+            inProgress = true
+            console.log("TERMINO**--------****", getDocumentsFolderUrl.data)
+            mainFolderUrl.url= await getDocumentsFolderUrl.data.preview_url
+            mainFolderUrl.path= await getDocumentsFolderUrl.data.path_lower
+             
+          }
+          console.log("inprogress despues", inProgress)
+        }
+        // inProgress = false
+        // let ImagesForlderUrl
+        // const shareImagesFolder= await dropbox.shareFolder(token,programName,eventName,eventDate,'Images')
+        // const ImagesFolderAsyncJobId= await shareDocumentFolder.data.async_job_id
+        // while (inProgress === false) {
+        //   console.log("while")
+        //   console.log("INPROGRESS",inProgress)
+        //   const getImagesFolderUrl= await dropbox.getFolderUrl(token,DocumentsFolderAsyncJobId);
+
+        //   if (getImagesFolderUrl.data['.tag'] === 'in_progress') {
+        //     inProgress = false
+        //   } else {
+        //     inProgress = true
+        //     ImagesForlderUrl=getImagesFolderUrl.data.preview_url
+        //     console.log("TERMINO**--------****", getImagesFolderUrl.data) 
+        //   }
+        //   console.log("inprogress images despues", inProgress)
+        // }
+        console.log("MainFolderUrl",mainFolderUrl)
+        //console.log("ImagesFolderUrl",ImagesForlderUrl)
+        const addSharedFolderToEvent=await dropbox.addFoldersToEvent(mainFolderUrl.url, mainFolderUrl.path, eventId,'events')
+        console.log("success")
+        res.status(200).send({ message: "Event saved successfully", statusText: "OK", createdEventId:eventId });
+    } catch (e) {
+      console.log("error", e);
+      res
+        .status(400)
+        .json({
+          message: "an error ocurred, please try again",
+          statusText: "FAIL",
+          error:e
+        });
+    }
+  },
+  updateOefEvent: async (req, res) => {
+    let {
+      id,
+      eventDateCreated,
+      programID,
+      programName,
+      eventName,
+      eventDate,
+      eventStartTime,
+      eventFinishTime,
+      healthAreaOfFocusID,
+      healthAreaOfFocusName,
+      createdByName,
+      createdByLastname,
+      eventZipCode,
+      borough,
+      oefEventEmail,
+      deliveryPartner,
+      inPersonEventTypeName,
+        inPersonEventTypeNameOther,
+        inPersonEventTypeID,
+        onlineEventTypeName,
+        locationAddress,
+        onlineEventTypeID,
+    } = req.body;
+
+    console.log(req.body)
+
+    try {
+      const query = await {
+        text: `update events set
+        eventDateCreated=$1,
+        programID=$2,
+        programName=$3,
+        eventName=$4,
+        eventDate=$5,
+        eventStartTime=$6,
+        eventFinishTime=$7,
+        healthAreaOfFocusID=$8,
+        healthAreaOfFocusName=$9,
+        createdByName=$10,
+        createdByLastname=$11,
+        eventZipCode=$12,
+        borough=$13,
+        oefEventEmail=$14,
+        deliveryPartner=$15,
+
+        inPersonEventTypeName=$16,
+        inPersonEventTypeNameOther=$17,
+        inPersonEventTypeID=$18,
+        onlineEventTypeName=$19,
+        locationAddress=$20,
+        onlineEventTypeID=$21
+        where id=$22`,
+        values: [
+          eventDateCreated,
+      programID,
+      programName,
+      eventName,
+      eventDate,
+      eventStartTime,
+      eventFinishTime,
+      healthAreaOfFocusID,
+      healthAreaOfFocusName,
+      createdByName,
+      createdByLastname,
+      eventZipCode,
+      borough,
+      oefEventEmail,
+      deliveryPartner,
+
+      inPersonEventTypeName,
+        inPersonEventTypeNameOther,
+        inPersonEventTypeID,
+        onlineEventTypeName,
+        locationAddress,
+        onlineEventTypeID,
+          id
+        ],
+      };
+      db.query(query).then((response) => {
+        console.log(response);
+        res.json({
+          message: "Updated  oef event successfully",
+          statusText: "OK",
+        });
+      });
+    } catch (error) {
+      res.send(e.stack);
+      console.log("error message:", error);
+    }
+  },
+  updateOefEventFromEventsOuput: async (req, res) => {
+    let {
+      id,
+     submissionStatus,
+     submissionNotes,
+     oefEventEmail,
+     onelineDescription,
+     oefEventPresentationTopic
+    } = req.body;
+
+    console.log(req.body)
+
+    try {
+      const query = await {
+        text: `update events set
+        submissionStatus=$1,
+     submissionNotes=$2,
+     onelineDescription=$3,
+     oefEventPresentationTopic=$4
+        where id=$5`,
+        values: [
+          submissionStatus,
+          submissionNotes,
+          onelineDescription,
+     oefEventPresentationTopic,
+          id
+        ],
+      };
+      db.query(query)
+      .then((response) => {
+        console.log(response);
+        res.json({
+          message: "Updated  oef event successfully",
+          statusText: "OK",
+        });
+      })
+      //.then(res=>sendEmail.sendEmailToUser(oefEventEmail))
+    } catch (error) {
+      res.send(e.stack);
+      console.log("error message:", error);
+    }
+  },
+  createOefCbtEvent: async (req, res) => {
+    let {
+        eventName,
+        eventDate,
+        eventStartTime,
+        eventFinishTime,
+        healthAreaOfFocusID,
+        healthAreaOfFocusName,
+        onlineInPersonEventType,
+        eventDescription,
+        surveyName,
+        programID,
+        programName,
+        eventDateCreated,
+        inPersonEventTypeName,
+        inPersonEventTypeNameOther,
+        inPersonEventTypeID,
+        onlineEventTypeName,
+        locationAddress,
+        onlineEventTypeID,
+    } = req.body;
+    console.log("req.body from create oef cbt event", req.body);
+const submissionStatus='Submitted'
+    try {
+      const text = `INSERT INTO events 
+      (
+        eventName,
+        eventDate,
+        eventStartTime,
+        eventFinishTime,
+        healthAreaOfFocusID,
+        healthAreaOfFocusName,
+        onlineInPersonEventType,
+        eventDescription,
+        surveyName,
+        programID,
+        programName,
+        eventDateCreated,
+        inPersonEventTypeName,
+        inPersonEventTypeNameOther,
+        inPersonEventTypeID,
+        onlineEventTypeName,
+        locationAddress,
+        onlineEventTypeID) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18) RETURNING *`;
+      let values = [
+        eventName,
+        eventDate,
+        eventStartTime,
+        eventFinishTime,
+        healthAreaOfFocusID,
+        healthAreaOfFocusName,
+        onlineInPersonEventType,
+        eventDescription,
+        surveyName,
+        programID,
+        programName,
+        eventDateCreated,
+
+        inPersonEventTypeName,
+        inPersonEventTypeNameOther,
+        inPersonEventTypeID,
+        onlineEventTypeName,
+        locationAddress,
+        onlineEventTypeID,
+      ];
+        const saveData = await db.query(text, values);
+        const response = saveData.rows;
+        const eventId=response[0].id
+        console.log("eventId",eventId)
+        const getRefreshToken= await dropbox.connectToDropbox()
+        const token=await getRefreshToken
+        //console.log("token",token)
+        const createFolders= await dropbox.createAllFolders(token,'OEF CBT',eventName,eventDate)
+        //const shareDocumentFolder= await dropbox.shareFolder(token,programName,eventName,eventDate,'Documents')
+        const shareDocumentFolder= await dropbox.shareMainFolder(token,'OEF CBT',eventName,eventDate)
+        console.log('shareDocumentFolder',shareDocumentFolder)
+        const DocumentsFolderAsyncJobId= await shareDocumentFolder.data.async_job_id
+        let inProgress = false
+        let mainFolderUrl={}
+        while (inProgress === false) {
+          console.log("while")
+          console.log("INPROGRESS",inProgress)
+          const getDocumentsFolderUrl= await dropbox.getFolderUrl(token,DocumentsFolderAsyncJobId);
+
+          if (getDocumentsFolderUrl.data['.tag'] === 'in_progress') {
+            
+            inProgress = false
+            
+          } else {
+            inProgress = true
+            console.log("TERMINO**--------****", getDocumentsFolderUrl.data)
+            mainFolderUrl.url= await getDocumentsFolderUrl.data.preview_url
+            mainFolderUrl.path= await getDocumentsFolderUrl.data.path_lower
+             
+          }
+          console.log("inprogress despues", inProgress)
+        }
+        console.log("MainFolderUrl",mainFolderUrl)
+        //console.log("ImagesFolderUrl",ImagesForlderUrl)
+        const addSharedFolderToEvent=await dropbox.addFoldersToEvent(mainFolderUrl.url, mainFolderUrl.path, eventId,'events')
+        const sendMessage= await sendMessageToOEFCBTSubscriber(eventName,eventDate,workArea='',eventDescription,locationAddress='New York City',onlineInPersonEventType='Online',eventStartTime,eventFinishTime)
+        console.log("success")
+        res.status(200).send({ message: "Event saved successfully", statusText: "OK", createdEventId:eventId });
+    } catch (e) {
+      console.log("error", e);
+      res
+        .status(400)
+        .json({
+          message: "an error ocurred, please try again",
+          statusText: "FAIL",
+          error:e
+        });
+    }
+  },
+  updateOefCbtEvent: async (req, res) => {
+    let {
+      id,
+      eventName,
+        eventDate,
+        eventStartTime,
+        eventFinishTime,
+        healthAreaOfFocusID,
+        healthAreaOfFocusName,
+        onlineInPersonEventType,
+        eventDescription,
+        surveyName,
+        programID,
+        programName,
+        eventDateCreated,
+
+        inPersonEventTypeName,
+        inPersonEventTypeNameOther,
+        inPersonEventTypeID,
+        onlineEventTypeName,
+        locationAddress,
+        onlineEventTypeID,
+    } = req.body;
+
+    console.log(req.body)
+
+    try {
+      const query = await {
+        text: `update events set
+        eventName=$1,
+        eventDate=$2,
+        eventStartTime=$3,
+        eventFinishTime=$4,
+        healthAreaOfFocusID=$5,
+        healthAreaOfFocusName=$6,
+        onlineInPersonEventType=$7,
+        eventDescription=$8,
+        surveyName=$9,
+        programID=$10,
+        programName=$11,
+        eventDateCreated=$12,
+
+        inPersonEventTypeName=$13,
+        inPersonEventTypeNameOther=$14,
+        inPersonEventTypeID=$15,
+        onlineEventTypeName=$16,
+        locationAddress=$17,
+        onlineEventTypeID=$18
+        where id=$19`,
+        values: [
+      eventName,
+        eventDate,
+        eventStartTime,
+        eventFinishTime,
+        healthAreaOfFocusID,
+        healthAreaOfFocusName,
+        onlineInPersonEventType,
+        eventDescription,
+        surveyName,
+        programID,
+        programName,
+        eventDateCreated,
+
+        inPersonEventTypeName,
+        inPersonEventTypeNameOther,
+        inPersonEventTypeID,
+        onlineEventTypeName,
+        locationAddress,
+        onlineEventTypeID,
+          id
+        ],
+      };
+      db.query(query).then((response) => {
+        console.log(response);
+        res.json({
+          message: "Updated  oef cbt event successfully",
+          statusText: "OK",
+        });
+      });
+    } catch (error) {
+      res.status(400).send(e.stack);
+      console.log("error message:", error);
+    }
+  },
+  createOefCabEvent: async (req, res) => {
+    let {
+      eventDateCreated,
+      programId,
+      programName,
+      eventDate,
+      eventStartTime,
+      eventFinishTime,
+      healthAreaOfFocusId,
+      healthAreaOfFocusName,
+      createdByName,
+      createdByLastname,
+      oefEventEmail,
+      deliveryPartner,
+      submissionStatus,
+      submissionNotes,
+      eventRole,
+      eventName,
+      surveyName
+    } = req.body;
+    console.log("req.body from create oef cab event", req.body);
+
+    try {
+      const text = `INSERT INTO events 
+      (
+        eventDateCreated,
+        programId,
+      programName,
+      eventDate,
+      eventStartTime,
+      eventFinishTime,
+      healthAreaOfFocusId,
+      healthAreaOfFocusName,
+      createdByName,
+      createdByLastname,
+      oefEventEmail,
+      deliveryPartner,
+      submissionStatus,
+      submissionNotes,
+      eventRole,
+      eventName,
+      surveyName
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15, $16, $17) RETURNING *`;
+      let values = [
+        eventDateCreated,
+        programId,
+        programName,
+        eventDate,
+        eventStartTime,
+        eventFinishTime,
+        healthAreaOfFocusId,
+        healthAreaOfFocusName,
+        createdByName,
+        createdByLastname,
+        oefEventEmail,
+        deliveryPartner,
+        submissionStatus,
+        submissionNotes,
+        eventRole,
+        eventName,
+        surveyName
+      ];
+        const saveData = await db.query(text, values);
+        const response = saveData.rows;
+        const eventId=response[0].id
+        console.log("eventId",eventId)
+       
+        console.log("cab Event saved successfully")
+        res.status(200).send({ message: "Event saved successfully", statusText: "OK", createdEventId:eventId });
+    } catch (e) {
+      console.log("error", e);
+      res
+        .status(400)
+        .json({
+          message: "an error ocurred, please try again",
+          statusText: "FAIL",
+          error:e
+        });
+    }
+  },
+  updateOefCabEvent: async (req, res) => {
+    let {
+      id,
+      programId,
+      programName,
+      eventDate,
+      eventStartTime,
+      eventFinishTime,
+      healthAreaOfFocusId,
+      healthAreaOfFocusName,
+      createdByName,
+      createdByLastname,
+      oefEventEmail,
+      deliveryPartner,
+      submissionStatus,
+      submissionNotes,
+      eventRole,
+      eventName,
+      surveyName
+    } = req.body;
+
+    console.log(req.body)
+
+    try {
+      const query = await {
+        text: `update events set
+        programId=$1,
+        programName=$2,
+        eventDate=$3,
+        eventStartTime=$4,
+        eventFinishTime=$5,
+        healthAreaOfFocusId=$6,
+        healthAreaOfFocusName=$7,
+        createdByName=$8,
+        createdByLastname=$9,
+        oefEventEmail=$10,
+        deliveryPartner=$11,
+        submissionStatus=$12,
+        submissionNotes=$13,
+        eventRole=$14,
+        eventName=$15,
+        surveyName=$16
+        where id=$17`,
+        values: [
+          programId,
+          programName,
+          eventDate,
+          eventStartTime,
+          eventFinishTime,
+          healthAreaOfFocusId,
+          healthAreaOfFocusName,
+          createdByName,
+          createdByLastname,
+          oefEventEmail,
+          deliveryPartner,
+          submissionStatus,
+          submissionNotes,
+          eventRole,
+          eventName,
+          surveyName,
+          id
+        ],
+      };
+      db.query(query).then((response) => {
+        console.log(response);
+        res.json({
+          message: "Updated  oef cab event successfully",
+          statusText: "OK",
+        });
+      });
+    } catch (error) {
+      res.status(400).send(e.stack);
+      console.log("error message:", error);
+    }
+  },
+  getOefCabEvents:async(req,res) => {
+    try {
+      const allData =
+        await db.query(`select events.id,events.eventdate,events.submissionstatus,events.eventname  ,events_output.cluster from events
+        join events_output on  events.id = events_output.eventid where events.surveyname='oef-cab'`);
+      const response = allData.rows;
+      res.send(response);
+    } catch (e) {
+      res.send("an error ocurred");
+    }
+  }
 };

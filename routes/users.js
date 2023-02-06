@@ -4,6 +4,7 @@ const router = express.Router()
 const controller = require('../controllers/usersControllers')
 
 router.get("/",controller.getUsers)
+router.get('/:id',controller.getUserById)
 router.delete("/",controller.delete)
 router.post("/create",controller.createUser)
 router.put('/lastlogin',controller.updateLastLogin)

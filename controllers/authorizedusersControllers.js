@@ -53,8 +53,20 @@ module.exports = {
               res.send("an error ocurred")
             }
     },
+    getUserById : async (req,res)=>{
+      const {id} = req.params
+      try {
+          const allData = await db.query(`select * from authorizedUsers where id=${id}`)
+          const response = allData.rows 
+            res.send(response[0])
+          }
+          catch (e) {
+            console.log(e)
+            res.send("an error ocurred")
+          }
+  },
     post: async (req,res)=>{
-        let {name,lastname,role,email,isactive} = req.body
+        let {name,lastname,role,email,isactive,userFbo,userAccessiblePrograms} = req.body
 
          if(isactive==="true"){
           isactive="Active"
@@ -66,8 +78,8 @@ module.exports = {
         
         const dateaccountactivated = new Date()
         const query = {
-          text: 'INSERT INTO authorizedusers (name,lastname,role,email,isactive,dateaccountactivated) VALUES($1,$2,$3,$4,$5,$6) RETURNING *',
-          values: [name,lastname,role,email.toLowerCase(),isactive,dateaccountactivated],
+          text: 'INSERT INTO authorizedusers (name,lastname,role,email,isactive,dateaccountactivated,userFbo,userAccessiblePrograms) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *',
+          values: [name,lastname,role,email.toLowerCase(),isactive,dateaccountactivated,userFbo,userAccessiblePrograms],
         }
         // promise
         db
@@ -77,7 +89,7 @@ module.exports = {
           .catch(e => console.error(e.stack))
     },
     updateUser: async (req, res) => {
-        let {id,name,lastname,role,email,isactive} = req.body;
+        let {id,name,lastname,role,email,isactive,userFbo,userAccessiblePrograms} = req.body;
     /*     if(isactive==="true"){
           isactive="Active"
         } else {
@@ -86,14 +98,14 @@ module.exports = {
 console.log("req.body",req.body)
         try {
           const query = await {
-            text: `update authorizedusers set id=$1, name=$2, lastname=$3, role=$4, email=$5, isactive=$6 where id=$1`,
-            values: [id,name,lastname,role,email,isactive],
+            text: `update authorizedusers set id=$1, name=$2, lastname=$3, role=$4, email=$5, isactive=$6, userFbo=$7, userAccessiblePrograms=$8  where id=$1`,
+            values: [id,name,lastname,role,email,isactive,userFbo,userAccessiblePrograms],
           };
           db
             .query(query)
             .then((response) =>{
               console.log(response)
-              res.json({
+              res.send({
                 data: response.rowCount,
                 status: 200,
               })
