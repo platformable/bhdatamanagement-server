@@ -3450,9 +3450,7 @@ try {
               $158,
               $159,
               $160,
-              $161,
-              $162,
-              $163
+              $161
             ) RETURNING *`;
         const values = [
           isClusterEvent,
