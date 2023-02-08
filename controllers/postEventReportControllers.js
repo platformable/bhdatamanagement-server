@@ -13,13 +13,14 @@ module.exports={
           }
     },
     getNysEventsOutput:async (req,res)=>{
-        const text=`select events_output.*, 
+        const text=`events_output.*, 
         events.userid,
         events.eventdescription,
         events.additionalmaterials,
         events.onlineinpersoneventtype,
         events.inpersoneventtypeid,
         events.inpersoneventtypename,
+        events.eventlocationtypename as _locationtypename,
         events.eventlocationtypeid,
         events.onlineeventtypeid,
         events.onlineeventtypename,
