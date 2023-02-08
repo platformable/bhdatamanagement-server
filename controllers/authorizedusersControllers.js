@@ -178,8 +178,8 @@ console.log("req.body",req.body)
         db
           .query(query)
           .then((response) =>{
-            console.log(response)
-            res.json({
+            console.log("authuser update from users edit success")
+            res.send({
               data: response.rowCount,
               status: 200,
             })}
