@@ -145,13 +145,35 @@ console.log("req.body",req.body)
             .catch(e => console.error(e.stack))
     },
     updateUserActiveStatus: async(req,res)=>{
-      let {isactive,email} = req.body
+      let {
+        name,
+      lastname,
+      email,
+      role,
+      isactive,
+      userFbo,
+      userAccessiblePrograms
+      } = req.body
       console.log(req.body)
      
       try {
         const query = await {
-          text: `update authorizedusers set isactive=$1,email=$2 where email=$2`,
-          values: [isactive,email],
+          text: `update authorizedusers set 
+          name=$1,
+          lastname=$2,
+          role=$3,
+          isactive=$4,
+          userFbo=$5,
+          userAccessiblePrograms=$6 where email=$7`,
+          values: [
+            name,
+            lastname,
+            role,
+            isactive,
+            userFbo,
+            userAccessiblePrograms,
+            email
+          ],
         };
         db
           .query(query)
