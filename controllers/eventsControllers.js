@@ -300,7 +300,7 @@ SUMMARY:${eventName}
 DESCRIPTION:${onlineInPersonEventType}-${eventDescription}
 ORGANIZER;CN=Black Health:MAILTO:nblchevents@nblch.org
 CLASS:PUBLIC
-LOCATION:215 W. 125th Street, Other, 11467
+LOCATION:${locationAddress}
 URL:https://nblch.org
 SEQUENCE:2
 UID:event_283355921@black_health_data_app_management
