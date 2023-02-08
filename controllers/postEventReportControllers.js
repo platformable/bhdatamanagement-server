@@ -13,15 +13,15 @@ module.exports={
           }
     },
     getNysEventsOutput:async (req,res)=>{
-        const text=`events_output.*, 
+        const text=`select events_output.*, 
         events.userid,
         events.eventdescription,
         events.additionalmaterials,
         events.onlineinpersoneventtype,
         events.inpersoneventtypeid,
         events.inpersoneventtypename,
-        events.eventlocationtypename as _locationtypename,
         events.eventlocationtypeid,
+        events.eventlocationtypename as _eventlocationtypename,
         events.onlineeventtypeid,
         events.onlineeventtypename,
         events.borough,
@@ -35,7 +35,12 @@ module.exports={
             const allData = await db.query(text);
             const response = allData.rows;
             console.log("response",response)
-            res.send(response);
+            if(response.length>0){
+              res.send(response);
+            } else {
+              res.status(400).send({message:"There is no data", statusText:"FAIL"})
+            }
+            
           } catch (e) {
             res.send("an error ocurred");
             console.log("error",e)
