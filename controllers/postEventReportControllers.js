@@ -4446,6 +4446,7 @@ console.log("req.body update oef post event report",req.body)
       eventStartTime,
       eventFinishTime,
       deliveryPartner,
+      totalAttendees
     } = req.body;
 
 
@@ -4467,8 +4468,9 @@ console.log("req.body update oef post event report",req.body)
         eventRole,
         eventStartTime,
         eventFinishTime,
-        deliveryPartner) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,
-            $16,$17) RETURNING *`;
+        deliveryPartner,
+        totalAttendees) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,
+            $16,$17,$18) RETURNING *`;
       const values = [
         cluster,
         clusterFbos,
@@ -4486,7 +4488,8 @@ console.log("req.body update oef post event report",req.body)
         eventRole,
         eventStartTime,
         eventFinishTime,
-        deliveryPartner
+        deliveryPartner,
+        totalAttendees
       ];
 
       const allData = await db.query(text, values);
