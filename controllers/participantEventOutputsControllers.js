@@ -498,7 +498,7 @@ createOefCbtParticipantEventOutputs: async (req,res)=>{
         canApply,
         presenterExplainWell,
         understoodTopics,
-        fbo,
+        deliveryPartner,
         participantSuggestions,
         participantTools,
     }= req.body
@@ -530,7 +530,7 @@ informationUseful,
 canApply,
 presenterExplainWell,
 understoodTopics,
-fbo,
+deliveryPartner,
 participantSuggestions,
 participantTools
     ) VALUES (
@@ -577,7 +577,7 @@ participantTools
             canApply,
             presenterExplainWell,
             understoodTopics,
-            fbo,
+            deliveryPartner,
             participantSuggestions,
             participantTools
         ]
