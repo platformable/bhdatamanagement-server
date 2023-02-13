@@ -9,6 +9,7 @@ router.post("/oef/cbt/participant-event-survey/create",controller.createOefCbtPa
 router.post("/oef-cbt-quarterly-evaluation-survey/create",controller.createOefCbtQuarterlyEvaluationSurvey)
 router.get("/",controller.getParticipantEventOutputs)
 router.get("/:id",controller.getParticipantEventOutputsById)
+router.get("/oef/participant_events_outputs",controller.getParticipantOEFEventOutputs)
 
 
 
