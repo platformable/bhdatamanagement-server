@@ -227,9 +227,8 @@ getOefHivOutReach: async (req, res) => {
   events_output.otherTesting,
   events_output.otherTestingType,
   events_output.otherTestedTotal
-          from events_output 
-          full outer join events on  events_output.eventid = events.id 
-          full outer join users on  events.userid = users.userid
+          from events
+          join events_output on  events.id = events_output.eventid 
           where events.programname='OEF' and events.surveyname='oef-fbo-outreach' order by events.eventdate asc`
 try {
 const allData = await db.query(query);
