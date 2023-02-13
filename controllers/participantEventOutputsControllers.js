@@ -15,6 +15,20 @@ module.exports={
             res.send("an error ocurred");
           }
     },
+    getParticipantOEFEventOutputs: async (req,res)=>{
+        try {
+            const allData = await db.query(`
+            select events.id eventid, events.programid, events.programname,
+            participant_survey_outputs.*
+            from events
+            join participant_survey_outputs on participant_survey_outputs.eventid = events.id
+            where events.programname='OEF'`);
+            const response = allData.rows;
+            res.send(response);
+          } catch (e) {
+            res.send("an error ocurred");
+          }
+    },
     getParticipantEventOutputsById:async (req,res)=>{
         let { id } = await req.params;
 
