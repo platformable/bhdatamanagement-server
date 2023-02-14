@@ -249,6 +249,7 @@ getOefCbtQuarterly: async (req, res) => {
   participant_survey_outputs.programName,
   participant_survey_outputs.surveyName,
   participant_survey_outputs.surveyCompleted,
+  participant_survey_outputs.surveyCompleted as eventdate,
   participant_survey_outputs.deliveryPartner,
   participant_survey_outputs.fboPosition,
   participant_survey_outputs.participantCbtActions,
