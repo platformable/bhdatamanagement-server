@@ -305,5 +305,39 @@ if(response.length>0){
 res.send("an error ocurred");
 }
 },
+getTechnicalAssistance: async (req, res) => {
+  const query = `select
+  programId,
+programName,
+surveyName,
+surveyCreated,
+surveyModified,
+taType,
+taTypeOther,
+taReason,
+taContactName,
+taEmail,
+taPhone,
+taFbo,
+taFboOther,
+taStatus,
+taStatusCompleteDate,
+taCompleteBhStaff,
+taNotesBhStaff
+from technical_assistance
+`
+try {
+const allData = await db.query(query);
+const response = allData.rows;
+if(response.length>0){
+  res.status(200).send(response);
+} else {
+  res.status(200).send({message:'There is no data'})
+}
+
+} catch (e) {
+res.send("an error ocurred");
+}
+},
  
 };
