@@ -289,8 +289,8 @@ getOefCbtQuarterly: async (req, res) => {
   participant_survey_outputs.participantGrantsWhySuccess,
   participant_survey_outputs.participantGrantsLearned,
   participant_survey_outputs.participantGrantsSuccessMore
-          from participant_survey_outputs
-          where participant_survey_outputs.surveyname='cbt-quarterly-evaluation'`
+  from participant_survey_outputs
+  where participant_survey_outputs.surveyname='cbt-quarterly-evaluation'`
 try {
 const allData = await db.query(query);
 const response = allData.rows;
