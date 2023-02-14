@@ -243,5 +243,66 @@ if(response.length>0){
 res.send("an error ocurred");
 }
 },
+getOefCbtQuarterly: async (req, res) => {
+  const query = `select
+  participant_survey_outputs.programId,
+  participant_survey_outputs.programName,
+  participant_survey_outputs.surveyName,
+  participant_survey_outputs.surveyCompleted,
+  participant_survey_outputs.deliveryPartner,
+  participant_survey_outputs.fboPosition,
+  participant_survey_outputs.participantCbtActions,
+  participant_survey_outputs.participantHivKnowledge,
+  participant_survey_outputs.participantPrepKnowledge,
+  participant_survey_outputs.participantPrepResourceKnowledge,
+  participant_survey_outputs.participantConsentKnowledge,
+  participant_survey_outputs.participantStiInfectionKnowledge,
+  participant_survey_outputs.participantPepUsageKnowledge,
+  participant_survey_outputs.participantPrepUse,
+  participant_survey_outputs.participantCreateSurvey,
+  participant_survey_outputs.participantSurveyTool,
+  participant_survey_outputs.participantSurveyGoal,
+  participant_survey_outputs.participantDataCollecting,
+  participant_survey_outputs.participantDataComfort,
+  participant_survey_outputs.participantDataUse,
+  participant_survey_outputs.participantDataUseOther,
+  participant_survey_outputs.participantFboEngagement,
+  participant_survey_outputs.participantFboImprove,
+  participant_survey_outputs.participantFboFeedbackResponse,
+  participant_survey_outputs.participantInfoUnderstandable,
+  participant_survey_outputs.participantInfoAccessible,
+  participant_survey_outputs.participantCabCreation,
+  participant_survey_outputs.participantCabRecruitment,
+  participant_survey_outputs.participantCabImpact,
+  participant_survey_outputs.participantCabMembers,
+  participant_survey_outputs.participantFboStrategy,
+  participant_survey_outputs.participantTargetGroups,
+  participant_survey_outputs.participantTargetGroupsOther,
+  participant_survey_outputs.participantYouthMinistryCreation,
+  participant_survey_outputs.participantYouthMinistryRecruitment,
+  participant_survey_outputs.participantFboYouth,
+  participant_survey_outputs.participantGrantsIdentify,
+  participant_survey_outputs.participantGrantsApplied,
+  participant_survey_outputs.participantGrantsProcess,
+  participant_survey_outputs.participantGrantsMore,
+  participant_survey_outputs.participantGrantsSuccess,
+  participant_survey_outputs.participantGrantsWhySuccess,
+  participant_survey_outputs.participantGrantsLearned,
+  participant_survey_outputs.participantGrantsSuccessMore
+          from participant_survey_outputs
+          where participant_survey_outputs.surveyname='cbt-quarterly-evaluation'`
+try {
+const allData = await db.query(query);
+const response = allData.rows;
+if(response.length>0){
+  res.status(200).send(response);
+} else {
+  res.status(200).send({message:'There is no data'})
+}
+
+} catch (e) {
+res.send("an error ocurred");
+}
+},
  
 };
