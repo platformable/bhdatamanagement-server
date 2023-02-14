@@ -310,7 +310,7 @@ getTechnicalAssistance: async (req, res) => {
   programId,
 programName,
 surveyName,
-surveyCreated,
+surveyCreated as eventDate,
 surveyModified,
 taType,
 taTypeOther,
