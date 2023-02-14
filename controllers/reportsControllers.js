@@ -339,5 +339,136 @@ if(response.length>0){
 res.send("an error ocurred");
 }
 },
+getOefCbtFacilitartor: async (req, res) => {
+  const query = `select 
+  events.programId,
+  events.programName,
+  events.surveyName,
+  events.id,
+  events.surveyCompleted,
+  events.eventName,
+  events.eventDate,
+  events.eventStartTime,
+  events.eventFinishTime,
+  events.onlineEventTypeId,
+  events.onlineInPersonEventType,
+  events.inPersonEventTypeId,
+  events.inPersonEventTypeName,
+  events.inPersonEventTypeNameOther,
+  events.onlineEventTypeName,
+  events.eventDescription,
+  events.locationAddress,
+  events.healthAreaOfFocusId,
+  events.healthAreaOfFocusName,
+  events_output.mainRoles,
+  events_output.mainRolesOther,
+  events_output.participantRegistrationForm,
+  events_output.eventStartedOnTime,
+  events_output.eventFinishedOnTime,
+  events_output.participantGreeted,
+  events_output.resourcesAvailable,
+  events_output.photoRelease,
+  events_output.handSanitizerAvailable,
+  events_output.reminderSafeSpace,
+  events_output.reminderPostEvaluationSurvey,
+  events_output.eventChecklistOther,
+  events_output.eventChecklistOtherText,
+  events_output.totalAttendees,
+  events_output.eventOrganization,
+  events_output.eventWorkedBest,
+  events_output.eventImprove,
+  events_output.eventDelivery,
+  events_output.eventResponsive,
+  events_output.engaged,
+  events_output.topicsFollowup,
+  events_output.leastEngaged,
+  events_output.improveEngagement,
+  events_output.eventChallenges,
+  events_output.eventQuestions,
+  events_output.organizerFeedback
+  from events 
+  inner join events_output on events.id = events_output.eventid where events.programname ='OEF' and events.surveyname = 'bh-cbt-register'
+`
+try {
+const allData = await db.query(query);
+const response = allData.rows;
+if(response.length>0){
+  res.status(200).send(response);
+} else {
+  res.status(200).send({message:'There is no data'})
+}
+
+} catch (e) {
+res.send("an error ocurred");
+}
+},
+
+getOefSiteVisits: async (req, res) => {
+  const query = `select 
+  programId,
+  programName,
+  surveyName,
+  surveyCreated,
+  id,
+  userId,
+  boroughFbo,
+  eventDate,
+  eventStartTime,
+  eventFinishTime,
+  fbo,
+  fboAttendees,
+  fboAttendeesOther,
+  sanctuary,
+  privateTestingArea,
+  healthMinistry,
+  healthMinistryMembers,
+  healthMinistryActive,
+  healthMinistryCoordinators,
+  strategiesHealthDisparities,
+  targetAudience,
+  targetAudienceOther,
+  targetAudienceAdditional,
+  barriersEngagement,
+  barriersEngagementOther,
+  bestPractices,
+  eventChallenges,
+  fboChanges,
+  fboImprovements,
+  fboObservations,
+  fboBeyondGrant,
+  fboCabFeedback,
+  fboAliFeedback,
+  fboYipFeedback,
+  fboLeaderHivOpenness,
+  healthMinistryHivOpenness,
+  membershipHivOpenness,
+  communityHivOpenness,
+  faithLeaderDiversityOpenness,
+  healthMinistryDiversityOpenness,
+  membershipDiversityOpenness,
+  communityDiversityOpenness,
+  fboObservations,
+  submissionStatus,
+  submissionNotes
+  from site_visits
+  '
+`
+try {
+const allData = await db.query(query);
+const response = allData.rows;
+if(response.length>0){
+  res.status(200).send(response);
+} else {
+  res.status(200).send({message:'There is no data'})
+}
+
+} catch (e) {
+res.send("an error ocurred");
+}
+},
+
+
+
+
  
 };
