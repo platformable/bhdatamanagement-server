@@ -4227,7 +4227,7 @@ console.log("req.body update oef post event report",req.body)
       eventChecklistOtherText
     } = req.body;
 
-
+console.log("create post event report oef cbt",req.body)
     try {
       const text = `insert into events_output (
         eventID,
