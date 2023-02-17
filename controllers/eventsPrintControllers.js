@@ -29,6 +29,10 @@ module.exports={
     events.inPersonEventTypeID,
     events.onlineEventTypeName,
     events.onlineEventTypeID,
+    events.submissionstatus,
+    events.onelinedescription,
+    events.oefEventPresentationTopic,
+    events.submissionNotes,
     events_output.isClusterEvent,
     events_output.cluster,
     events_output.clusterFbos,
@@ -182,6 +186,7 @@ module.exports={
     events_output.datePostEventSurvey,
     events_output.guestSpeakers,
     events_output.nameGuestSpeakers
+ 
         from events
         inner join events_output on  events.id =events_output.eventid
         where events.id=$1
