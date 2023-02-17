@@ -4342,6 +4342,7 @@ console.log("create post event report oef cbt",req.body)
       mainRolesOther,
       eventChecklistOtherText,
       externalFacilitator,
+      externalFacilitatorEmail,
       id
     } = req.body
 console.log("req.body update oef post event report",req.body)
@@ -4378,8 +4379,9 @@ console.log("req.body update oef post event report",req.body)
       mainRoles=$28,
       mainRolesOther=$29,
       eventChecklistOtherText=$30,
-      externalFacilitator=$31
-  where id=$32`,
+      externalFacilitator=$31,
+      externalFacilitatorEmail=$32,
+  where id=$33`,
         values:[
           eventID,
       programid,
@@ -4412,6 +4414,7 @@ console.log("req.body update oef post event report",req.body)
       mainRolesOther,
       eventChecklistOtherText,
       externalFacilitator,
+      externalFacilitatorEmail,
           id
         ]
       }
