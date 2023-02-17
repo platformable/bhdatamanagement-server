@@ -4380,7 +4380,7 @@ console.log("req.body update oef post event report",req.body)
       mainRolesOther=$29,
       eventChecklistOtherText=$30,
       externalFacilitator=$31,
-      externalFacilitatorEmail=$32,
+      externalFacilitatorEmail=$32
   where id=$33`,
         values:[
           eventID,
