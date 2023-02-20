@@ -4227,7 +4227,7 @@ console.log("req.body update oef post event report",req.body)
       eventChecklistOtherText
     } = req.body;
 
-
+console.log("create post event report oef cbt",req.body)
     try {
       const text = `insert into events_output (
         eventID,
@@ -4341,6 +4341,8 @@ console.log("req.body update oef post event report",req.body)
       mainRoles,
       mainRolesOther,
       eventChecklistOtherText,
+      externalFacilitatorName,
+      externalFacilitatorEmail,
       id
     } = req.body
 console.log("req.body update oef post event report",req.body)
@@ -4376,8 +4378,10 @@ console.log("req.body update oef post event report",req.body)
       organizerFeedback=$27,
       mainRoles=$28,
       mainRolesOther=$29,
-      eventChecklistOtherText=$30
-  where id=$31`,
+      eventChecklistOtherText=$30,
+      externalFacilitatorName=$31,
+      externalFacilitatorEmail=$32
+  where id=$33`,
         values:[
           eventID,
       programid,
@@ -4409,6 +4413,8 @@ console.log("req.body update oef post event report",req.body)
       mainRoles,
       mainRolesOther,
       eventChecklistOtherText,
+      externalFacilitatorName,
+      externalFacilitatorEmail,
           id
         ]
       }
