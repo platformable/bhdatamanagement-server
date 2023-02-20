@@ -1330,5 +1330,134 @@ const submissionStatus='Submitted'
     } catch (e) {
       res.send("an error ocurred");
     }
-  }
+  },
+  createOefYipEvent: async (req, res) => {
+    let {
+      createdbyLastName,
+      createdByName,
+      eventDate,
+      eventDateCreated,
+      eventDescription,
+      eventFinishTime,
+      eventStartTime,
+      inPersonEventTypeId,
+      inPersonEventTypeName,
+      locationAddress,
+      onlineEventTypeId,
+      onlineEventTypeName,
+      onlineInPersonEventType,
+      programId,
+      programName,
+      //submissionStatus,
+      surveyCreated,
+      surveyModified,
+      surveyName,
+      userid,
+      workArea,
+      workAreaOther,
+      yipSession,
+      yipSessionOther,
+    } = req.body;
+    console.log("req.body from create oef yip event", req.body);
+const submissionStatus='Submitted'
+    try {
+      const text = `INSERT INTO events 
+      (
+        createdbyLastName,
+        createdByName,
+        eventDate,
+        eventDateCreated,
+        eventDescription,
+        eventFinishTime,
+        eventStartTime,
+        inPersonEventTypeId,
+        inPersonEventTypeName,
+        locationAddress,
+        onlineEventTypeId,
+        onlineEventTypeName,
+        onlineInPersonEventType,
+        programId,
+        programName,
+        surveyCreated,
+        surveyModified,
+        surveyName,
+        userid,
+        workArea,
+        workAreaOther,
+        yipSession,
+        yipSessionOther) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$21,$22,$23) RETURNING *`;
+      let values = [
+        createdbyLastName,
+        createdByName,
+        eventDate,
+        eventDateCreated,
+        eventDescription,
+        eventFinishTime,
+        eventStartTime,
+        inPersonEventTypeId,
+        inPersonEventTypeName,
+        locationAddress,
+        onlineEventTypeId,
+        onlineEventTypeName,
+        onlineInPersonEventType,
+        programId,
+        programName,
+        surveyCreated,
+        surveyModified,
+        surveyName,
+        userid,
+        workArea,
+        workAreaOther,
+        yipSession,
+        yipSessionOther
+      ];
+        const saveData = await db.query(text, values);
+        const response = saveData.rows;
+        const eventId=response[0].id
+        console.log("eventId",eventId)
+        const getRefreshToken= await dropbox.connectToDropbox()
+        const token=await getRefreshToken
+        //console.log("token",token)
+        const createFolders= await dropbox.createAllFolders(token,`YIP/${workArea}`,eventName,eventDate)
+        //const shareDocumentFolder= await dropbox.shareFolder(token,programName,eventName,eventDate,'Documents')
+        const shareDocumentFolder= await dropbox.shareMainFolder(token,`YIP/${workArea}`,eventName,eventDate)
+        console.log('shareDocumentFolder',shareDocumentFolder)
+        const DocumentsFolderAsyncJobId= await shareDocumentFolder.data.async_job_id
+        let inProgress = false
+        let mainFolderUrl={}
+        while (inProgress === false) {
+          console.log("while")
+          console.log("INPROGRESS",inProgress)
+          const getDocumentsFolderUrl= await dropbox.getFolderUrl(token,DocumentsFolderAsyncJobId);
+
+          if (getDocumentsFolderUrl.data['.tag'] === 'in_progress') {
+            
+            inProgress = false
+            
+          } else {
+            inProgress = true
+            console.log("TERMINO**--------****", getDocumentsFolderUrl.data)
+            mainFolderUrl.url= await getDocumentsFolderUrl.data.preview_url
+            mainFolderUrl.path= await getDocumentsFolderUrl.data.path_lower
+             
+          }
+          console.log("inprogress despues", inProgress)
+        }
+        console.log("MainFolderUrl",mainFolderUrl)
+        //console.log("ImagesFolderUrl",ImagesForlderUrl)
+        const addSharedFolderToEvent=await dropbox.addFoldersToEvent(mainFolderUrl.url, mainFolderUrl.path, eventId,'events')
+        const sendMessage= await sendMessageToOEFCBTSubscriber(eventName,eventDate,workArea='',eventDescription,locationAddress='New York City',onlineInPersonEventType='Online',eventStartTime,eventFinishTime)
+        console.log("success")
+        res.status(200).send({ message: "Event saved successfully", statusText: "OK", createdEventId:eventId });
+    } catch (e) {
+      console.log("error", e);
+      res
+        .status(400)
+        .json({
+          message: "an error ocurred, please try again",
+          statusText: "FAIL",
+          error:e
+        });
+    }
+  },
 };
