@@ -1355,10 +1355,11 @@ const submissionStatus='Submitted'
       workArea,
       workAreaOther,
       yipSession,
-      yipSessionOther
+      yipSessionOther,
+      submissionStatus
     } = req.body;
     console.log("req.body from create oef yip event", req.body);
-const submissionStatus='Submitted'
+    //const submissionStatus='Submitted'
     try {
       const text = `INSERT INTO events 
       (createdbyLastName,
@@ -1383,7 +1384,8 @@ const submissionStatus='Submitted'
         workArea,
         workAreaOther,
         yipSession,
-        yipSessionOther) VALUES (
+        yipSessionOther,
+        submissionStatus) VALUES (
           $1,
         $2,
         $3,
@@ -1406,7 +1408,7 @@ const submissionStatus='Submitted'
         $20,
         $21,
         $22,
-        $23
+        $23, $24
         ) RETURNING *`;
       let values = [
         createdbyLastName,
@@ -1431,7 +1433,8 @@ const submissionStatus='Submitted'
         workArea,
         workAreaOther,
         yipSession,
-        yipSessionOther
+        yipSessionOther,
+        submissionStatus
       ];
         const saveData = await db.query(text, values);
         const response = saveData.rows;
@@ -1483,3 +1486,7 @@ const submissionStatus='Submitted'
     }
   },
 };
+
+
+
+
