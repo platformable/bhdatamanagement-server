@@ -1634,11 +1634,9 @@ const submissionStatus='Submitted'
       userid=$17,
       workArea=$18,
       workAreaOther=$19,
-      yipSession=$20,
-      yipSessionOther=$21,
-      submissionStatus=$22,
-      id=$23
-        where id=$23`,
+      submissionStatus=$20,
+      id=$21
+        where id=$21`,
         values: [
           createdbyLastName,
       createdByName,
@@ -1661,8 +1659,6 @@ const submissionStatus='Submitted'
       userid,
       workArea,
       workAreaOther,
-      yipSession,
-      yipSessionOther,
       submissionStatus,
           id
         ],
