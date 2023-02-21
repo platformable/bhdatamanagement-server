@@ -1599,8 +1599,6 @@ const submissionStatus='Submitted'
       onlineInPersonEventType,
       programId,
       programName,
-      surveyCreated,
-      surveyModified,
       surveyName,
       userid,
       workArea,
@@ -1634,8 +1632,7 @@ const submissionStatus='Submitted'
       userid=$17,
       workArea=$18,
       workAreaOther=$19,
-      submissionStatus=$20,
-      id=$21
+      submissionStatus=$20
         where id=$21`,
         values: [
           createdbyLastName,
@@ -1653,8 +1650,6 @@ const submissionStatus='Submitted'
       onlineInPersonEventType,
       programId,
       programName,
-      surveyCreated,
-      surveyModified,
       surveyName,
       userid,
       workArea,
