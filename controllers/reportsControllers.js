@@ -503,7 +503,7 @@ getOefEventsOutputReport:async (req,res)=>{
 getOefParticipantEventsOutput:async (req,res)=>{
   /* const text=`select events.id, events.eventname, events.eventdate, participant_survey_outputs.*
   from events join participant_survey_outputs on events.id=participant_survey_outputs.eventid` */
-  const text=`select * from participant_survey_output`
+  const text=`select * from participant_survey_outputs`
   try {
       const allData = await db.query(text);
       const response = allData.rows;
