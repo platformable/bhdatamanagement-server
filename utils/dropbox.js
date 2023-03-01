@@ -59,8 +59,8 @@ try {
       autorename: false,
       force_async: false,
       paths: [
-        `/Data Governance App/Events/${programName}/${eventName}-${eventDate}/Documents`,
-        `/Data Governance App/Events/${programName}/${eventName}-${eventDate}/Images`
+        `/Data Governance App/Events/${programName}/${eventName.replace(/[/]/g,'-')}-${eventDate}/Documents`,
+        `/Data Governance App/Events/${programName}/${eventName.replace(/[/]/g,'-')}-${eventDate}/Images`
       ],
     },
   });
@@ -90,7 +90,7 @@ exports.shareMainFolder = async (tokenFromRefresh,programName,eventName,eventDat
               "acl_update_policy": "editors",
               "force_async": false,
               "member_policy": "anyone",
-              "path": `/Data Governance App/Events/${programName}/${eventName}-${eventDate}`,
+              "path": `/Data Governance App/Events/${programName}/${eventName.replace(/[/]/g,'-')}-${eventDate}`,
               "shared_link_policy": "anyone"
           }
       })
@@ -125,7 +125,7 @@ exports.shareFolder = async (tokenFromRefresh,programName,eventName,eventDate,fo
               "acl_update_policy": "editors",
               "force_async": false,
               "member_policy": "anyone",
-              "path": `/Data Governance App/Events/${programName}/${eventName}-${eventDate}/${folder}`,
+              "path": `/Data Governance App/Events/${programName}/${eventName.replace(/[/]/g,'-')}-${eventDate}/${folder}`,
               "shared_link_policy": "anyone"
           }
       })

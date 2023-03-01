@@ -467,6 +467,59 @@ res.send({message:"an error ocurred", error:e});
 },
 
 
+getOefEventsOutputReport:async (req,res)=>{
+  const text=`select events_output.*, 
+  events.userid,
+  events.eventdescription,
+  events.additionalmaterials,
+  events.onlineinpersoneventtype,
+  events.inpersoneventtypeid,
+  events.inpersoneventtypename,
+  events.eventlocationtypeid,
+  events.eventlocationtypename as _eventlocationtypename,
+  events.onlineeventtypeid,
+  events.onlineeventtypename,
+  events.borough,
+  events.surveyname as _surveyname
+  from events_output 
+  join events on  events_output.eventid = events.id 
+  where events.programname='OEF'`
+  try {
+      const allData = await db.query(text);
+      const response = allData.rows;
+      console.log("response",response)
+      if(response.length>0){
+        res.send(response);
+      } else {
+        res.status(400).send({message:"There is no data", statusText:"FAIL"})
+      }
+      
+    } catch (e) {
+      res.send("an error ocurred");
+      console.log("error",e)
+    }
+},
+
+getOefParticipantEventsOutput:async (req,res)=>{
+  /* const text=`select events.id, events.eventname, events.eventdate, participant_survey_outputs.*
+  from events join participant_survey_outputs on events.id=participant_survey_outputs.eventid` */
+  const text=`select * from participant_survey_outputs`
+  try {
+      const allData = await db.query(text);
+      const response = allData.rows;
+      console.log("response",response)
+      if(response.length>0){
+        res.send(response);
+      } else {
+        res.status(400).send({message:"There is no data", statusText:"FAIL"})
+      }
+      
+    } catch (e) {
+      res.send("an error ocurred");
+      console.log("error",e)
+    }
+},
+
 
 
  
