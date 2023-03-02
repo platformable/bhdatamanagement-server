@@ -481,7 +481,8 @@ getOefEventsOutputReport:async (req,res)=>{
   events.onlineeventtypename,
   events.borough,
   events.surveyname as _surveyname,
-  events.eventname as _eventname
+  events.eventname as _eventname,
+  events.deliverypartner as _deliverypartner
   from events_output 
   join events on  events_output.eventid = events.id 
   where events.programname='OEF'`
