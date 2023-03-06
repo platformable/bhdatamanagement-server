@@ -485,7 +485,7 @@ getOefEventsOutputReport:async (req,res)=>{
   events.deliverypartner as _deliverypartner
   from events_output 
   join events on  events_output.eventid = events.id 
-  where events.programname='OEF'`
+  where events.programname='OEF' and events.submissionstatus ='Complete'`
   try {
       const allData = await db.query(text);
       const response = allData.rows;
