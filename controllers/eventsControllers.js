@@ -1089,6 +1089,8 @@ inPersonEventTypeName,
         onlineEventTypeName,
         locationAddress,
         onlineEventTypeID,
+        createdByName,
+        createdByLastname
     } = req.body;
     console.log("req.body from create oef cbt event", req.body);
 const submissionStatus='Submitted'
@@ -1112,7 +1114,9 @@ const submissionStatus='Submitted'
         inPersonEventTypeID,
         onlineEventTypeName,
         locationAddress,
-        onlineEventTypeID) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18) RETURNING *`;
+        onlineEventTypeID,
+        createdByName,
+        createdByLastname) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *`;
       let values = [
         eventName,
         eventDate,
@@ -1133,6 +1137,8 @@ const submissionStatus='Submitted'
         onlineEventTypeName,
         locationAddress,
         onlineEventTypeID,
+        createdByName,
+        createdByLastname
       ];
         const saveData = await db.query(text, values);
         const response = saveData.rows;

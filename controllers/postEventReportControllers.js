@@ -4225,7 +4225,9 @@ console.log("req.body update oef post event report",req.body)
       mainRoles,
       mainRolesOther,
       eventChecklistOtherText,
-      eventDate
+      eventDate,
+      createdByName,
+      createdbyLastname
     } = req.body;
 
 console.log("create post event report oef cbt",req.body)
@@ -4261,9 +4263,11 @@ console.log("create post event report oef cbt",req.body)
         mainRoles,
         mainRolesOther,
         eventChecklistOtherText,
-        eventDate
+        eventDate,
+        createdByName,
+        createdbyLastname
           ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,
-            $16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31) RETURNING *`;
+            $16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33) RETURNING *`;
       const values = [
         eventID,
         programid,
@@ -4295,7 +4299,9 @@ console.log("create post event report oef cbt",req.body)
         mainRoles,
         mainRolesOther,
         eventChecklistOtherText,
-        eventDate
+        eventDate, 
+        createdByName,
+        createdbyLastname
       ];
 
       const allData = await db.query(text, values);
