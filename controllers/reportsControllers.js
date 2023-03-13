@@ -468,7 +468,7 @@ res.send({message:"an error ocurred", error:e});
 
 
 getOefEventsOutputReport:async (req,res)=>{
-  const text=`select events_output.*, 
+  const text=`  select events_output.*, 
   events.userid,
   events.eventdescription,
   events.additionalmaterials,
@@ -482,10 +482,11 @@ getOefEventsOutputReport:async (req,res)=>{
   events.borough,
   events.surveyname as _surveyname,
   events.eventname as _eventname,
-  events.deliverypartner as _deliverypartner
+  events.deliverypartner as _deliverypartner,
+  events.submissionstatus
   from events_output 
   join events on  events_output.eventid = events.id 
-  where events.programname='OEF' and events.submissionstatus ='Complete'`
+  where events.programname='OEF' and events.submissionstatus ='Complete' and events.surveyname= 'oef-fbo-outreach'`
   try {
       const allData = await db.query(text);
       const response = allData.rows;
@@ -521,8 +522,4 @@ getOefParticipantEventsOutput:async (req,res)=>{
       console.log("error",e)
     }
 },
-
-
-
- 
 };
