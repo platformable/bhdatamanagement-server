@@ -52,7 +52,7 @@ module.exports = {
                     data.hivTesting=row.hivtesting?'Yes':'No'
                     data.eventName=row.eventname
                     data.onelineDescription=row.onelinedescription
-                    data.oefEventPresentationTopic=row.oefeventpresentationtopic
+                    data.oefEventPresentationTopic=row.oefeventpresentationtopic || ""
                     data.month=new Date(row.eventdate).toLocaleString('default', { month: 'long' });
                     data.eventDate=row.eventdate
                     data.eventStartTime=row.eventstarttime
@@ -64,7 +64,7 @@ module.exports = {
                     data.selftestKits=0
                     //data.collaborativeEvent=row?.clusterfbos ? row.clusterfbos?.join(", ") + row.partnerorganization1 !=='' && `AND ${row.partnerorganization1}` + row.partnerorganization2 !=='' && `AND ${row.partnerorganization2}`:""
                     data.collaborativeEvent=collabEvent(row)
-                    data.notes=`HIV discussion points: ${row.eventquestions} Collaborated with: ${joinClusterFbos(row)} ${row.partnerorganization1!=='' && `AND ${row.partnerorganization1}`} ${row.partnerorganization2!=='' && `AND ${row.partnerorganization2}`} `
+                    data.notes=`HIV discussion points: ${row.eventquestions} Collaborated with: ${joinClusterFbos(row)} ${row.partnerorganization1!=='' && `, ${row.partnerorganization1}`} ${row.partnerorganization2!=='' && `, ${row.partnerorganization2}`} `
                     newData.push(data)   
               })  
                
@@ -128,7 +128,7 @@ module.exports = {
                     data.eventStartTime=row.eventstarttime
                     data.eventFinishTime=row.eventfinishtime
                     data.totalTime=((convertDurationtoSeconds(row.eventfinishtime)-convertDurationtoSeconds(row.eventstarttime)) / 3600).toFixed(2)
-                    data.oefTargetAudienceForReport=row.oeftargetaudienceforreport 
+                    data.oefTargetAudienceForReport=row.oeftargetaudienceforreport || ""
                     data.targetAudience='All FBOs'
                     data.totalAttendees=row.totalattendees
                     data.hivTestedTotal=""
