@@ -1034,7 +1034,8 @@ inPersonEventTypeName,
      submissionNotes,
      oefEventEmail,
      onelineDescription,
-     oefEventPresentationTopic
+     oefEventPresentationTopic,
+     oefTargetAudienceForReport
     } = req.body;
 
     console.log(req.body)
@@ -1045,13 +1046,15 @@ inPersonEventTypeName,
         submissionStatus=$1,
      submissionNotes=$2,
      onelineDescription=$3,
-     oefEventPresentationTopic=$4
-        where id=$5`,
+     oefEventPresentationTopic=$4,
+     oefTargetAudienceForReport=$5
+        where id=$6`,
         values: [
           submissionStatus,
           submissionNotes,
           onelineDescription,
      oefEventPresentationTopic,
+     oefTargetAudienceForReport,
           id
         ],
       };

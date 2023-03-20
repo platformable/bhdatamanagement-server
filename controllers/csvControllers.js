@@ -85,6 +85,7 @@ module.exports = {
         events.eventDate,
         events.eventStartTime,
         events.eventFinishTime,
+        events.oefTargetAudienceForReport,
         events_output.deliveryPartner,
         events_output.cluster,
         events_output.nameGuestSpeakers,
@@ -126,7 +127,8 @@ module.exports = {
                     data.eventDate=row.eventdate
                     data.eventStartTime=row.eventstarttime
                     data.eventFinishTime=row.eventfinishtime
-                    data.totalTime=((convertDurationtoSeconds(row.eventfinishtime)-convertDurationtoSeconds(row.eventstarttime)) / 3600).toFixed(2) 
+                    data.totalTime=((convertDurationtoSeconds(row.eventfinishtime)-convertDurationtoSeconds(row.eventstarttime)) / 3600).toFixed(2)
+                    data.oefTargetAudienceForReport=row.oeftargetaudienceforreport 
                     data.targetAudience='All FBOs'
                     data.totalAttendees=row.totalattendees
                     data.hivTestedTotal=""
