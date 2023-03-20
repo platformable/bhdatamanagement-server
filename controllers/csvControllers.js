@@ -123,6 +123,7 @@ module.exports = {
                     data.hivTesting='No'
                     data.eventName=row.eventname
                     data.onelineDescription=`${row.cluster} Quarterly CAB. ${row.eventhighlights}`
+                    data.typeOfactivity=""
                     data.month=new Date(row.eventdate).toLocaleString('default', { month: 'long' });
                     data.eventDate=row.eventdate
                     data.eventStartTime=row.eventstarttime
@@ -133,7 +134,6 @@ module.exports = {
                     data.totalAttendees=row.totalattendees
                     data.hivTestedTotal=""
                     data.selftestKits=0
-                    data.typeOfactivity=""
                     data.collaborativeEvent='Yes'
                     data.eventQuestions='How HIV was discussed: '  + row.eventquestions
                     newData.push(data)   
