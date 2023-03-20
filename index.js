@@ -96,6 +96,9 @@ app.use('/site_visits',siteVisits)
 const reports = require('./routes/reports')
 app.use('/reports',reports)
 
+const csv = require('./routes/csv')
+app.use('/csv',csv)
+
 //AUTOBACKUP
 
 var task = cron.schedule('50 9 * * *', () =>  {
