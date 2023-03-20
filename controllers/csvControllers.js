@@ -120,7 +120,6 @@ module.exports = {
                     data.cluster=row.cluster
                     data.nameGuestSpeakers=row.nameguestspeakers
                     data.hivTesting='No'
-                    data.eventQuestions='How HIV was discussed: '  + row.eventquestions
                     data.eventName=row.eventname
                     data.onelineDescription=`${row.cluster} Quarterly CAB. ${row.eventhighlights}`
                     data.month=new Date(row.eventdate).toLocaleString('default', { month: 'long' });
@@ -134,6 +133,7 @@ module.exports = {
                     data.selftestKits=0
                     data.typeOfactivity=""
                     data.collaborativeEvent='Yes'
+                    data.eventQuestions='How HIV was discussed: '  + row.eventquestions
                     newData.push(data)   
               })  
                
