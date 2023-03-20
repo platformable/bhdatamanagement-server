@@ -131,7 +131,8 @@ module.exports = {
                     data.targetAudience='All FBOs'
                     data.totalAttendees=row.totalattendees
                     data.hivTestedTotal=""
-                    data.selftestKits=""
+                    data.selftestKits=0
+                    data.typeOfactivity=""
                     data.collaborativeEvent='Yes'
                     newData.push(data)   
               })  
