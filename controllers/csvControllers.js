@@ -10,7 +10,7 @@ module.exports = {
         events.eventFinishTime,
         events.borough,
         events.surveyname,
-        events_output.deliveryPartner,
+        events.deliveryPartner,
         events_output.nameGuestSpeakers,
         events_output.hivTesting,
         events_output.totalAttendees,
