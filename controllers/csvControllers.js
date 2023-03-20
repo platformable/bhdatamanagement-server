@@ -47,6 +47,14 @@ module.exports = {
                         const [hours, minutes, seconds] = duration.split(':');
                         return Number(hours) * 60 * 60 + Number(minutes) * 60 + Number(seconds);
                     };
+
+                    const collabEvent=(row)=>{
+                        if(row.clusterfbos ==='' || row.partnerorganization1==='' || row.partnerorganization2 === ''){
+                            return 'No'
+                        } else {
+                            return 'Yes'
+                        }
+                    }
                     data.deliveryPartner=row.deliverypartner
                     data.borough=row.borough
                     data.nameGuestSpeakers=row.nameguestspeakers
@@ -64,8 +72,8 @@ module.exports = {
                     data.hivTestedTotal=row.hivtestedtotal
                     data.selftestKits=0
                     //data.collaborativeEvent=row?.clusterfbos ? row.clusterfbos?.join(", ") + row.partnerorganization1 !=='' && `AND ${row.partnerorganization1}` + row.partnerorganization2 !=='' && `AND ${row.partnerorganization2}`:""
-                    data.collaborativeEvent=`${joinClusterFbos(row)} ${row.partnerorganization1!=='' && `AND ${row.partnerorganization1}`} ${row.partnerorganization2!=='' && `AND ${row.partnerorganization2}`}`
-                    data.notes=`${row.eventquestions} Collaborated with: ${joinClusterFbos(row)} ${row.partnerorganization1!=='' && `AND ${row.partnerorganization1}`} ${row.partnerorganization2!=='' && `AND ${row.partnerorganization2}`} `
+                    data.collaborativeEvent=collabEvent(row)
+                    data.notes=`HIV discussion points: ${row.eventquestions} Collaborated with: ${joinClusterFbos(row)} ${row.partnerorganization1!=='' && `AND ${row.partnerorganization1}`} ${row.partnerorganization2!=='' && `AND ${row.partnerorganization2}`} `
                     newData.push(data)   
               })  
                
