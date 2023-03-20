@@ -22,7 +22,7 @@ module.exports = {
         events_output.eventQuestions
         from events
         inner join events_output on  events.id =events_output.eventid
-        where events.surveyname='oef-fbo-outreach'`
+        where events.surveyname='oef-fbo-outreach' and events.submissionstatus = 'Complete'`
         try {
             const allData = await db.query(text);
             const response = allData.rows;
@@ -93,7 +93,7 @@ module.exports = {
         events_output.eventQuestions
         from events
         inner join events_output on  events.id =events_output.eventid
-        where events.surveyname='oef-cab'`
+        where events.surveyname='oef-cab' and events.submissionstatus = 'Complete'`
         try {
             const allData = await db.query(text);
             const response = allData.rows;
