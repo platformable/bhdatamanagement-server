@@ -58,7 +58,7 @@ module.exports = {
                     data.eventStartTime=row.eventstarttime
                     data.eventFinishTime=row.eventfinishtime
                     data.totalTime=((convertDurationtoSeconds(row.eventfinishtime)-convertDurationtoSeconds(row.eventstarttime)) / 3600).toFixed(2) 
-                    data.oefTargetAudienceForReport=row.oeftargetaudienceforreport 
+                    data.oefTargetAudienceForReport=row.oeftargetaudienceforreport || ""
                     data.totalAttendees=row.totalattendees
                     data.hivTestedTotal=row.hivtestedtotal
                     data.selftestKits=0
@@ -90,7 +90,8 @@ module.exports = {
         events_output.cluster,
         events_output.nameGuestSpeakers,
         events_output.eventHighlights,
-        events_output.eventQuestions
+        events_output.eventQuestions,
+        events_output.totalattendees 
         from events
         inner join events_output on  events.id =events_output.eventid
         where events.surveyname='oef-cab' and events.submissionstatus = 'Complete'`
@@ -129,9 +130,9 @@ module.exports = {
                     data.eventStartTime=row.eventstarttime
                     data.eventFinishTime=row.eventfinishtime
                     data.totalTime=((convertDurationtoSeconds(row.eventfinishtime)-convertDurationtoSeconds(row.eventstarttime)) / 3600).toFixed(2)
-                    data.oefTargetAudienceForReport=row.oeftargetaudienceforreport || ""
                     data.targetAudience='All FBOs'
-                    data.totalAttendees=row.totalattendees
+                    //data.oefTargetAudienceForReport=row.oeftargetaudienceforreport || ""
+                    data.totalAttendees=row.totalattendees || ""
                     data.hivTestedTotal=""
                     data.selftestKits=0
                     data.collaborativeEvent='Yes'
