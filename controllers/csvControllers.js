@@ -148,5 +148,73 @@ module.exports = {
             res.send("an error ocurred");
             console.log("error",e)
           }
+    },
+    getCbtCsvData:async (req,res)=>{
+        const text=`select
+        events.createdByName,
+        events.eventName,
+        events.eventDate,
+        events.eventStartTime,
+        events.eventFinishTime,
+        events_output.totalAttendees,
+        events_output.eventOrganization,
+        events_output.eventWorkedBest,
+        events_output.eventImprove,
+        events_output.eventDelivery,
+        events_output.engaged,
+        events_output.eventResponsive,
+        events_output.topicsFollowup,
+        events_output.leastEngaged
+        from events
+        inner join events_output on  events.id =events_output.eventid
+        where events_output.surveyname='bh-cbt-post-event' and events.surveyname='bh-cbt-register'`
+        try {
+            const allData = await db.query(text);
+            const response = allData.rows;
+        
+            
+            if(response.length>0){
+                const newData = []
+           
+                response.forEach((row,index)=>{
+                    let data={}
+                   
+                    function convertDurationtoSeconds(duration){
+                        const [hours, minutes, seconds] = duration.split(':');
+                        return Number(hours) * 60 * 60 + Number(minutes) * 60 + Number(seconds);
+                    };
+
+    
+                    data.typeOfActivity='Capacity Building Training'
+                    data.activityLedBy='NBLCH'
+                    data.facilitatorPresenter=row.createdbyname
+                    data.eventTitle=row.eventname
+                    data.eventDescription='N/A'
+                    data.event='Remotely/Virtually'
+                    data.presentationTopic='Educational Topics'
+                    data.activityMonth=new Date(row.eventdate).toLocaleString('default', { month: 'long' });
+                    data.activityDate=row.eventdate
+                    data.startTime=row.eventstarttime
+                    data.endTime=row.eventfinishtime
+                    data.totalTime=((convertDurationtoSeconds(row.eventfinishtime)-convertDurationtoSeconds(row.eventstarttime)) / 3600).toFixed(2)
+                    data.targetAudience=""
+                    data.totalAttendees=row.totalattendees
+                    data.notes=`How satisfied were you with how the event was facilitated/delivered? ${row.eventorganization} What do you think worked best with how the workshop was organized today?
+                    ${row.eventworkedbest} How satisfied were you with how the event was facilitated/delivered? ${row.eventdelivery} How responsive and engaged do you think participants were? ${row.engaged}
+                    What do you think was the activity or discussion topic where the participants were most engaged? ${row.eventresponsive}
+                    Were there any topics or discussions that you would like to followup on or prepare additional resources for in future? ${row.topicsfollowup}
+                    What do you think was the activity or discussion topic that participants were least engaged? ${row.leastengaged}`
+                    newData.push(data)   
+              })  
+               
+              res.send(newData);
+            } else {
+              res.status(400).send({message:"There is no data", statusText:"FAIL"})
+            }
+            
+          } catch (e) {
+            res.send("an error ocurred");
+            console.log("error",e)
+          }
     }
 }
