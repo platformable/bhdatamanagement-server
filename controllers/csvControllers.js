@@ -197,7 +197,8 @@ module.exports = {
                     data.startTime=row.eventstarttime
                     data.endTime=row.eventfinishtime
                     data.totalTime=((convertDurationtoSeconds(row.eventfinishtime)-convertDurationtoSeconds(row.eventstarttime)) / 3600).toFixed(2)
-                    data.targetAudience=""
+                    data.targetAudienceTotal=""
+                    data.targetAudience='All FBOs'
                     data.totalAttendees=row.totalattendees
                     data.notes=`How satisfied were you with how the event was facilitated/delivered? ${row.eventorganization} What do you think worked best with how the workshop was organized today?
                     ${row.eventworkedbest} How satisfied were you with how the event was facilitated/delivered? ${row.eventdelivery} How responsive and engaged do you think participants were? ${row.engaged}
@@ -253,7 +254,8 @@ module.exports = {
                     data.startTime=row.eventstarttime
                     data.endTime=row.eventfinishtime
                     data.totalTime=((convertDurationtoSeconds(row.eventfinishtime)-convertDurationtoSeconds(row.eventstarttime)) / 3600).toFixed(2)
-                    data.targetAudience=1
+                    data.targetAudienceTotal=1
+                    data.targetAudience=row.fbo
                     data.totalAttendees='To be updated'
                     data.notes=row.submissionnotes
                     newData.push(data)   
