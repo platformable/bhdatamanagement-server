@@ -257,7 +257,7 @@ module.exports = {
                     data.totalTime=((convertDurationtoSeconds(row.eventfinishtime)-convertDurationtoSeconds(row.eventstarttime)) / 3600).toFixed(2)
                     data.targetAudienceTotal=1
                     data.targetAudience=row.fbo
-                    data.totalAttendees='To be updated'
+                    data.totalAttendees=''
                     data.notes=row.submissionnotes
                     newData.push(data)   
               })  
