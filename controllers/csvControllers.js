@@ -268,5 +268,57 @@ module.exports = {
             res.send("an error ocurred");
             console.log("error",e)
           }
+    },
+    getTechnicalAssistanceCsvData:async (req,res)=>{
+        const text=`select 
+        taCompleteBhStaff,
+        taType,
+        taDateSubmitted,
+        taFbo,
+        taNotesBhStaff
+        from technical_assistance  where tastatus='Complete'`
+        try {
+            const allData = await db.query(text);
+            const response = allData.rows;
+        
+            
+            if(response.length>0){
+                const newData = []
+           
+                response.forEach((row,index)=>{
+                    let data={}
+                   
+                    function convertDurationtoSeconds(duration){
+                        const [hours, minutes, seconds] = duration.split(':');
+                        return Number(hours) * 60 * 60 + Number(minutes) * 60 + Number(seconds);
+                    };
+                    data.typeOfActivity='Technical Assistance'
+                    data.activityLedBy='NBLCH'
+                    data.facilitatorPresenter=row.tacompletebhstaff || " "
+                    data.eventTitle=row.tatype.join(', ')
+                    data.eventDescription='N/A'
+                    data.event='Remotely/Virtually'
+                    data.presentationTopic='N/A'
+                    data.activityMonth=new Date(row.eventdate).toLocaleString('default', { month: 'long' });
+                    data.activityDate=row.tadatesubmitted
+                    data.startTime=""
+                    data.endTime=""
+                    data.totalTime=""
+                    data.targetAudienceTotal=row.tafbo.length
+                    data.targetAudience=row.tafbo.join(', ')
+                    data.totalAttendees=''
+                    data.notes=row.tanotesbhstaff
+                    newData.push(data)   
+              })  
+               
+              res.send(newData);
+            } else {
+              res.status(400).send({message:"There is no data", statusText:"FAIL"})
+            }
+            
+          } catch (e) {
+            res.send("an error ocurred");
+            console.log("error",e)
+          }
     }
 }
