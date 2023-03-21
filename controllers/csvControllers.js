@@ -216,5 +216,57 @@ module.exports = {
             res.send("an error ocurred");
             console.log("error",e)
           }
+    },
+    getSiteVisitsCsvData:async (req,res)=>{
+        const text=`select
+       eventDate,
+       eventstarttime,
+       eventfinishtime,
+       fbo,
+       submissionnotes
+        from site_visits
+        where submissionstatus='Complete'`
+        try {
+            const allData = await db.query(text);
+            const response = allData.rows;
+        
+            
+            if(response.length>0){
+                const newData = []
+           
+                response.forEach((row,index)=>{
+                    let data={}
+                   
+                    function convertDurationtoSeconds(duration){
+                        const [hours, minutes, seconds] = duration.split(':');
+                        return Number(hours) * 60 * 60 + Number(minutes) * 60 + Number(seconds);
+                    };
+                    data.typeOfActivity='Site Visit'
+                    data.activityLedBy='NBLCH'
+                    data.facilitatorPresenter=row.createdbyname || " "
+                    data.eventTitle='FBO Site Visit'
+                    data.eventDescription='Annual Site Visit'
+                    data.event='On-site'
+                    data.presentationTopic='N/A'
+                    data.activityMonth=new Date(row.eventdate).toLocaleString('default', { month: 'long' });
+                    data.activityDate=row.eventdate
+                    data.startTime=row.eventstarttime
+                    data.endTime=row.eventfinishtime
+                    data.totalTime=((convertDurationtoSeconds(row.eventfinishtime)-convertDurationtoSeconds(row.eventstarttime)) / 3600).toFixed(2)
+                    data.targetAudience=1
+                    data.totalAttendees='To be updated'
+                    data.notes=row.submissionnotes
+                    newData.push(data)   
+              })  
+               
+              res.send(newData);
+            } else {
+              res.status(400).send({message:"There is no data", statusText:"FAIL"})
+            }
+            
+          } catch (e) {
+            res.send("an error ocurred");
+            console.log("error",e)
+          }
     }
 }
