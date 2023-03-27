@@ -25,6 +25,8 @@ module.exports={
         events.onlineeventtypeid,
         events.onlineeventtypename,
         events.borough,
+        events.nysactivity as _nysactivity,
+        events.nysactivity as _nysactivityother,
         users.name,
         users.lastname,users.userid
         from events_output 
