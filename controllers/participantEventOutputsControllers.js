@@ -1238,7 +1238,7 @@ consentCanBeTakenAway
 const allData = await db.query(text,values);
 const response = allData.rows;
 res.status(200).send({"message":"oef yip participant session 1 saved successfully",'statusText':'OK'});
-console.log("sucess participant oef cbt survey")
+console.log("sucess yip session1  oef ")
        
 
 } catch (error) {
