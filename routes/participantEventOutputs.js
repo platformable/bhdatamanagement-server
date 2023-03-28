@@ -7,6 +7,7 @@ router.post("/create",controller.createParticipantEventOutputs)
 router.post("/oef/participant-event-survey/create",controller.createOefParticipantEventOutputs)
 router.post("/oef/cbt/participant-event-survey/create",controller.createOefCbtParticipantEventOutputs)
 router.post("/oef-cbt-quarterly-evaluation-survey/create",controller.createOefCbtQuarterlyEvaluationSurvey)
+router.post("/oef-pre-workout-survey/create",controller.createOefPreWorkshopSurvey)
 router.get("/",controller.getParticipantEventOutputs)
 router.get("/:id",controller.getParticipantEventOutputsById)
 router.get("/oef/cbt",controller.getParticipantOEFCBTEventOutputs)
@@ -15,3 +16,5 @@ router.get("/oef/cbt",controller.getParticipantOEFCBTEventOutputs)
 
 
 module.exports = router
+
+

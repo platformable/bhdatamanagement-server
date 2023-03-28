@@ -348,10 +348,6 @@ try {
 }
     },
 
-
-
-
-
 // CREATE OEF PARTICIPANT EVENT OUTPUT
 
 createOefParticipantEventOutputs: async (req,res)=>{
@@ -469,8 +465,6 @@ res.status(400).send({"message":"an error occurred, try again later","error":err
 console.log("create participant event error:",error)
 }
 },
-
-
 
 createOefCbtParticipantEventOutputs: async (req,res)=>{
 
@@ -593,6 +587,256 @@ res.status(400).send({"message":"an error occurred, try again later","error":err
 console.log("create participant event error:",error)
 }
 },
+
+createOefPreWorkshopSurvey: async (req,res)=>{
+
+    console.log("OEF pre workshop evaluation survey")
+    const {
+        participantHivKnowledge,
+        deliveryPartner,
+        participantZipCode,
+        raceID,
+        participantRace,
+        participantRaceOther,
+        ethnicityID,
+        participantEthnicity,
+        participantEthnicityOther,
+        genderID,
+        participantGender,
+        participantGenderOther,
+        orientationID,
+        participantOrientation,
+        participantOrientationOther,
+        participantReferral,
+        participantReferralOther,
+        participantSuggestions,
+        surveyName,
+        confidentCondom,
+        stiInfectionsAgeRange,
+        knowHaveSti,
+        pep28DaysAfter,
+        condomWalletHandy,
+        emergencyContraceptionAfterSex,
+        surveyCreated,
+        confidentRelationshipsCommunicating,
+        participantListening,
+        participantBodyLanguageConsent,
+        phoneActiveListening,
+        pubertyDifferentExperiences,
+        eatingHabitsEmotions,
+        stairsInsteadElevator,
+        confidentMentalHealthToolsResources,
+        lowEnergySocialMediaHelpful,
+        preparationHelpsGoals,
+        hbcuMeaningKnowledge,
+        participantGrade,
+        participantGradeOther,
+        participantAge,
+        confidentPreventingHivAndStis,
+        confidentJobAndCareerChoices,
+        partnerCheckPhoneEmail,
+        peopleMentallyIllViolent,
+        selfCareAwareness,
+        mentalIllnessCausedBy,
+        smartGoalAwareness,
+        goodCommunicationImportantOnlyPublicSpeakers,
+        poorCommunicationCanRuinRelationships,
+        cyberBullyingOnlyNegativeSocialMedia,
+        deleteFromInternetGoneForever,
+        oneProvenPathToSuccess,
+        shouldKnowFutureCareerInHighSchool,
+        managingHealthyRelationships,
+        confidentCommunicatingEffectively,
+        deliveryPartnerOther,
+        awareOptionsEducationCareer,
+        consentCanBeTakenAway,
+        participantBorough
+    
+    }= req.body
+
+    console.log("OEF pre workshop participant survey",req.body)
+
+
+try {
+const text = `insert into participant_survey_outputs (
+    participantHivKnowledge,
+        deliveryPartner,
+        participantZipCode,
+        raceID,
+        participantRace,
+        participantRaceOther,
+        ethnicityID,
+        participantEthnicity,
+        participantEthnicityOther,
+        genderID,
+        participantGender,
+        participantGenderOther,
+        orientationID,
+        participantOrientation,
+        participantOrientationOther,
+        participantReferral,
+        participantReferralOther,
+        participantSuggestions,
+        surveyName,
+        confidentCondom,
+        stiInfectionsAgeRange,
+        knowHaveSti,
+        pep28DaysAfter,
+        condomWalletHandy,
+        emergencyContraceptionAfterSex,
+        surveyCreated,
+        confidentRelationshipsCommunicating,
+        participantListening,
+        participantBodyLanguageConsent,
+        phoneActiveListening,
+        pubertyDifferentExperiences,
+        eatingHabitsEmotions,
+        stairsInsteadElevator,
+        confidentMentalHealthToolsResources,
+        lowEnergySocialMediaHelpful,
+        preparationHelpsGoals,
+        hbcuMeaningKnowledge,
+        participantGrade,
+        participantGradeOther,
+        participantAge,
+        confidentPreventingHivAndStis,
+        confidentJobAndCareerChoices,
+        partnerCheckPhoneEmail,
+        peopleMentallyIllViolent,
+        selfCareAwareness,
+        mentalIllnessCausedBy,
+        smartGoalAwareness,
+        goodCommunicationImportantOnlyPublicSpeakers,
+        poorCommunicationCanRuinRelationships,
+        cyberBullyingOnlyNegativeSocialMedia,
+        deleteFromInternetGoneForever,
+        oneProvenPathToSuccess,
+        shouldKnowFutureCareerInHighSchool,
+        managingHealthyRelationships,
+        confidentCommunicatingEffectively,
+        deliveryPartnerOther,
+        awareOptionsEducationCareer,
+        consentCanBeTakenAway,
+        participantBorough
+    ) VALUES (
+        $1,
+        $2,
+        $3,
+        $4,
+        $5,
+        $6,
+        $7,
+        $8,
+        $9,
+        $10,
+        $11,
+        $12,
+        $13,
+        $14,
+        $15,
+        $16,
+        $17,
+        $18,
+        $19,
+        $20,
+        $21,
+        $22,
+        $23,
+        $24,
+        $25,
+        $26,
+        $27,
+        $28,
+        $29,
+        $30,
+        $31,
+        $32,
+        $33,
+        $34,
+        $35,
+        $36,
+        $37,
+        $38,
+        $39,
+        $40,
+        $41,
+        $42,
+        $43,$44,$45,$46,$47,$48,$49,$50,$51,$52,$53,$54,$55,$56,$57,$58,$59
+        ) RETURNING *`;
+        const values = [
+            participantHivKnowledge,
+        deliveryPartner,
+        participantZipCode,
+        raceID,
+        participantRace,
+        participantRaceOther,
+        ethnicityID,
+        participantEthnicity,
+        participantEthnicityOther,
+        genderID,
+        participantGender,
+        participantGenderOther,
+        orientationID,
+        participantOrientation,
+        participantOrientationOther,
+        participantReferral,
+        participantReferralOther,
+        participantSuggestions,
+        surveyName,
+        confidentCondom,
+        stiInfectionsAgeRange,
+        knowHaveSti,
+        pep28DaysAfter,
+        condomWalletHandy,
+        emergencyContraceptionAfterSex,
+        surveyCreated,
+        confidentRelationshipsCommunicating,
+        participantListening,
+        participantBodyLanguageConsent,
+        phoneActiveListening,
+        pubertyDifferentExperiences,
+        eatingHabitsEmotions,
+        stairsInsteadElevator,
+        confidentMentalHealthToolsResources,
+        lowEnergySocialMediaHelpful,
+        preparationHelpsGoals,
+        hbcuMeaningKnowledge,
+        participantGrade,
+        participantGradeOther,
+        participantAge,
+        confidentPreventingHivAndStis,
+        confidentJobAndCareerChoices,
+        partnerCheckPhoneEmail,
+        peopleMentallyIllViolent,
+        selfCareAwareness,
+        mentalIllnessCausedBy,
+        smartGoalAwareness,
+        goodCommunicationImportantOnlyPublicSpeakers,
+        poorCommunicationCanRuinRelationships,
+        cyberBullyingOnlyNegativeSocialMedia,
+        deleteFromInternetGoneForever,
+        oneProvenPathToSuccess,
+        shouldKnowFutureCareerInHighSchool,
+        managingHealthyRelationships,
+        confidentCommunicatingEffectively,
+        deliveryPartnerOther,
+        awareOptionsEducationCareer,
+        consentCanBeTakenAway,
+        participantBorough
+        ]
+
+const allData = await db.query(text,values);
+const response = allData.rows;
+res.status(200).send({"message":"oef pre workshop saved successfully",'statusText':'OK'});
+console.log("sucess participant oef cbt survey")
+       
+
+} catch (error) {
+res.status(400).send({"message":"an error occurred, try again later","error":error})
+console.log("create participant event error:",error)
+}
+},
+
 
 createOefCbtQuarterlyEvaluationSurvey: async (req,res)=>{
 
