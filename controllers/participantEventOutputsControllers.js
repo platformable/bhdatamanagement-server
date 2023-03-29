@@ -1290,7 +1290,6 @@ createOefYipParticipantSession2: async (req,res)=>{
         mentalIllnessCausedBy,
         managingHealthyRelationships,
         deliveryPartnerOther,
-        consentCanBeTakenAway,
         phoneActiveListening,
         participantListening,
         goodCommunicationImportantOnlyPublicSpeakers,
@@ -1344,7 +1343,6 @@ const text = `insert into participant_survey_outputs (
     mentalIllnessCausedBy,
     managingHealthyRelationships,
     deliveryPartnerOther,
-    consentCanBeTakenAway,
     phoneActiveListening,
     participantListening,
     goodCommunicationImportantOnlyPublicSpeakers,
@@ -1395,7 +1393,7 @@ const text = `insert into participant_survey_outputs (
         $40,
         $41,
         $42,
-        $43,$44,$45,$46
+        $43,$44,$45
         ) RETURNING *`;
         const values = [
             surveyCreated,
@@ -1436,7 +1434,6 @@ const text = `insert into participant_survey_outputs (
             mentalIllnessCausedBy,
             managingHealthyRelationships,
             deliveryPartnerOther,
-            consentCanBeTakenAway,
             phoneActiveListening,
             participantListening,
             goodCommunicationImportantOnlyPublicSpeakers,
@@ -1449,7 +1446,7 @@ const text = `insert into participant_survey_outputs (
 const allData = await db.query(text,values);
 const response = allData.rows;
 res.status(200).send({"message":"oef yip participant session 2 saved successfully",'statusText':'OK'});
-console.log("sucess yip session1  oef ")
+console.log("sucess yip session2  oef ")
        
 
 } catch (error) {
@@ -1643,7 +1640,227 @@ const text = `insert into participant_survey_outputs (
 const allData = await db.query(text,values);
 const response = allData.rows;
 res.status(200).send({"message":"oef yip participant session 3 saved successfully",'statusText':'OK'});
-console.log("sucess yip session1  oef ")
+console.log("sucess yip session3  oef ")
+       
+
+} catch (error) {
+res.status(400).send({"message":"an error occurred, try again later","error":error})
+console.log("create participant event error:",error)
+}
+},
+createOefYipParticipantSession4: async (req,res)=>{
+
+    console.log("OEF yip participant session 4 survey")
+    const {
+        canApply,
+condomWalletHandy,
+confidentNegotiatingContraceptives,
+confidentPreventingHivAndStis,
+consentCanBeTakenAway,
+deliveryPartner,
+deliveryPartnerOther,
+emergencyContraceptionAfterSex,
+ethnicityID,
+eventId,
+genderID,
+informationUseful,
+knowHaveSti,
+orientationID,
+participantAge,
+participantBorough,
+participantEthnicity,
+participantEthnicityOther,
+participantGender,
+participantGenderOther,
+participantGrade,
+participantGradeOther,
+participantHivKnowledge,
+participantOrientation,
+participantOrientationOther,
+participantRace,
+participantRaceOther,
+participantReferral,
+participantReferralOther,
+participantSuggestions,
+participantZipCode,
+pep28DaysAfter,
+raceID,
+recommendEvent,
+satisfiedEventActivities,
+stiInfectionsAgeRange,
+surveyCreated,
+surveyName,
+thinkDifferently,
+workshopActivities,
+workshopDoDifferently,
+workshopFavorite,
+workshopLikelyTellFriend,
+workshopsEnjoyed,
+workshopsHelpful,
+workshopShouldChange,
+workshopsLearnedFrom,
+workshopsRecommendToFriends
+
+    }= req.body
+
+    console.log("OEF yip participant session 4 survey",req.body)
+
+
+try {
+const text = `insert into participant_survey_outputs (
+    canApply,
+condomWalletHandy,
+confidentNegotiatingContraceptives,
+confidentPreventingHivAndStis,
+consentCanBeTakenAway,
+deliveryPartner,
+deliveryPartnerOther,
+emergencyContraceptionAfterSex,
+ethnicityID,
+eventId,
+genderID,
+informationUseful,
+knowHaveSti,
+orientationID,
+participantAge,
+participantBorough,
+participantEthnicity,
+participantEthnicityOther,
+participantGender,
+participantGenderOther,
+participantGrade,
+participantGradeOther,
+participantHivKnowledge,
+participantOrientation,
+participantOrientationOther,
+participantRace,
+participantRaceOther,
+participantReferral,
+participantReferralOther,
+participantSuggestions,
+participantZipCode,
+pep28DaysAfter,
+raceID,
+recommendEvent,
+satisfiedEventActivities,
+stiInfectionsAgeRange,
+surveyCreated,
+surveyName,
+thinkDifferently,
+workshopActivities,
+workshopDoDifferently,
+workshopFavorite,
+workshopLikelyTellFriend,
+workshopsEnjoyed,
+workshopsHelpful,
+workshopShouldChange,
+workshopsLearnedFrom,
+workshopsRecommendToFriends
+    ) VALUES (
+        $1,
+        $2,
+        $3,
+        $4,
+        $5,
+        $6,
+        $7,
+        $8,
+        $9,
+        $10,
+        $11,
+        $12,
+        $13,
+        $14,
+        $15,
+        $16,
+        $17,
+        $18,
+        $19,
+        $20,
+        $21,
+        $22,
+        $23,
+        $24,
+        $25,
+        $26,
+        $27,
+        $28,
+        $29,
+        $30,
+        $31,
+        $32,
+        $33,
+        $34,
+        $35,
+        $36,
+        $37,
+        $38,
+        $39,
+        $40,
+        $41,
+        $42,
+        $43,
+        $44,
+        $45,
+        $46,
+        $47,
+        $48
+        ) RETURNING *`;
+        const values = [
+            canApply,
+condomWalletHandy,
+confidentNegotiatingContraceptives,
+confidentPreventingHivAndStis,
+consentCanBeTakenAway,
+deliveryPartner,
+deliveryPartnerOther,
+emergencyContraceptionAfterSex,
+ethnicityID,
+eventId,
+genderID,
+informationUseful,
+knowHaveSti,
+orientationID,
+participantAge,
+participantBorough,
+participantEthnicity,
+participantEthnicityOther,
+participantGender,
+participantGenderOther,
+participantGrade,
+participantGradeOther,
+participantHivKnowledge,
+participantOrientation,
+participantOrientationOther,
+participantRace,
+participantRaceOther,
+participantReferral,
+participantReferralOther,
+participantSuggestions,
+participantZipCode,
+pep28DaysAfter,
+raceID,
+recommendEvent,
+satisfiedEventActivities,
+stiInfectionsAgeRange,
+surveyCreated,
+surveyName,
+thinkDifferently,
+workshopActivities,
+workshopDoDifferently,
+workshopFavorite,
+workshopLikelyTellFriend,
+workshopsEnjoyed,
+workshopsHelpful,
+workshopShouldChange,
+workshopsLearnedFrom,
+workshopsRecommendToFriends
+        ]
+
+const allData = await db.query(text,values);
+const response = allData.rows;
+res.status(200).send({"message":"oef yip participant session 4 saved successfully",'statusText':'OK'});
+console.log("sucess yip session 4  oef ")
        
 
 } catch (error) {
@@ -1652,3 +1869,4 @@ console.log("create participant event error:",error)
 }
 },
 }
+
