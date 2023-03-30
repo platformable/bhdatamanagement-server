@@ -4702,6 +4702,29 @@ eventName=$7
         console.log("error",e)
       }
 },
+getOefYipPostEventReportById:async (req,res)=>{
+   
+  let {id}=req.params
+  console.log("get oef yip",id)
+  const text=`select events.id as eventID,events.eventname as event_name,events.eventdate as event_date,events.folderpath,events.folderurl,events_output.* eventname from events
+   join events_output on  events.id = events_output.eventid
+  where eventid=$1 `
+ const values=[id]
+  try {
+      const allData = await db.query(text,values);
+      const response = allData.rows;
+      console.log("response",response)
+      if(response.length>0){
+        res.send(response);
+      }
+      else {
+        res.send({message:"Somenthing went wront, please try again", statusText:'FAIL',eventID:id})
+      }
+    } catch (e) {
+      res.send("an error ocurred");
+      console.log("error",e)
+    }
+},
 
 }
 
