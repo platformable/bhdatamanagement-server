@@ -4629,7 +4629,7 @@ console.log("req.body update oef post event report",req.body)
   },
 
   updateOefYipPostEventReport:async(req,res) =>{
-    console.log("oef cbt post event report update")
+    console.log("oef yip post event report update")
     let {
       surveyCreated,
       surveyName,
@@ -4660,7 +4660,7 @@ console.log("req.body update oef post event report",req.body)
   organizerFeedback,
       id
     } = req.body
-console.log("req.body update oef post event report",req.body)
+console.log("req.body update oef yip event report",req.body)
     try {
       const query = {
         text:`update events_output set
