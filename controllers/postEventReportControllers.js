@@ -4628,6 +4628,117 @@ console.log("req.body update oef post event report",req.body)
     }
   },
 
+  updateOefYipPostEventReport:async(req,res) =>{
+    console.log("oef cbt post event report update")
+    let {
+      surveyCreated,
+      surveyName,
+      eventId,
+      programName,
+      programID,
+     externalFacilitatorName,
+     mainRoles,
+     participantRegistrationForm,
+     eventStartedOnTime,
+     eventFinishedOnTime,
+     participantGreeted,
+     resourcesAvailable,
+     photoRelease,
+     handSanitizerAvailable,
+     reminderSafeSpace,
+     reminderPostEvaluationSurvey,
+     eventChecklistOther,
+     totalAttendees,
+     eventOrganization,
+     eventResponsive,
+     engaged,
+  topicsFollowup,
+  leastEngaged,
+  improveEngagement,
+  eventChallenges,
+  eventQuestions,
+  organizerFeedback,
+      id
+    } = req.body
+console.log("req.body update oef post event report",req.body)
+    try {
+      const query = {
+        text:`update events_output set
+        surveyCreated=$1,
+      surveyName=$2,
+      eventId=$3,
+      programName=$4,
+      programID=$5,
+     externalFacilitatorName=$6,
+     mainRoles=$7,
+     participantRegistrationForm=$8,
+     eventStartedOnTime=$9,
+     eventFinishedOnTime=$10,
+     participantGreeted=$11,
+     resourcesAvailable=$12,
+     photoRelease=$13,
+     handSanitizerAvailable=$14,
+     reminderSafeSpace=$15,
+     reminderPostEvaluationSurvey=$16,
+     eventChecklistOther=$17,
+     totalAttendees=$18,
+     eventOrganization=$19,
+     eventResponsive=$20,
+     engaged=$21,
+  topicsFollowup=$22,
+  leastEngaged=$23,
+  improveEngagement=$24,
+  eventChallenges=$25,
+  eventQuestions=$26,
+  organizerFeedback=$27
+  where id=$28`,
+        values:[
+          surveyCreated,
+          surveyName,
+          eventId,
+          programName,
+          programID,
+         externalFacilitatorName,
+         mainRoles,
+         participantRegistrationForm,
+         eventStartedOnTime,
+         eventFinishedOnTime,
+         participantGreeted,
+         resourcesAvailable,
+         photoRelease,
+         handSanitizerAvailable,
+         reminderSafeSpace,
+         reminderPostEvaluationSurvey,
+         eventChecklistOther,
+         totalAttendees,
+         eventOrganization,
+         eventResponsive,
+         engaged,
+      topicsFollowup,
+      leastEngaged,
+      improveEngagement,
+      eventChallenges,
+      eventQuestions,
+      organizerFeedback,
+          id
+        ]
+      }
+        db
+          .query(query)
+          .then((response) =>{
+            console.log(response)
+            res.send({
+              message: "oef yip event Updated successfully",
+              statusText:'OK'
+            })
+          }
+          )
+    } catch (error) {
+      console.log(error)
+      res.send(error)
+    }
+  },
+
   updateOefCabPostEventReport:async(req,res) =>{
     console.log("oef cab post event report update starting")
     let {

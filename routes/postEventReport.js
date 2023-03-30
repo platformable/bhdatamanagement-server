@@ -18,6 +18,7 @@ router.get("/oef/cbt/event/:id",controller.getOefCbtPostEventReportById)
 router.get("/oef/yip/event/:id",controller.getOefYipPostEventReportById)
 router.put("/oef/event/update",controller.updateOefPostEventReport)
 router.put("/oef/cbt/event/update",controller.updateOefCbtPostEventReport)
+router.put("/oef/yip/event/update",controller.updateOefYipPostEventReport)
 router.put("/oef/cab/post-event/update",controller.updateOefCabPostEventReport)
 router.get("/oef/cab/event/:id",controller.getOefCabPostEventReportById)
 
