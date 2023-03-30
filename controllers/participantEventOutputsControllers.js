@@ -2072,7 +2072,7 @@ const text = `insert into participant_survey_outputs (
 const allData = await db.query(text,values);
 const response = allData.rows;
 res.status(200).send({"message":"oef yip months follow up saved successfully",'statusText':'OK'});
-console.log("sucess yip session 4  oef ")
+console.log("sucess yip 6 months follow up  oef ")
        
 
 } catch (error) {
