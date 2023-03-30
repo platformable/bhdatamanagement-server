@@ -4522,6 +4522,111 @@ console.log("req.body update oef post event report",req.body)
       console.log("create Event_output error:", error);
     }
   },
+  createOEFYipPostEventReport: async (req, res) => {
+    const {
+      surveyCreated,
+      surveyName,
+      eventId,
+      programName,
+      programID,
+     externalFacilitatorName,
+     mainRoles,
+     participantRegistrationForm,
+     eventStartedOnTime,
+     eventFinishedOnTime,
+     participantGreeted,
+     resourcesAvailable,
+     photoRelease,
+     handSanitizerAvailable,
+     reminderSafeSpace,
+     reminderPostEvaluationSurvey,
+     eventChecklistOther,
+     totalAttendees,
+     eventOrganization,
+     eventResponsive,
+     engaged,
+  topicsFollowup,
+  leastEngaged,
+  improveEngagement,
+  eventChallenges,
+  eventQuestions,
+  organizerFeedback
+    } = req.body;
+
+
+    try {
+      const text = `insert into events_output (
+        surveyCreated,
+        surveyName,
+        eventId,
+        programName,
+        programID,
+       externalFacilitatorName,
+       mainRoles,
+       participantRegistrationForm,
+       eventStartedOnTime,
+       eventFinishedOnTime,
+       participantGreeted,
+       resourcesAvailable,
+       photoRelease,
+       handSanitizerAvailable,
+       reminderSafeSpace,
+       reminderPostEvaluationSurvey,
+       eventChecklistOther,
+       totalAttendees,
+       eventOrganization,
+       eventResponsive,
+       engaged,
+    topicsFollowup,
+    leastEngaged,
+    improveEngagement,
+    eventChallenges,
+    eventQuestions,
+    organizerFeedback) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,
+            $16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26) RETURNING *`;
+      const values = [
+        surveyCreated,
+        surveyName,
+        eventId,
+        programName,
+        programID,
+       externalFacilitatorName,
+       mainRoles,
+       participantRegistrationForm,
+       eventStartedOnTime,
+       eventFinishedOnTime,
+       participantGreeted,
+       resourcesAvailable,
+       photoRelease,
+       handSanitizerAvailable,
+       reminderSafeSpace,
+       reminderPostEvaluationSurvey,
+       eventChecklistOther,
+       totalAttendees,
+       eventOrganization,
+       eventResponsive,
+       engaged,
+    topicsFollowup,
+    leastEngaged,
+    improveEngagement,
+    eventChallenges,
+    eventQuestions,
+    organizerFeedback
+      ];
+
+      const allData = await db.query(text, values);
+      const response = allData.rows;
+      res
+        .status(200)
+        .send({ message: "oef cb Event_output saved successfully", statusText: "OK" });
+      console.log("sucess post event report");
+    } catch (error) {
+      res
+        .status(400)
+        .send({ message: "an error occurred, try again later", error: error });
+      console.log("create Event_output error:", error);
+    }
+  },
 
   updateOefCabPostEventReport:async(req,res) =>{
     console.log("oef cab post event report update starting")
