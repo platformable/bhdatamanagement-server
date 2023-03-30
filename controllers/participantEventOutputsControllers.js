@@ -1926,7 +1926,7 @@ createOefYip6MonthsFollowUp: async (req,res)=>{
 
 try {
 const text = `insert into participant_survey_outputs (
-    surveyCreated,
+        surveyCreated,
         surveyName,
         participantHivKnowledge,
         deliveryPartner,
@@ -1973,7 +1973,6 @@ const text = `insert into participant_survey_outputs (
         workshopShouldChange,
         participantSuggestions
     ) VALUES (
-        surveyCreated,
             $1,
             $2,
             $3,
@@ -2018,7 +2017,8 @@ const text = `insert into participant_survey_outputs (
             $42,
             $43,
             $44,
-            $45
+            $45,
+            $46
         ) RETURNING *`;
         const values = [
             surveyCreated,
