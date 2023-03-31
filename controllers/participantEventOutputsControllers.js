@@ -1084,8 +1084,8 @@ selfCareAwareness,
 mentalIllnessCausedBy,
 managingHealthyRelationships,
 deliveryPartnerOther,
-consentCanBeTakenAway
-
+consentCanBeTakenAway,
+presenterExplainWell
     }= req.body
 
     console.log("OEF yip participant session 1 survey",req.body)
@@ -1139,7 +1139,8 @@ selfCareAwareness,
 mentalIllnessCausedBy,
 managingHealthyRelationships,
 deliveryPartnerOther,
-consentCanBeTakenAway
+consentCanBeTakenAway,
+presenterExplainWell
     ) VALUES (
         $1,
         $2,
@@ -1183,7 +1184,7 @@ consentCanBeTakenAway
         $40,
         $41,
         $42,
-        $43,$44,$45,$46,$47
+        $43,$44,$45,$46,$47,$48
         ) RETURNING *`;
         const values = [
             eventId,
@@ -1232,7 +1233,8 @@ selfCareAwareness,
 mentalIllnessCausedBy,
 managingHealthyRelationships,
 deliveryPartnerOther,
-consentCanBeTakenAway
+consentCanBeTakenAway,
+presenterExplainWell
         ]
 
 const allData = await db.query(text,values);
@@ -1297,7 +1299,7 @@ createOefYipParticipantSession2: async (req,res)=>{
         cyberBullyingOnlyNegativeSocialMedia,
         deleteFromInternetGoneForever,
         confidentCommunicatingEffectively,
-
+        presenterExplainWell
     }= req.body
 
     console.log("OEF yip participant session 2 survey",req.body)
@@ -1349,7 +1351,8 @@ const text = `insert into participant_survey_outputs (
     poorCommunicationCanRuinRelationships,
     cyberBullyingOnlyNegativeSocialMedia,
     deleteFromInternetGoneForever,
-    confidentCommunicatingEffectively
+    confidentCommunicatingEffectively,
+    presenterExplainWell
     ) VALUES (
         $1,
         $2,
@@ -1393,7 +1396,7 @@ const text = `insert into participant_survey_outputs (
         $40,
         $41,
         $42,
-        $43,$44,$45
+        $43,$44,$45,$46
         ) RETURNING *`;
         const values = [
             surveyCreated,
@@ -1440,7 +1443,8 @@ const text = `insert into participant_survey_outputs (
             poorCommunicationCanRuinRelationships,
             cyberBullyingOnlyNegativeSocialMedia,
             deleteFromInternetGoneForever,
-            confidentCommunicatingEffectively
+            confidentCommunicatingEffectively,
+            presenterExplainWell
         ]
 
 const allData = await db.query(text,values);
@@ -1501,7 +1505,7 @@ createOefYipParticipantSession3: async (req,res)=>{
         mentorBenefits,
         confidentFindingMentor,
         awareOptionsEducationCareer,
-
+        presenterExplainWell
     }= req.body
 
     console.log("OEF yip participant session 3 survey",req.body)
@@ -1549,7 +1553,8 @@ const text = `insert into participant_survey_outputs (
     workshopShouldChange,
     mentorBenefits,
     confidentFindingMentor,
-    awareOptionsEducationCareer
+    awareOptionsEducationCareer,
+    presenterExplainWell
     ) VALUES (
         $1,
         $2,
@@ -1591,7 +1596,7 @@ const text = `insert into participant_survey_outputs (
         $38,
         $39,
         $40,
-        $41
+        $41, $42
         ) RETURNING *`;
         const values = [
             surveyCreated,
@@ -1635,6 +1640,7 @@ const text = `insert into participant_survey_outputs (
             mentorBenefits,
             confidentFindingMentor,
             awareOptionsEducationCareer,
+            presenterExplainWell
         ]
 
 const allData = await db.query(text,values);
