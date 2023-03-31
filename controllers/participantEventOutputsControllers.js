@@ -1085,7 +1085,8 @@ mentalIllnessCausedBy,
 managingHealthyRelationships,
 deliveryPartnerOther,
 consentCanBeTakenAway,
-presenterExplainWell
+presenterExplainWell,
+participantAgeOther
     }= req.body
 
     console.log("OEF yip participant session 1 survey",req.body)
@@ -1140,7 +1141,8 @@ mentalIllnessCausedBy,
 managingHealthyRelationships,
 deliveryPartnerOther,
 consentCanBeTakenAway,
-presenterExplainWell
+presenterExplainWell,
+participantAgeOther
     ) VALUES (
         $1,
         $2,
@@ -1184,7 +1186,7 @@ presenterExplainWell
         $40,
         $41,
         $42,
-        $43,$44,$45,$46,$47,$48
+        $43,$44,$45,$46,$47,$48,$49
         ) RETURNING *`;
         const values = [
             eventId,
@@ -1234,7 +1236,8 @@ mentalIllnessCausedBy,
 managingHealthyRelationships,
 deliveryPartnerOther,
 consentCanBeTakenAway,
-presenterExplainWell
+presenterExplainWell,
+participantAgeOther
         ]
 
 const allData = await db.query(text,values);
