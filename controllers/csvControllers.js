@@ -728,4 +728,72 @@ where surveyname='yip-6month-follow-up'`
     }
 },
 
+getPostEventCsvData:async (req,res)=>{
+  const text=`select
+  events.programId,
+  events.programName,
+  events.id as eventid,
+  events.surveyName,
+  events.createdByName,
+  events.createdbyLastName,
+  events.surveyCreated,
+  events.surveyModified,
+  events.eventName,
+  events.eventDate,
+  events.eventStartTime,
+  events.eventFinishTime,
+  events_output.externalFacilitatorName,
+  events_output.mainRoles,
+  events_output.mainRolesOther,
+  events_output.participantRegistrationForm,
+  events_output.eventStartedOnTime,
+  events_output.eventFinishedOnTime,
+  events_output.participantGreeted,
+  events_output.resourcesAvailable,
+  events_output.photoRelease,
+  events_output.handSanitizerAvailable,
+  events.healthAreaOfFocusId,
+  events_output.reminderSafeSpace,
+  events_output.healthAreaOfFocusName,
+  events_output.reminderPostEvaluationSurvey,
+  events_output.eventChecklistOther,
+  events_output.eventChecklistOtherText,
+  events_output.totalAttendees,
+  events_output.eventOrganization,
+  events_output.eventResponsive,
+  events_output.engaged,
+  events_output.topicsFollowup,
+  events_output.leastEngaged,
+  events_output.improveEngagement,
+  events_output.eventChallenges,
+  events_output.eventQuestions,
+  events_output.organizerFeedback,
+  events.folderurl,
+  events.folderpath
+  from events
+  join events_output
+  on events.id=events_output.eventid
+  where events.surveyname='yip-register' and events_output.surveyname = 'yip-post-event'`
+  try {
+      const allData = await db.query(text);
+      const response = allData.rows;
+
+      if(response.length>0){
+        res.send(response);
+      } else {
+        res.status(400).send({message:"There is no data", statusText:"FAIL"})
+      }
+      
+    } catch (e) {
+      res.send("an error ocurred");
+      console.log("error",e)
+    }
+},
+
 }
+
+
+
+
+
+

@@ -13,6 +13,7 @@ router.get("/participant_survey_outputs_session3",controller.getYipSession3CsvDa
 router.get("/participant_survey_outputs_session4",controller.getYipSession4CsvData)
 router.get("/yip_pre_workshop",controller.getYipPreWorkshopCsvData)
 router.get("/yip_6months",controller.getYip6MonthsCsvData)
+router.get("/post_event",controller.getPostEventCsvData)
 
 
 
