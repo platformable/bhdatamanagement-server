@@ -569,4 +569,163 @@ where surveyname='yip-participant-session4'`
       console.log("error",e)
     }
 },
+
+getYipPreWorkshopCsvData:async (req,res)=>{
+  const text=`select
+  surveyName,
+  surveyCreated,
+  participantGrade,
+  participantGradeOther,
+  participantAge,
+  participantZipCode,
+  participantBorough,
+  raceId,
+  participantRaceOther,
+  participantRace,
+  ethnicityId,
+  participantEthnicity,
+  participantEthnicityOther,
+  orientationId,
+  participantOrientationOther,
+  participantOrientation,
+  genderId,
+  participantGender,
+  participantGenderOther,
+  participantReferral,
+  deliveryPartner,
+  deliveryPartnerOther,
+  participantReferralOther,
+  consentCanBeTakenAway,
+  participantBodyLanguageConsent,
+  partnerCheckPhoneEmail,
+  lowEnergySocialMediaHelpful,
+  eatingHabitsEmotions,
+  stairsInsteadElevator,
+  pubertyDifferentExperiences,
+  peopleMentallyIllViolent,
+  selfCareAwareness,
+  mentalIllnessCausedBy,
+  smartGoalAwareness,
+  phoneActiveListening,
+  participantListening,
+  goodCommunicationImportantOnlyPublicSpeakers,
+  poorCommunicationCanRuinRelationships,
+  cyberBullyingOnlyNegativeSocialMedia,
+  deleteFromInternetGoneForever,
+  awareOptionsEducationCareer,
+  preparationHelpsGoals,
+  oneProvenPathToSuccess,
+  shouldKnowFutureCareerInHighSchool,
+  hbcuMeaningKnowledge,
+  confidentCondom,
+  participantHivKnowledge,
+  stiInfectionsAgeRange,
+  knowHaveSti,
+  pep28DaysAfter,
+  condomWalletHandy,
+  emergencyContraceptionAfterSex,
+  managingHealthyRelationships,
+  confidentCommunicatingEffectively,
+  confidentLookingAfterMyMentalHealth,
+  confidentNegotiatingContraceptives,
+  confidentPreventingHivAndStis,
+  confidentJobAndCareerChoices,
+  participantSuggestions
+from participant_survey_outputs
+where surveyname='yip-pre-workshop'`
+  try {
+      const allData = await db.query(text);
+      const response = allData.rows;
+
+      if(response.length>0){
+        res.send(response);
+      } else {
+        res.status(400).send({message:"There is no data", statusText:"FAIL"})
+      }
+      
+    } catch (e) {
+      res.send("an error ocurred");
+      console.log("error",e)
+    }
+},
+
+getYip6MonthsCsvData:async (req,res)=>{
+  const text=`select
+  surveyName,
+surveyCreated,
+participantGrade,
+participantGradeOther,
+participantAge,
+participantZipCode,
+participantBorough,
+raceId,
+participantRaceOther,
+participantRace,
+ethnicityId,
+participantEthnicity,
+participantEthnicityOther,
+orientationId,
+participantOrientationOther,
+participantOrientation,
+genderId,
+participantGender,
+participantGenderOther,
+participantReferral,
+deliveryPartner,
+deliveryPartnerOther,
+participantReferralOther,
+consentCanBeTakenAway,
+participantBodyLanguageConsent,
+partnerCheckPhoneEmail,
+lowEnergySocialMediaHelpful,
+eatingHabitsEmotions,
+stairsInsteadElevator,
+pubertyDifferentExperiences,
+peopleMentallyIllViolent,
+selfCareAwareness,
+mentalIllnessCausedBy,
+smartGoalAwareness,
+phoneActiveListening,
+participantListening,
+goodCommunicationImportantOnlyPublicSpeakers,
+poorCommunicationCanRuinRelationships,
+cyberBullyingOnlyNegativeSocialMedia,
+deleteFromInternetGoneForever,
+awareOptionsEducationCareer,
+preparationHelpsGoals,
+oneProvenPathToSuccess,
+shouldKnowFutureCareerInHighSchool,
+hbcuMeaningKnowledge,
+confidentCondom,
+participantHivKnowledge,
+stiInfectionsAgeRange,
+knowHaveSti,
+pep28DaysAfter,
+condomWalletHandy,
+emergencyContraceptionAfterSex,
+managingHealthyRelationships,
+confidentCommunicatingEffectively,
+confidentLookingAfterMyMentalHealth,
+confidentNegotiatingContraceptives,
+confidentPreventingHivAndStis,
+confidentJobAndCareerChoices,
+participantSuggestions
+from participant_survey_outputs
+where surveyname='yip-6month-follow-up'`
+  try {
+      const allData = await db.query(text);
+      const response = allData.rows;
+
+      if(response.length>0){
+        res.send(response);
+      } else {
+        res.status(400).send({message:"There is no data", statusText:"FAIL"})
+      }
+      
+    } catch (e) {
+      res.send("an error ocurred");
+      console.log("error",e)
+    }
+},
+
 }
