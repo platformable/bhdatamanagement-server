@@ -328,5 +328,245 @@ module.exports = {
             res.send("an error ocurred");
             console.log("error",e)
           }
+    },
+
+    getYipSession1CsvData:async (req,res)=>{
+      const text=`select
+      surveyName,
+      surveyCreated,
+      eventId,
+      participantGrade,
+      participantGradeOther,
+      participantAge,
+      participantZipCode,
+      participantBorough,
+      raceId,
+      participantRace,
+      participantRaceOther,
+      ethnicityId,
+      participantEthnicity,
+      participantEthnicityOther,
+      orientationId,
+      participantOrientation,
+      participantOrientationOther,
+      genderId,
+      participantGender,
+      participantGenderOther,
+      satisfiedEventActivities,
+      recommendEvent,
+      informationUseful,
+      presenterExplainWell,
+      thinkDifferently,
+      canApply,
+      workshopDoDifferently,
+      workshopShouldChange,
+      participantSuggestions,
+      consentCanBeTakenAway,
+      participantBodyLanguageConsent,
+      partnerCheckPhoneEmail,
+      preparationHelpsGoals,
+      lowEnergySocialMediaHelpful,
+      pubertyDifferentExperiences,
+      eatingHabitsEmotions,
+      stairsInsteadElevator,
+      peopleMentallyIllViolent,
+      selfCareAwareness,
+      mentalIllnessCausedBy,
+      mentalHealthMeaning,
+      managingHealthyRelationships,
+      confidentLookingAfterMyMentalHealth
+      from participant_survey_outputs       
+      where surveyname='yip-participant-session1'`
+      try {
+          const allData = await db.query(text);
+          const response = allData.rows;
+
+          if(response.length>0){
+            res.send(response);
+          } else {
+            res.status(400).send({message:"There is no data", statusText:"FAIL"})
+          }
+          
+        } catch (e) {
+          res.send("an error ocurred");
+          console.log("error",e)
+        }
+  },
+  getYipSession2CsvData:async (req,res)=>{
+    const text=`select
+    surveyName,
+surveyCreated,
+eventId,
+participantGrade,
+participantGradeOther,
+participantAge,
+participantZipCode,
+participantBorough,
+raceId,
+participantRace,
+participantRaceOther,
+ethnicityId,
+participantEthnicity,
+participantEthnicityOther,
+orientationId,
+participantOrientation,
+participantOrientationOther,
+genderId,
+participantGender,
+participantGenderOther,
+satisfiedEventActivities,
+recommendEvent,
+informationUseful,
+presenterExplainWell,
+thinkDifferently,
+canApply,
+workshopDoDifferently,
+workshopShouldChange,
+participantSuggestions,
+smartGoalAwareness,
+phoneActiveListening,
+participantListening,
+goodCommunicationImportantOnlyPublicSpeakers,
+poorCommunicationCanRuinRelationships,
+cyberBullyingOnlyNegativeSocialMedia,
+deleteFromInternetGoneForever,
+confidentCommunicatingEffectively
+from participant_survey_outputs
+where surveyname='yip-participant-session2'`
+    try {
+        const allData = await db.query(text);
+        const response = allData.rows;
+
+        if(response.length>0){
+          res.send(response);
+        } else {
+          res.status(400).send({message:"There is no data", statusText:"FAIL"})
+        }
+        
+      } catch (e) {
+        res.send("an error ocurred");
+        console.log("error",e)
+      }
+},
+
+getYipSession3CsvData:async (req,res)=>{
+  const text=`select
+  surveyName,
+surveyCreated,
+eventId,
+participantGrade,
+participantGradeOther,
+participantAge,
+participantZipCode,
+participantBorough,
+raceId,
+participantRace,
+participantRaceOther,
+ethnicityId,
+participantEthnicity,
+participantEthnicityOther,
+orientationId,
+participantOrientation,
+participantOrientationOther,
+genderId,
+participantGender,
+participantGenderOther,
+satisfiedEventActivities,
+recommendEvent,
+informationUseful,
+presenterExplainWell,
+thinkDifferently,
+canApply,
+workshopDoDifferently,
+workshopShouldChange,
+participantSuggestions,
+awareOptionsEducationCareer,
+preparationHelpsGoals,
+oneProvenPathToSuccess,
+shouldKnowFutureCareerInHighSchool,
+hbcuMeaningKnowledge,
+mentorBenefits,
+confidentFindingMentor,
+hasMentor,
+confidentJobAndCareerChoices
+from participant_survey_outputs
+where surveyname='yip-participant-session3'`
+  try {
+      const allData = await db.query(text);
+      const response = allData.rows;
+
+      if(response.length>0){
+        res.send(response);
+      } else {
+        res.status(400).send({message:"There is no data", statusText:"FAIL"})
+      }
+      
+    } catch (e) {
+      res.send("an error ocurred");
+      console.log("error",e)
     }
+},
+getYipSession4CsvData:async (req,res)=>{
+  const text=`select
+  surveyName,
+surveyCreated,
+eventId,
+participantGrade,
+participantGradeOther,
+participantAge,
+participantZipCode,
+participantBorough,
+raceId,
+participantRace,
+participantRaceOther,
+ethnicityId,
+participantEthnicity,
+participantEthnicityOther,
+orientationId,
+participantOrientation,
+participantOrientationOther,
+genderId,
+participantGender,
+participantGenderOther,
+satisfiedEventActivities,
+recommendEvent,
+informationUseful,
+presenterExplainWell,
+thinkDifferently,
+canApply,
+workshopDoDifferently,
+workshopShouldChange,
+participantSuggestions,
+participantHivKnowledge,
+consentCanBeTakenAway,
+stiInfectionsAgeRange,
+knowHaveSti,
+pep28DaysAfter,
+condomWalletHandy,
+emergencyContraceptionAfterSex,
+confidentNegotiatingContraceptives,
+confidentPreventingHivAndStis,
+workshopsHelpful,
+workshopsEnjoyed,
+workshopsLearnedFrom,
+workshopsRecommendToFriends,
+workshopFavorite,
+workshopLikelyTellFriend
+from participant_survey_outputs
+where surveyname='yip-participant-session4'`
+  try {
+      const allData = await db.query(text);
+      const response = allData.rows;
+
+      if(response.length>0){
+        res.send(response);
+      } else {
+        res.status(400).send({message:"There is no data", statusText:"FAIL"})
+      }
+      
+    } catch (e) {
+      res.send("an error ocurred");
+      console.log("error",e)
+    }
+},
 }
