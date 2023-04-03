@@ -1930,6 +1930,7 @@ createOefYip6MonthsFollowUp: async (req,res)=>{
         workshopsPlanToUseInfoLearned,
         workshopShouldChange,
         participantSuggestions,
+        startMonthYip
 
     }= req.body
 
@@ -1983,7 +1984,8 @@ const text = `insert into participant_survey_outputs (
         likelyDiscussWithFriends6MonthsAfter,
         workshopsPlanToUseInfoLearned,
         workshopShouldChange,
-        participantSuggestions
+        participantSuggestions,
+        startMonthYip
     ) VALUES (
             $1,
             $2,
@@ -2030,7 +2032,7 @@ const text = `insert into participant_survey_outputs (
             $43,
             $44,
             $45,
-            $46
+            $46,$47
         ) RETURNING *`;
         const values = [
             surveyCreated,
@@ -2079,6 +2081,7 @@ const text = `insert into participant_survey_outputs (
         workshopsPlanToUseInfoLearned,
         workshopShouldChange,
         participantSuggestions,
+        startMonthYip
         ]
 
 const allData = await db.query(text,values);
