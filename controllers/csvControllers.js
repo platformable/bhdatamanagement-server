@@ -226,6 +226,10 @@ module.exports = {
        eventfinishtime,
        fbo,
        submissionnotes
+       fbochanges,
+       fboimprovements,
+       fboobservations,
+       fbobeyondgrant
         from site_visits
         where submissionstatus='Complete'`
         try {
@@ -243,6 +247,7 @@ module.exports = {
                         const [hours, minutes, seconds] = duration.split(':');
                         return Number(hours) * 60 * 60 + Number(minutes) * 60 + Number(seconds);
                     };
+             
                     data.typeOfActivity='Site Visit'
                     data.activityLedBy='NBLCH'
                     data.facilitatorPresenter=row.createdbyname || " "
@@ -257,10 +262,10 @@ module.exports = {
                     data.totalTime=((convertDurationtoSeconds(row.eventfinishtime)-convertDurationtoSeconds(row.eventstarttime)) / 3600).toFixed(2)
                     data.targetAudienceTotal=1
                     data.targetAudience=row.fbo
-                    data.totalAttendees=''
-                    data.notes=row.submissionnotes
+                    data.totalAttendees='N/A'
+                    data.notes=`How have you shifted your work to ensure that all program goals are met? ${row.fbochanges}   What improvements have you made since our last site visit? ${row.fboimprovements}   What results have you observed from your community outreach efforts? ${row.fboobservations}   What systems or sustainable practices have you put in place to make sure that this work can continue beyond the life of the grant (eg. when the funding runs out)? ${row.fbobeyondgrant}`
                     newData.push(data)   
-              })  
+                  })  
                
               res.send(newData);
             } else {
