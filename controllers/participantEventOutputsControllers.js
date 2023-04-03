@@ -1302,7 +1302,8 @@ createOefYipParticipantSession2: async (req,res)=>{
         cyberBullyingOnlyNegativeSocialMedia,
         deleteFromInternetGoneForever,
         confidentCommunicatingEffectively,
-        presenterExplainWell
+        presenterExplainWell,
+        smartGoalAwareness
     }= req.body
 
     console.log("OEF yip participant session 2 survey",req.body)
@@ -1355,7 +1356,8 @@ const text = `insert into participant_survey_outputs (
     cyberBullyingOnlyNegativeSocialMedia,
     deleteFromInternetGoneForever,
     confidentCommunicatingEffectively,
-    presenterExplainWell
+    presenterExplainWell,
+    smartGoalAwareness
     ) VALUES (
         $1,
         $2,
@@ -1399,7 +1401,7 @@ const text = `insert into participant_survey_outputs (
         $40,
         $41,
         $42,
-        $43,$44,$45,$46
+        $43,$44,$45,$46,$47
         ) RETURNING *`;
         const values = [
             surveyCreated,
@@ -1447,7 +1449,8 @@ const text = `insert into participant_survey_outputs (
             cyberBullyingOnlyNegativeSocialMedia,
             deleteFromInternetGoneForever,
             confidentCommunicatingEffectively,
-            presenterExplainWell
+            presenterExplainWell,
+            smartGoalAwareness
         ]
 
 const allData = await db.query(text,values);
