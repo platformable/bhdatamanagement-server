@@ -4817,7 +4817,7 @@ getOefYipPostEventReportById:async (req,res)=>{
    
   let {id}=req.params
   console.log("get oef yip",id)
-  const text=`select events.id as eventID,events.eventname as event_name,events.eventdate as event_date,events.folderpath,events.folderurl,events_output.* eventname from events
+  const text=`select events.id as eventID,events.eventname as event_name,events.eventdate as event_date,events.folderpath,events.folderurl,events.yipsession,events_output.* eventname from events
    join events_output on  events.id = events_output.eventid
   where eventid=$1 `
  const values=[id]
