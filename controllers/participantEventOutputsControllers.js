@@ -1413,7 +1413,7 @@ const text = `insert into participant_survey_outputs (
         $40,
         $41,
         $42,
-        $43,$44,$45,$46,$47,$48,$9
+        $43,$44,$45,$46,$47,$48,$49
         ) RETURNING *`;
         const values = [
             surveyCreated,
