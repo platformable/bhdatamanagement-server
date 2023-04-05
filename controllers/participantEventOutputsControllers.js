@@ -1225,7 +1225,7 @@ participantSuggestions,
 workshopDoDifferently,
 participantGrade,
 participantGradeOther,
-participantAge,
+Number(participantAge),
 confidentLookingAfterMyMentalHealth,
 mentalHealthMeaning,
 satisfiedEventActivities,
@@ -1239,7 +1239,7 @@ managingHealthyRelationships,
 deliveryPartnerOther,
 consentCanBeTakenAway,
 presenterExplainWell,
-participantAgeOther,
+Number(participantAgeOther),
 eventDate
         ]
 
