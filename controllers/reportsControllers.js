@@ -306,27 +306,26 @@ res.send("an error ocurred");
 }
 },
 getTechnicalAssistance: async (req, res) => {
-  const query = `select
+  const query = `select        
   programId,
-programName,
-surveyName,
-surveyCreated,
-surveyModified,
-taType,
-taTypeOther,
-taReason,
-taDateSubmitted,
-taContactName,
-taEmail,
-taPhone,
-taFbo,
-taFboOther,
-taStatus,
-taStatusCompleteDate,
-taCompleteBhStaff,
-taNotesBhStaff
-from technical_assistance
-`
+  programName,
+  surveyName,
+  surveyCreated,
+  surveyModified,
+  taType,
+  taTypeOther,
+  taReason,
+  taDateSubmitted,
+  taContactName,
+  taEmail,
+  taPhone,
+  taFbo,
+  taFboOther,
+  taStatus,
+  taStatusCompleteDate,
+  taCompleteBhStaff,
+  taNotesBhStaff
+  from technical_assistance where tastatus='Complete'`
 try {
 const allData = await db.query(query);
 const response = allData.rows;
