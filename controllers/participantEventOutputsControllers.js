@@ -1072,7 +1072,7 @@ participantSuggestions,
 workshopDoDifferently,
 participantGrade,
 participantGradeOther,
-participantAge=20,
+participantAge,
 confidentLookingAfterMyMentalHealth,
 mentalHealthMeaning,
 satisfiedEventActivities,
@@ -1093,8 +1093,10 @@ eventDate
 
     console.log("OEF yip participant session 1 survey",req.body)
 
-    Number(participantAge)
+    
     Number(participantAgeOther)
+
+    const partAge=Number(participantAge)
 
 try {
 const text = `insert into participant_survey_outputs (
@@ -1228,7 +1230,7 @@ participantSuggestions,
 workshopDoDifferently,
 participantGrade,
 participantGradeOther,
-Number(participantAge),
+partAge,
 confidentLookingAfterMyMentalHealth,
 mentalHealthMeaning,
 satisfiedEventActivities,
