@@ -1312,7 +1312,8 @@ createOefYipParticipantSession2: async (req,res)=>{
         confidentCommunicatingEffectively,
         presenterExplainWell,
         smartGoalAwareness,
-        eventDate
+        eventDate,
+        participantAgeOther
     }= req.body
 
     console.log("OEF yip participant session 2 survey",req.body)
@@ -1367,7 +1368,8 @@ const text = `insert into participant_survey_outputs (
     confidentCommunicatingEffectively,
     presenterExplainWell,
     smartGoalAwareness,
-    eventDate
+    eventDate,
+    participantAgeOther
     ) VALUES (
         $1,
         $2,
@@ -1411,7 +1413,7 @@ const text = `insert into participant_survey_outputs (
         $40,
         $41,
         $42,
-        $43,$44,$45,$46,$47,$48
+        $43,$44,$45,$46,$47,$48,$9
         ) RETURNING *`;
         const values = [
             surveyCreated,
@@ -1461,7 +1463,8 @@ const text = `insert into participant_survey_outputs (
             confidentCommunicatingEffectively,
             presenterExplainWell,
             smartGoalAwareness,
-            eventDate
+            eventDate,
+            participantAgeOther
         ]
 
 const allData = await db.query(text,values);
@@ -1523,7 +1526,8 @@ createOefYipParticipantSession3: async (req,res)=>{
         confidentFindingMentor,
         awareOptionsEducationCareer,
         presenterExplainWell,
-        eventDate
+        eventDate,
+        participantAgeOther
     }= req.body
 
     console.log("OEF yip participant session 3 survey",req.body)
@@ -1573,7 +1577,8 @@ const text = `insert into participant_survey_outputs (
     confidentFindingMentor,
     awareOptionsEducationCareer,
     presenterExplainWell,
-    eventDate
+    eventDate,
+    participantAgeOther
     ) VALUES (
         $1,
         $2,
@@ -1615,7 +1620,7 @@ const text = `insert into participant_survey_outputs (
         $38,
         $39,
         $40,
-        $41, $42,$43
+        $41, $42,$43,$44
         ) RETURNING *`;
         const values = [
             surveyCreated,
@@ -1660,7 +1665,8 @@ const text = `insert into participant_survey_outputs (
             confidentFindingMentor,
             awareOptionsEducationCareer,
             presenterExplainWell,
-            eventDate
+            eventDate,
+            participantAgeOther
         ]
 
 const allData = await db.query(text,values);
@@ -1726,7 +1732,8 @@ workshopsHelpful,
 workshopShouldChange,
 workshopsLearnedFrom,
 workshopsRecommendToFriends,
-eventDate
+eventDate,
+participantAgeOther
 
     }= req.body
 
@@ -1783,7 +1790,8 @@ workshopsHelpful,
 workshopShouldChange,
 workshopsLearnedFrom,
 workshopsRecommendToFriends,
-eventDate
+eventDate,
+participantAgeOther
     ) VALUES (
         $1,
         $2,
@@ -1832,7 +1840,7 @@ eventDate
         $45,
         $46,
         $47,
-        $48,$49
+        $48,$49,$50
         ) RETURNING *`;
         const values = [
             canApply,
@@ -1883,7 +1891,8 @@ workshopsHelpful,
 workshopShouldChange,
 workshopsLearnedFrom,
 workshopsRecommendToFriends,
-eventDate
+eventDate,
+participantAgeOther
         ]
 
 const allData = await db.query(text,values);
