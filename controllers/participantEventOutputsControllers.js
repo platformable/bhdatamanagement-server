@@ -1090,8 +1090,11 @@ participantAgeOther,
 eventDate
     }= req.body
 
+
     console.log("OEF yip participant session 1 survey",req.body)
 
+    Number(participantAge)
+    Number(participantAgeOther)
 
 try {
 const text = `insert into participant_survey_outputs (
