@@ -384,7 +384,7 @@ module.exports = {
           if(response.length>0){
             res.send(response);
           } else {
-            res.status(400).send([])
+            res.send([{data:'no data'}])
           }
           
         } catch (e) {
@@ -440,7 +440,7 @@ where surveyname='yip-participant-session2'`
         if(response.length>0){
           res.send(response);
         } else {
-          res.status(400).send([])
+          res.send([{data:'no data'}])
         }
         
       } catch (e) {
@@ -498,7 +498,7 @@ where surveyname='yip-participant-session3'`
       if(response.length>0){
         res.send(response);
       } else {
-        res.status(400).send([])
+        res.send([{data:'no data'}])
       }
       
     } catch (e) {
@@ -561,7 +561,7 @@ where surveyname='yip-participant-session4'`
       if(response.length>0){
         res.send(response);
       } else {
-        res.status(400).send([])
+        res.send([{data:'no data'}])
       }
       
     } catch (e) {
