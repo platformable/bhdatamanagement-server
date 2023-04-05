@@ -1086,7 +1086,8 @@ managingHealthyRelationships,
 deliveryPartnerOther,
 consentCanBeTakenAway,
 presenterExplainWell,
-participantAgeOther
+participantAgeOther,
+eventDate
     }= req.body
 
     console.log("OEF yip participant session 1 survey",req.body)
@@ -1142,7 +1143,8 @@ managingHealthyRelationships,
 deliveryPartnerOther,
 consentCanBeTakenAway,
 presenterExplainWell,
-participantAgeOther
+participantAgeOther,
+eventDate
     ) VALUES (
         $1,
         $2,
@@ -1186,7 +1188,7 @@ participantAgeOther
         $40,
         $41,
         $42,
-        $43,$44,$45,$46,$47,$48,$49
+        $43,$44,$45,$46,$47,$48,$49,$50
         ) RETURNING *`;
         const values = [
             eventId,
@@ -1237,7 +1239,8 @@ managingHealthyRelationships,
 deliveryPartnerOther,
 consentCanBeTakenAway,
 presenterExplainWell,
-participantAgeOther
+participantAgeOther,
+eventDate
         ]
 
 const allData = await db.query(text,values);
@@ -1303,7 +1306,8 @@ createOefYipParticipantSession2: async (req,res)=>{
         deleteFromInternetGoneForever,
         confidentCommunicatingEffectively,
         presenterExplainWell,
-        smartGoalAwareness
+        smartGoalAwareness,
+        eventDate
     }= req.body
 
     console.log("OEF yip participant session 2 survey",req.body)
@@ -1357,7 +1361,8 @@ const text = `insert into participant_survey_outputs (
     deleteFromInternetGoneForever,
     confidentCommunicatingEffectively,
     presenterExplainWell,
-    smartGoalAwareness
+    smartGoalAwareness,
+    eventDate
     ) VALUES (
         $1,
         $2,
@@ -1401,7 +1406,7 @@ const text = `insert into participant_survey_outputs (
         $40,
         $41,
         $42,
-        $43,$44,$45,$46,$47
+        $43,$44,$45,$46,$47,$48
         ) RETURNING *`;
         const values = [
             surveyCreated,
@@ -1450,7 +1455,8 @@ const text = `insert into participant_survey_outputs (
             deleteFromInternetGoneForever,
             confidentCommunicatingEffectively,
             presenterExplainWell,
-            smartGoalAwareness
+            smartGoalAwareness,
+            eventDate
         ]
 
 const allData = await db.query(text,values);
@@ -1511,7 +1517,8 @@ createOefYipParticipantSession3: async (req,res)=>{
         mentorBenefits,
         confidentFindingMentor,
         awareOptionsEducationCareer,
-        presenterExplainWell
+        presenterExplainWell,
+        eventDate
     }= req.body
 
     console.log("OEF yip participant session 3 survey",req.body)
@@ -1560,7 +1567,8 @@ const text = `insert into participant_survey_outputs (
     mentorBenefits,
     confidentFindingMentor,
     awareOptionsEducationCareer,
-    presenterExplainWell
+    presenterExplainWell,
+    eventDate
     ) VALUES (
         $1,
         $2,
@@ -1602,7 +1610,7 @@ const text = `insert into participant_survey_outputs (
         $38,
         $39,
         $40,
-        $41, $42
+        $41, $42,$43
         ) RETURNING *`;
         const values = [
             surveyCreated,
@@ -1646,7 +1654,8 @@ const text = `insert into participant_survey_outputs (
             mentorBenefits,
             confidentFindingMentor,
             awareOptionsEducationCareer,
-            presenterExplainWell
+            presenterExplainWell,
+            eventDate
         ]
 
 const allData = await db.query(text,values);
@@ -1711,7 +1720,8 @@ workshopsEnjoyed,
 workshopsHelpful,
 workshopShouldChange,
 workshopsLearnedFrom,
-workshopsRecommendToFriends
+workshopsRecommendToFriends,
+eventDate
 
     }= req.body
 
@@ -1767,7 +1777,8 @@ workshopsEnjoyed,
 workshopsHelpful,
 workshopShouldChange,
 workshopsLearnedFrom,
-workshopsRecommendToFriends
+workshopsRecommendToFriends,
+eventDate
     ) VALUES (
         $1,
         $2,
@@ -1816,7 +1827,7 @@ workshopsRecommendToFriends
         $45,
         $46,
         $47,
-        $48
+        $48,$49
         ) RETURNING *`;
         const values = [
             canApply,
@@ -1866,7 +1877,8 @@ workshopsEnjoyed,
 workshopsHelpful,
 workshopShouldChange,
 workshopsLearnedFrom,
-workshopsRecommendToFriends
+workshopsRecommendToFriends,
+eventDate
         ]
 
 const allData = await db.query(text,values);
