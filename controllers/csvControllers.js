@@ -374,7 +374,8 @@ module.exports = {
       mentalIllnessCausedBy,
       mentalHealthMeaning,
       managingHealthyRelationships,
-      confidentLookingAfterMyMentalHealth
+      confidentLookingAfterMyMentalHealth,
+      eventdate
       from participant_survey_outputs       
       where surveyname='yip-participant-session1'`
       try {
@@ -430,7 +431,8 @@ goodCommunicationImportantOnlyPublicSpeakers,
 poorCommunicationCanRuinRelationships,
 cyberBullyingOnlyNegativeSocialMedia,
 deleteFromInternetGoneForever,
-confidentCommunicatingEffectively
+confidentCommunicatingEffectively,
+eventdate
 from participant_survey_outputs
 where surveyname='yip-participant-session2'`
     try {
@@ -488,7 +490,8 @@ hbcuMeaningKnowledge,
 mentorBenefits,
 confidentFindingMentor,
 hasMentor,
-confidentJobAndCareerChoices
+confidentJobAndCareerChoices,
+eventdate
 from participant_survey_outputs
 where surveyname='yip-participant-session3'`
   try {
@@ -551,7 +554,8 @@ workshopsEnjoyed,
 workshopsLearnedFrom,
 workshopsRecommendToFriends,
 workshopFavorite,
-workshopLikelyTellFriend
+workshopLikelyTellFriend,
+eventdate
 from participant_survey_outputs
 where surveyname='yip-participant-session4'`
   try {
