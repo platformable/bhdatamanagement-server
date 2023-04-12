@@ -405,7 +405,7 @@ const text = `insert into participant_survey_outputs (
     participantRaceOther,
     participantEthnicityOther,
     participantGenderOther,
-    surveyName
+    surveyName,
     participantBorough) VALUES (
     $1,
     $2,
