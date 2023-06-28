@@ -1034,7 +1034,8 @@ inPersonEventTypeName,
      submissionNotes,
      oefEventEmail,
      onelineDescription,
-     oefEventPresentationTopic
+     oefEventPresentationTopic,
+     oefTargetAudienceForReport
     } = req.body;
 
     console.log(req.body)
@@ -1045,13 +1046,15 @@ inPersonEventTypeName,
         submissionStatus=$1,
      submissionNotes=$2,
      onelineDescription=$3,
-     oefEventPresentationTopic=$4
-        where id=$5`,
+     oefEventPresentationTopic=$4,
+     oefTargetAudienceForReport=$5
+        where id=$6`,
         values: [
           submissionStatus,
           submissionNotes,
           onelineDescription,
      oefEventPresentationTopic,
+     oefTargetAudienceForReport,
           id
         ],
       };
@@ -1450,6 +1453,7 @@ const submissionStatus='Submitted'
       eventStartTime,
       inPersonEventTypeId,
       inPersonEventTypeName,
+      inPersonEventTypeNameOther,
       locationAddress,
       onlineEventTypeId,
       onlineEventTypeName,
@@ -1479,6 +1483,7 @@ const submissionStatus='Submitted'
         eventStartTime,
         inPersonEventTypeId,
         inPersonEventTypeName,
+        inPersonEventTypeNameOther,
         locationAddress,
         onlineEventTypeId,
         onlineEventTypeName,
@@ -1513,7 +1518,7 @@ const submissionStatus='Submitted'
         $19,
         $20,
         $21,
-        $22
+        $22,$23
         ) RETURNING *`;
       let values = [
         createdbyLastName,
@@ -1525,6 +1530,7 @@ const submissionStatus='Submitted'
       eventStartTime,
       inPersonEventTypeId,
       inPersonEventTypeName,
+      inPersonEventTypeNameOther,
       locationAddress,
       onlineEventTypeId,
       onlineEventTypeName,
@@ -1602,6 +1608,7 @@ const submissionStatus='Submitted'
       locationAddress,
       onlineEventTypeId,
       onlineEventTypeName,
+      inPersonEventTypeNameOther,
       onlineInPersonEventType,
       programId,
       programName,
@@ -1631,15 +1638,16 @@ const submissionStatus='Submitted'
       locationAddress=$10,
       onlineEventTypeId=$11,
       onlineEventTypeName=$12,
-      onlineInPersonEventType=$13,
-      programId=$14,
-      programName=$15,
-      surveyName=$16,
-      userid=$17,
-      workArea=$18,
-      workAreaOther=$19,
-      submissionStatus=$20
-        where id=$21`,
+      inPersonEventTypeNameOther=$13,
+      onlineInPersonEventType=$14,
+      programId=$15,
+      programName=$16,
+      surveyName=$17,
+      userid=$18,
+      workArea=$19,
+      workAreaOther=$20,
+      submissionStatus=$21
+        where id=$22`,
         values: [
           createdbyLastName,
       createdByName,
@@ -1653,6 +1661,7 @@ const submissionStatus='Submitted'
       locationAddress,
       onlineEventTypeId,
       onlineEventTypeName,
+      inPersonEventTypeNameOther,
       onlineInPersonEventType,
       programId,
       programName,

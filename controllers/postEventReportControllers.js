@@ -25,6 +25,10 @@ module.exports={
         events.onlineeventtypeid,
         events.onlineeventtypename,
         events.borough,
+        events.workarea as _workarea,
+        events.workareaother as _workareaother,
+        events.nysactivity as _nysactivity,
+        events.nysactivityother as _nysactivityother,
         users.name,
         users.lastname,users.userid
         from events_output 
@@ -4227,7 +4231,8 @@ console.log("req.body update oef post event report",req.body)
       eventChecklistOtherText,
       eventDate,
       createdByName,
-      createdbyLastname
+      createdbyLastname,
+      nameGuestSpeakers
     } = req.body;
 
 console.log("create post event report oef cbt",req.body)
@@ -4265,9 +4270,10 @@ console.log("create post event report oef cbt",req.body)
         eventChecklistOtherText,
         eventDate,
         createdByName,
-        createdbyLastname
+        createdbyLastname,
+        nameGuestSpeakers
           ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,
-            $16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33) RETURNING *`;
+            $16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34) RETURNING *`;
       const values = [
         eventID,
         programid,
@@ -4301,7 +4307,8 @@ console.log("create post event report oef cbt",req.body)
         eventChecklistOtherText,
         eventDate, 
         createdByName,
-        createdbyLastname
+        createdbyLastname,
+        nameGuestSpeakers
       ];
 
       const allData = await db.query(text, values);
@@ -4352,6 +4359,7 @@ console.log("create post event report oef cbt",req.body)
       eventChecklistOtherText,
       externalFacilitatorName,
       externalFacilitatorEmail,
+      nameGuestSpeakers,
       id
     } = req.body
 console.log("req.body update oef post event report",req.body)
@@ -4389,8 +4397,9 @@ console.log("req.body update oef post event report",req.body)
       mainRolesOther=$29,
       eventChecklistOtherText=$30,
       externalFacilitatorName=$31,
-      externalFacilitatorEmail=$32
-  where id=$33`,
+      externalFacilitatorEmail=$32,
+      nameGuestSpeakers=$33
+  where id=$34`,
         values:[
           eventID,
       programid,
@@ -4424,6 +4433,7 @@ console.log("req.body update oef post event report",req.body)
       eventChecklistOtherText,
       externalFacilitatorName,
       externalFacilitatorEmail,
+      nameGuestSpeakers,
           id
         ]
       }
@@ -4520,6 +4530,222 @@ console.log("req.body update oef post event report",req.body)
       console.log("create Event_output error:", error);
     }
   },
+  createOEFYipPostEventReport: async (req, res) => {
+    const {
+      surveyCreated,
+      surveyName,
+      eventId,
+      programName,
+      programID,
+     externalFacilitatorName,
+     mainRoles,
+     participantRegistrationForm,
+     eventStartedOnTime,
+     eventFinishedOnTime,
+     participantGreeted,
+     resourcesAvailable,
+     photoRelease,
+     handSanitizerAvailable,
+     reminderSafeSpace,
+     reminderPostEvaluationSurvey,
+     eventChecklistOther,
+     totalAttendees,
+     eventOrganization,
+     eventResponsive,
+     engaged,
+  topicsFollowup,
+  leastEngaged,
+  improveEngagement,
+  eventChallenges,
+  eventQuestions,
+  organizerFeedback
+    } = req.body;
+
+
+    try {
+      const text = `insert into events_output (
+        surveyCreated,
+      surveyName,
+      eventId,
+      programName,
+      programID,
+     externalFacilitatorName,
+     mainRoles,
+     participantRegistrationForm,
+     eventStartedOnTime,
+     eventFinishedOnTime,
+     participantGreeted,
+     resourcesAvailable,
+     photoRelease,
+     handSanitizerAvailable,
+     reminderSafeSpace,
+     reminderPostEvaluationSurvey,
+     eventChecklistOther,
+     totalAttendees,
+     eventOrganization,
+     eventResponsive,
+     engaged,
+  topicsFollowup,
+  leastEngaged,
+  improveEngagement,
+  eventChallenges,
+  eventQuestions,
+  organizerFeedback) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,
+            $16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27) RETURNING *`;
+      const values = [
+        surveyCreated,
+      surveyName,
+      eventId,
+      programName,
+      programID,
+     externalFacilitatorName,
+     mainRoles,
+     participantRegistrationForm,
+     eventStartedOnTime,
+     eventFinishedOnTime,
+     participantGreeted,
+     resourcesAvailable,
+     photoRelease,
+     handSanitizerAvailable,
+     reminderSafeSpace,
+     reminderPostEvaluationSurvey,
+     eventChecklistOther,
+     totalAttendees,
+     eventOrganization,
+     eventResponsive,
+     engaged,
+  topicsFollowup,
+  leastEngaged,
+  improveEngagement,
+  eventChallenges,
+  eventQuestions,
+  organizerFeedback
+      ];
+
+      const allData = await db.query(text, values);
+      const response = allData.rows;
+      res
+        .status(200)
+        .send({ message: "oef cb Event_output saved successfully", statusText: "OK" });
+      console.log("sucess post event report");
+    } catch (error) {
+      res
+        .status(400)
+        .send({ message: "an error occurred, try again later", error: error });
+      console.log("create Event_output error:", error);
+    }
+  },
+
+  updateOefYipPostEventReport:async(req,res) =>{
+    console.log("oef yip post event report update")
+    let {
+      surveyCreated,
+      surveyName,
+      eventId,
+      programName,
+      programID,
+     externalFacilitatorName,
+     mainRoles,
+     participantRegistrationForm,
+     eventStartedOnTime,
+     eventFinishedOnTime,
+     participantGreeted,
+     resourcesAvailable,
+     photoRelease,
+     handSanitizerAvailable,
+     reminderSafeSpace,
+     reminderPostEvaluationSurvey,
+     eventChecklistOther,
+     totalAttendees,
+     eventOrganization,
+     eventResponsive,
+     engaged,
+  topicsFollowup,
+  leastEngaged,
+  improveEngagement,
+  eventChallenges,
+  eventQuestions,
+  organizerFeedback,
+      id
+    } = req.body
+console.log("req.body update oef yip event report",req.body)
+    try {
+      const query = {
+        text:`update events_output set
+        surveyCreated=$1,
+      surveyName=$2,
+      eventId=$3,
+      programName=$4,
+      programID=$5,
+     externalFacilitatorName=$6,
+     mainRoles=$7,
+     participantRegistrationForm=$8,
+     eventStartedOnTime=$9,
+     eventFinishedOnTime=$10,
+     participantGreeted=$11,
+     resourcesAvailable=$12,
+     photoRelease=$13,
+     handSanitizerAvailable=$14,
+     reminderSafeSpace=$15,
+     reminderPostEvaluationSurvey=$16,
+     eventChecklistOther=$17,
+     totalAttendees=$18,
+     eventOrganization=$19,
+     eventResponsive=$20,
+     engaged=$21,
+  topicsFollowup=$22,
+  leastEngaged=$23,
+  improveEngagement=$24,
+  eventChallenges=$25,
+  eventQuestions=$26,
+  organizerFeedback=$27
+  where id=$28`,
+        values:[
+          surveyCreated,
+          surveyName,
+          eventId,
+          programName,
+          programID,
+         externalFacilitatorName,
+         mainRoles,
+         participantRegistrationForm,
+         eventStartedOnTime,
+         eventFinishedOnTime,
+         participantGreeted,
+         resourcesAvailable,
+         photoRelease,
+         handSanitizerAvailable,
+         reminderSafeSpace,
+         reminderPostEvaluationSurvey,
+         eventChecklistOther,
+         totalAttendees,
+         eventOrganization,
+         eventResponsive,
+         engaged,
+      topicsFollowup,
+      leastEngaged,
+      improveEngagement,
+      eventChallenges,
+      eventQuestions,
+      organizerFeedback,
+          id
+        ]
+      }
+        db
+          .query(query)
+          .then((response) =>{
+            console.log(response)
+            res.send({
+              message: "oef yip event Updated successfully",
+              statusText:'OK'
+            })
+          }
+          )
+    } catch (error) {
+      console.log(error)
+      res.send(error)
+    }
+  },
 
   updateOefCabPostEventReport:async(req,res) =>{
     console.log("oef cab post event report update starting")
@@ -4594,6 +4820,29 @@ eventName=$7
         res.send("an error ocurred");
         console.log("error",e)
       }
+},
+getOefYipPostEventReportById:async (req,res)=>{
+   
+  let {id}=req.params
+  console.log("get oef yip",id)
+  const text=`select events.id as eventID,events.eventname as _eventname,events.eventdate as _eventdate,events.folderpath,events.folderurl,events.yipsession,events_output.* eventname from events
+   join events_output on  events.id = events_output.eventid
+  where eventid=$1 `
+ const values=[id]
+  try {
+      const allData = await db.query(text,values);
+      const response = allData.rows;
+      console.log("response",response)
+      if(response.length>0){
+        res.send(response);
+      }
+      else {
+        res.send({message:"Somenthing went wront, please try again", statusText:'FAIL',eventID:id})
+      }
+    } catch (e) {
+      res.send("an error ocurred");
+      console.log("error",e)
+    }
 },
 
 }
