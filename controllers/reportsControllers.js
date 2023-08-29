@@ -526,6 +526,25 @@ getOefParticipantEventsOutput:async (req,res)=>{
       console.log("error",e)
     }
 },
+
+getOefCabOrganizer:async (req,res)=>{
+  /* const text=`select events.id, events.eventname, events.eventdate, participant_survey_outputs.*
+  from events join participant_survey_outputs on events.id=participant_survey_outputs.eventid` */
+  const text=`select * from events where surveyname='oef-cab'`
+  try {
+      const allData = await db.query(text);
+      const response = allData.rows;
+      if(response.length>0){
+        res.send(response);
+      } else {
+        res.status(400).send({message:"There is no data", statusText:"FAIL"})
+      }
+      
+    } catch (e) {
+      res.send("an error ocurred");
+      console.log("error",e)
+    }
+},
 };
 
 

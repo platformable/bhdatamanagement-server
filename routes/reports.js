@@ -13,6 +13,7 @@ router.get("/oef/sv/site_visits/",controller.getOefSiteVisits)
 
 router.get("/oef/events_output/report/",controller.getOefEventsOutputReport)
 router.get("/oef/participant_events_output/report/",controller.getOefParticipantEventsOutput)
+router.get("/oef/cab/organizer", controller.getOefCabOrganizer)
 
 
 
