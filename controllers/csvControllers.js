@@ -4,7 +4,7 @@ module.exports = {
     getQuarterlyReportSubcon:async (req,res)=>{
         const text=`select events.eventName,
         events.onelineDescription,
-        events.oefEventPresentationTopic as typeOfActivity,
+        events.oefEventPresentationTopic,
         events.eventDate,
         events.eventStartTime,
         events.eventFinishTime,
@@ -54,13 +54,13 @@ module.exports = {
                     data.eventName=row.eventname
                     data.onelineDescription=row.onelinedescription
                     data.typeofactivity=row.oefeventpresentationtopic || ""
-                    data.targetAudience=row.targetaudience
                     data.month=new Date(row.eventdate).toLocaleString('default', { month: 'long' });
                     data.eventDate=row.eventdate
                     data.eventStartTime=row.eventstarttime
                     data.eventFinishTime=row.eventfinishtime
-                    data.totalTime=((convertDurationtoSeconds(row.eventfinishtime)-convertDurationtoSeconds(row.eventstarttime)) / 3600).toFixed(2) 
-                    data.oefTargetAudienceForReport=row.oeftargetaudienceforreport || ""
+                    data.totalTime=((convertDurationtoSeconds(row.eventfinishtime)-convertDurationtoSeconds(row.eventstarttime)) / 3600).toFixed(2)
+                    data.targetAudience=row.oeftargetaudienceforreport || ""
+                    // data.oefTargetAudienceForReport=row.oeftargetaudienceforreport || ""
                     data.totalAttendees=row.totalattendees
                     data.hivTestedTotal=row.hivtestedtotal
                     data.selftestKits=0
