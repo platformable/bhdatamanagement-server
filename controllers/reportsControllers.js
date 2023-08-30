@@ -531,20 +531,20 @@ getOefCabOrganizer:async (req,res)=>{
   /* const text=`select events.id, events.eventname, events.eventdate, participant_survey_outputs.*
   from events join participant_survey_outputs on events.id=participant_survey_outputs.eventid` */
   const text=`select 
-  events.createdbyname,
-  events.createdbylastname,
-  events.eventrole,
-  events.eventname,
+  events.createdbyname as "createdByName",
+  events.createdbylastname as "createdByLastName",
+  events.eventrole as "eventRole",
+  events.eventname as "eventName",
   events_output.cluster,
-  events.eventdate,
-  events.eventstarttime,
-  events.eventfinishtime,
-  events.healthareaoffocusname,
-  events_output.clusterFBOs,
-  events.deliverypartner,
-  events_output.totalattendees,
-  events.submissionstatus,
-  events.submissionnotes
+  events.eventdate as "eventDate",
+  events.eventstarttime as "eventStartTime",
+  events.eventfinishtime as "eventFinishTime",
+  events.healthareaoffocusname as "healthAreaOfFocus",
+  events_output.clusterFBOs as "clusterFBOs",
+  events.deliverypartner as "deliveryPartner",
+  events_output.totalattendees as "totalAttendees",
+  events.submissionstatus as "submissionStatus",
+  events.submissionnotes as "submissionNotes"
    from events
    inner join events_output on  events.id =events_output.eventid
    where events.surveyname='oef-cab'`
