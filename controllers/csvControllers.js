@@ -48,7 +48,8 @@ module.exports = {
                         }
                     }
                     data.deliveryPartner=row.deliverypartner
-                    data.borough=row.borough
+                    data.borough=row.borough,
+                    data.typeofactivity=row.typeOfActivity
                     data.nameGuestSpeakers=row.nameguestspeakers
                     data.hivTesting=row.hivtesting?'Yes':'No'
                     data.eventName=row.eventname
