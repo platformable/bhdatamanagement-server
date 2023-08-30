@@ -49,12 +49,11 @@ module.exports = {
                     }
                     data.deliveryPartner=row.deliverypartner
                     data.borough=row.borough,
-                    data.typeofactivity=row.typeOfActivity
                     data.nameGuestSpeakers=row.nameguestspeakers
                     data.hivTesting=row.hivtesting?'Yes':'No'
                     data.eventName=row.eventname
                     data.onelineDescription=row.onelinedescription
-                    data.oefEventPresentationTopic=row.oefeventpresentationtopic || ""
+                    data.typeofactivity=row.oefeventpresentationtopic || ""
                     data.targetAudience=row.targetaudience
                     data.month=new Date(row.eventdate).toLocaleString('default', { month: 'long' });
                     data.eventDate=row.eventdate
