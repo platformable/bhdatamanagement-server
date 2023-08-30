@@ -4,13 +4,14 @@ module.exports = {
     getQuarterlyReportSubcon:async (req,res)=>{
         const text=`select events.eventName,
         events.onelineDescription,
-        events.oefEventPresentationTopic,
+        events.oefEventPresentationTopic as typeOfActivity,
         events.eventDate,
         events.eventStartTime,
         events.eventFinishTime,
         events.borough,
         events.surveyname,
         events.deliveryPartner,
+        events.oeftargetaudienceforreport as targetAudience,
         events_output.nameGuestSpeakers,
         events_output.hivTesting,
         events_output.totalAttendees,
@@ -53,6 +54,7 @@ module.exports = {
                     data.eventName=row.eventname
                     data.onelineDescription=row.onelinedescription
                     data.oefEventPresentationTopic=row.oefeventpresentationtopic || ""
+                    data.targetAudience=row.targetaudience
                     data.month=new Date(row.eventdate).toLocaleString('default', { month: 'long' });
                     data.eventDate=row.eventdate
                     data.eventStartTime=row.eventstarttime
