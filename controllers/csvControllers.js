@@ -165,7 +165,8 @@ module.exports = {
         events_output.engaged,
         events_output.eventResponsive,
         events_output.topicsFollowup,
-        events_output.leastEngaged
+        events_output.leastEngaged,
+        events_output.organizerFeedback
         from events
         inner join events_output on  events.id =events_output.eventid
         where events_output.surveyname='bh-cbt-post-event' and events.surveyname='bh-cbt-register'`
@@ -201,11 +202,9 @@ module.exports = {
                     data.targetAudienceTotal=""
                     data.targetAudience='All FBOs'
                     data.totalAttendees=row.totalattendees
-                    data.notes=`How satisfied were you with how the event was facilitated/delivered? ${row.eventorganization} What do you think worked best with how the workshop was organized today?
-                    ${row.eventworkedbest} How satisfied were you with how the event was facilitated/delivered? ${row.eventdelivery} How responsive and engaged do you think participants were? ${row.engaged}
-                    What do you think was the activity or discussion topic where the participants were most engaged? ${row.eventresponsive}
-                    Were there any topics or discussions that you would like to followup on or prepare additional resources for in future? ${row.topicsfollowup}
-                    What do you think was the activity or discussion topic that participants were least engaged? ${row.leastengaged}`
+                    data.notes=`What do you think worked best with how the workshop was organized today? ${row.eventworkedbest} What could be improved when organizing the next workshop? ${row.eventimprove} 
+                    Do you have any other feedback or reflections to add? ${row.organizerFeedback}
+                    `
                     newData.push(data)   
               })  
                
