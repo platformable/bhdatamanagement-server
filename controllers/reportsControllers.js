@@ -530,7 +530,24 @@ getOefParticipantEventsOutput:async (req,res)=>{
 getOefCabOrganizer:async (req,res)=>{
   /* const text=`select events.id, events.eventname, events.eventdate, participant_survey_outputs.*
   from events join participant_survey_outputs on events.id=participant_survey_outputs.eventid` */
-  const text=`select * from events where surveyname='oef-cab'`
+  const text=`select 
+  events.createdbyname,
+  events.createdbylastname,
+  events.eventrole,
+  events.eventname,
+  events_output.cluster,
+  events.eventdate,
+  events.eventstarttime,
+  events.eventfinishtime,
+  events.healthareaoffocusname,
+  events_output.clusterFBOs,
+  events.deliverypartner,
+  events_output.totalattendees,
+  events.submissionstatus,
+  events.submissionnotes
+   from events
+   inner join events_output on  events.id =events_output.eventid
+   where events.surveyname='oef-cab'`
   try {
       const allData = await db.query(text);
       const response = allData.rows;
