@@ -204,8 +204,9 @@ module.exports = {
                     data.targetAudienceTotal=""
                     data.targetAudience='All FBOs'
                     data.totalAttendees=row.totalattendees
-                    data.notes=`What do you think worked best with how the workshop was organized today? ${row.eventworkedbest} What could be improved when organizing the next workshop? ${row.eventimprove} 
-                    Do you have any other feedback or reflections to add? ${row.organizerFeedback}
+                    data.notes=`${row.eventworkedbest} 
+                    ${row.eventimprove} 
+                    ${row.organizerFeedback}
                     `
                     newData.push(data)   
               })  
