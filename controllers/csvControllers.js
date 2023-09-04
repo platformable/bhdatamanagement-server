@@ -66,7 +66,8 @@ module.exports = {
                     data.selftestKits=0
                     //data.collaborativeEvent=row?.clusterfbos ? row.clusterfbos?.join(", ") + row.partnerorganization1 !=='' && `AND ${row.partnerorganization1}` + row.partnerorganization2 !=='' && `AND ${row.partnerorganization2}`:""
                     data.collaborativeEvent=collabEvent(row)
-                    data.notes=`HIV discussion points: ${row.eventquestions} Collaborated with: ${joinClusterFbos(row)} ${row.partnerorganization1!=='' && `, ${row.partnerorganization1}`} ${row.partnerorganization2!=='' && `, ${row.partnerorganization2}`} `
+                    data.notes=`${row.eventquestions} 
+                    ${joinClusterFbos(row)} ${row.partnerorganization1!=='' && `, ${row.partnerorganization1}`} ${row.partnerorganization2!=='' && `, ${row.partnerorganization2}`} `
                     newData.push(data)   
               })  
                
@@ -138,7 +139,7 @@ module.exports = {
                     data.hivTestedTotal=""
                     data.selftestKits=0
                     data.collaborativeEvent='Yes'
-                    data.eventQuestions='How HIV was discussed: '  + row.eventquestions
+                    data.eventQuestions=row.eventquestions
                     newData.push(data)   
               })  
                
@@ -265,7 +266,10 @@ module.exports = {
                     data.targetAudienceTotal=1
                     data.targetAudience=row.fbo
                     data.totalAttendees='N/A'
-                    data.notes=`How have you shifted your work to ensure that all program goals are met? ${row.fbochanges}   What improvements have you made since our last site visit? ${row.fboimprovements}   What results have you observed from your community outreach efforts? ${row.fboobservations}   What systems or sustainable practices have you put in place to make sure that this work can continue beyond the life of the grant (eg. when the funding runs out)? ${row.fbobeyondgrant}`
+                    data.notes=`${row.fbochanges} 
+                    ${row.fboimprovements} 
+                   ${row.fboobservations}  
+                   ${row.fbobeyondgrant}`
                     newData.push(data)   
                   })  
                
