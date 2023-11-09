@@ -514,7 +514,12 @@ eventLocationTypeNameOther,
     } = req.body;
     console.log("req.body", req.body);
 
-    
+    const folders = await connectDropboxAndCreateFolders(
+      DBXCLIENT_ID,
+      programName,
+      eventName,
+      eventDate
+    );
 
     try {
       const text = `INSERT INTO events 
@@ -589,13 +594,6 @@ eventLocationTypeNameOther
           }, 8000)
         );
         const sendMessage = await sendMessageToSubscriber(eventName,eventDate,workArea,eventDescription,locationAddress,onlineInPersonEventType,eventStartTime,eventFinishTime)
-        const folders = await connectDropboxAndCreateFolders(
-          DBXCLIENT_ID,
-          programName,
-          eventName,
-          eventDate
-        );
-       
         res
           .status(200)
           .send({ message: "Event saved successfully", statusText: "OK" });
