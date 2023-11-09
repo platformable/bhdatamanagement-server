@@ -609,6 +609,160 @@ eventLocationTypeNameOther
         });
     }
   },
+  createNYSEvent: async (req, res) => {
+    const {
+      userID,
+      eventDateCreated,
+      programID,
+      programName,
+      eventName,
+      eventDate,
+      eventStartTime,
+      eventFinishTime,
+      eventLocationTypeID = Number(eventLocationTypeID),
+      eventLocationTypeName,
+      healthAreaOfFocusID = Number(eventLocationTypeID),
+      healthAreaOfFocusName,
+      eventTypeID = Number(eventTypeID),
+      eventTypeName,
+      nysActivity,
+      nysActivityOther,
+      onlineInPersonEventType,
+      inPersonEventTypeID,
+      inPersonEventTypeName,
+      onlineEventTypeID,
+      onlineEventTypeName,
+      eventDescription,
+      additionalMaterials,
+      createdByName,
+      createdByLastname,
+      workArea,
+workAreaOther,
+locationName,
+locationNameOther,
+locationAddress,
+eventZipCode,
+icsUrlFile,
+borough,
+eventLocationTypeNameOther,
+    } = req.body;
+    console.log("req.body", req.body);
+
+
+
+    try {
+      const text = `INSERT INTO events 
+      (userID,eventDateCreated,programID,programName,eventName,eventDate,eventStartTime,eventFinishTime,
+          eventLocationTypeID,eventLocationTypeName,healthAreaOfFocusID,healthAreaOfFocusName,
+          eventTypeID ,eventTypeName,folderUrl,folderPath,nysActivity,nysActivityOther,onlineInPersonEventType,
+          inPersonEventTypeID,
+          inPersonEventTypeName,
+          onlineEventTypeID,
+          onlineEventTypeName,eventDescription,additionalMaterials,
+          createdByName,
+            createdByLastname,
+            workArea,
+workAreaOther,
+locationName,
+locationNameOther,
+locationAddress,
+eventZipCode,
+icsUrlFile,
+borough,eventLocationTypeNameOther
+          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36) RETURNING *`;
+      const values = [
+        userID,
+        eventDateCreated,
+        programID,
+        programName,
+        eventName,
+        eventDate,
+        eventStartTime,
+        eventFinishTime,
+        eventLocationTypeID,
+        eventLocationTypeName,
+        healthAreaOfFocusID,
+        healthAreaOfFocusName,
+        eventTypeID,
+        eventTypeName,
+        mainFolder,
+        folderPath,
+        nysActivity,
+        nysActivityOther,
+        onlineInPersonEventType,
+        inPersonEventTypeID,
+        inPersonEventTypeName,
+        onlineEventTypeID,
+        onlineEventTypeName,
+        eventDescription,
+        additionalMaterials,
+        createdByName,
+        createdByLastname,
+        workArea,
+workAreaOther,
+locationName,
+locationNameOther,
+locationAddress,
+eventZipCode,
+icsUrlFile,
+borough,
+eventLocationTypeNameOther
+      ];
+
+
+      const saveData = await db.query(text, values);
+      const response = saveData.rows;
+      const eventId=response[0].id
+      console.log("eventId",eventId)
+      const getRefreshToken= await dropbox.connectToDropbox()
+      const token=await getRefreshToken
+      const createFolders= await dropbox.createAllFolders(token,programName,eventName,eventDate)
+      const shareDocumentFolder= await dropbox.shareMainFolder(token,programName,eventName,eventDate)
+      console.log('shareDocumentFolder',shareDocumentFolder)
+      const DocumentsFolderAsyncJobId= await shareDocumentFolder.data.async_job_id
+      let inProgress = false
+      let mainFolderUrl={}
+      while (inProgress === false) {
+        console.log("while")
+        console.log("INPROGRESS",inProgress)
+        const getDocumentsFolderUrl= await dropbox.getFolderUrl(token,DocumentsFolderAsyncJobId);
+
+        if (getDocumentsFolderUrl.data['.tag'] === 'in_progress') {
+          
+          inProgress = false
+          
+        } else {
+          inProgress = true
+          console.log("TERMINO**--------****", getDocumentsFolderUrl.data)
+          mainFolderUrl.url= await getDocumentsFolderUrl.data.preview_url
+          mainFolderUrl.path= await getDocumentsFolderUrl.data.path_lower
+           
+        }
+        console.log("inprogress despues", inProgress)
+      }
+      console.log("MainFolderUrl",mainFolderUrl)
+      
+      const addSharedFolderToEvent=await dropbox.addFoldersToEvent(mainFolderUrl.url, mainFolderUrl.path, eventId,'events')
+      const generatedQRCode = await createQrCode(eventId).then((code) =>
+      setTimeout(() => {
+        updateEventWithQrCode(eventId, generatedCode);
+      }, 8000)
+    );
+    const sendMessage = await sendMessageToSubscriber(eventName,eventDate,workArea,eventDescription,locationAddress,onlineInPersonEventType,eventStartTime,eventFinishTime)
+      console.log("success")
+      res.status(200).send({ message: "Event saved successfully", statusText: "OK", createdEventId:eventId });
+
+    } catch (e) {
+      console.log("error", e);
+      res
+        .status(400)
+        .json({
+          message: "an error ocurred, please try again",
+          statusText: "FAIL",
+          error:e
+        });
+    }
+  },
   updateEvent: async (req, res) => {
     let {
       eventid,

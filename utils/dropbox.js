@@ -46,7 +46,7 @@ exports.connectToDropbox = async () => {
 };
 
 exports.createAllFolders = async (tokenFromRefresh,programName,eventName,eventDate) => {
-  console.log("tokenFromRefresh",tokenFromRefresh)
+  
 try {
   const getData = axios({
     method: "post",
