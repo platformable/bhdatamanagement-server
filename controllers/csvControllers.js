@@ -11,6 +11,7 @@ module.exports = {
         events.borough,
         events.surveyname,
         events.deliveryPartner,
+        events.oeftargetaudienceforreport as targetAudience,
         events_output.nameGuestSpeakers,
         events_output.hivTesting,
         events_output.totalAttendees,
@@ -47,24 +48,26 @@ module.exports = {
                         }
                     }
                     data.deliveryPartner=row.deliverypartner
-                    data.borough=row.borough
+                    data.borough=row.borough,
                     data.nameGuestSpeakers=row.nameguestspeakers
                     data.hivTesting=row.hivtesting?'Yes':'No'
                     data.eventName=row.eventname
                     data.onelineDescription=row.onelinedescription
-                    data.oefEventPresentationTopic=row.oefeventpresentationtopic || ""
+                    data.typeofactivity=row.oefeventpresentationtopic || ""
                     data.month=new Date(row.eventdate).toLocaleString('default', { month: 'long' });
                     data.eventDate=row.eventdate
                     data.eventStartTime=row.eventstarttime
                     data.eventFinishTime=row.eventfinishtime
-                    data.totalTime=((convertDurationtoSeconds(row.eventfinishtime)-convertDurationtoSeconds(row.eventstarttime)) / 3600).toFixed(2) 
-                    data.oefTargetAudienceForReport=row.oeftargetaudienceforreport || ""
+                    data.totalTime=((convertDurationtoSeconds(row.eventfinishtime)-convertDurationtoSeconds(row.eventstarttime)) / 3600).toFixed(2)
+                    data.targetAudience=row.targetaudience || ""
+                    // data.oefTargetAudienceForReport=row.oeftargetaudienceforreport || ""
                     data.totalAttendees=row.totalattendees
                     data.hivTestedTotal=row.hivtestedtotal
                     data.selftestKits=0
                     //data.collaborativeEvent=row?.clusterfbos ? row.clusterfbos?.join(", ") + row.partnerorganization1 !=='' && `AND ${row.partnerorganization1}` + row.partnerorganization2 !=='' && `AND ${row.partnerorganization2}`:""
                     data.collaborativeEvent=collabEvent(row)
-                    data.notes=`HIV discussion points: ${row.eventquestions} Collaborated with: ${joinClusterFbos(row)} ${row.partnerorganization1!=='' && `, ${row.partnerorganization1}`} ${row.partnerorganization2!=='' && `, ${row.partnerorganization2}`} `
+                    data.notes=`${row.eventquestions} 
+                    ${joinClusterFbos(row)} ${row.partnerorganization1!=='' && `, ${row.partnerorganization1}`} ${row.partnerorganization2!=='' && `, ${row.partnerorganization2}`} `
                     newData.push(data)   
               })  
                
@@ -136,7 +139,7 @@ module.exports = {
                     data.hivTestedTotal=""
                     data.selftestKits=0
                     data.collaborativeEvent='Yes'
-                    data.eventQuestions='How HIV was discussed: '  + row.eventquestions
+                    data.eventQuestions=row.eventquestions
                     newData.push(data)   
               })  
                
@@ -165,7 +168,8 @@ module.exports = {
         events_output.engaged,
         events_output.eventResponsive,
         events_output.topicsFollowup,
-        events_output.leastEngaged
+        events_output.leastEngaged,
+        events_output.organizerFeedback
         from events
         inner join events_output on  events.id =events_output.eventid
         where events_output.surveyname='bh-cbt-post-event' and events.surveyname='bh-cbt-register'`
@@ -201,11 +205,10 @@ module.exports = {
                     data.targetAudienceTotal=""
                     data.targetAudience='All FBOs'
                     data.totalAttendees=row.totalattendees
-                    data.notes=`How satisfied were you with how the event was facilitated/delivered? ${row.eventorganization} What do you think worked best with how the workshop was organized today?
-                    ${row.eventworkedbest} How satisfied were you with how the event was facilitated/delivered? ${row.eventdelivery} How responsive and engaged do you think participants were? ${row.engaged}
-                    What do you think was the activity or discussion topic where the participants were most engaged? ${row.eventresponsive}
-                    Were there any topics or discussions that you would like to followup on or prepare additional resources for in future? ${row.topicsfollowup}
-                    What do you think was the activity or discussion topic that participants were least engaged? ${row.leastengaged}`
+                    data.notes=`${row.eventworkedbest} 
+                    ${row.eventimprove} 
+                    ${row.organizerFeedback}
+                    `
                     newData.push(data)   
               })  
                
@@ -263,7 +266,10 @@ module.exports = {
                     data.targetAudienceTotal=1
                     data.targetAudience=row.fbo
                     data.totalAttendees='N/A'
-                    data.notes=`How have you shifted your work to ensure that all program goals are met? ${row.fbochanges}   What improvements have you made since our last site visit? ${row.fboimprovements}   What results have you observed from your community outreach efforts? ${row.fboobservations}   What systems or sustainable practices have you put in place to make sure that this work can continue beyond the life of the grant (eg. when the funding runs out)? ${row.fbobeyondgrant}`
+                    data.notes=`${row.fbochanges} 
+                    ${row.fboimprovements} 
+                   ${row.fboobservations}  
+                   ${row.fbobeyondgrant}`
                     newData.push(data)   
                   })  
                
