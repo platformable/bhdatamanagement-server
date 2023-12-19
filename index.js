@@ -34,6 +34,14 @@ const clientIdSecretEncoded = buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toStr
 
 const redirectUri = `http://localhost:3500/auth`;
 
+const newrelic = require('newrelic');
+
+newrelic.instrumentLoadedModule(
+  'express',    // the module's name, as a string
+  express // the module instance
+);
+
+
 const client = new Client(
   {
       user:process.env.DBUSER,
