@@ -20,7 +20,8 @@ module.exports = {
         events_output.partnerOrganization1,
         events_output.partnerOrganization1Other,
         events_output.partnerOrganization2,
-        events_output.eventQuestions
+        events_output.eventQuestions,
+        events_output.eventhighlights
         from events
         inner join events_output on  events.id =events_output.eventid
         where events.surveyname='oef-fbo-outreach' and events.submissionstatus = 'Complete'`
@@ -66,8 +67,9 @@ module.exports = {
                     data.selftestKits=0
                     //data.collaborativeEvent=row?.clusterfbos ? row.clusterfbos?.join(", ") + row.partnerorganization1 !=='' && `AND ${row.partnerorganization1}` + row.partnerorganization2 !=='' && `AND ${row.partnerorganization2}`:""
                     data.collaborativeEvent=collabEvent(row)
-                    data.notes=`${row.eventquestions} 
-                    ${joinClusterFbos(row)} ${row.partnerorganization1!=='' && `, ${row.partnerorganization1}`} ${row.partnerorganization2!=='' && `, ${row.partnerorganization2}`} `
+                    data.notes=row.eventhighlights
+                    // data.notes=`${row.eventquestions} 
+                    // ${joinClusterFbos(row)} ${row.partnerorganization1!=='' && `, ${row.partnerorganization1}`} ${row.partnerorganization2!=='' && `, ${row.partnerorganization2}`} `
                     newData.push(data)   
               })  
                
@@ -139,7 +141,8 @@ module.exports = {
                     data.hivTestedTotal=""
                     data.selftestKits=0
                     data.collaborativeEvent='Yes'
-                    data.eventQuestions=row.eventquestions
+                    // data.eventQuestions=row.eventquestions
+                    data.notes=row.eventhighlights
                     newData.push(data)   
               })  
                
@@ -157,6 +160,7 @@ module.exports = {
         const text=`select
         events.createdByName,
         events.eventName,
+        events.eventdescription,
         events.eventDate,
         events.eventStartTime,
         events.eventFinishTime,
@@ -232,7 +236,8 @@ module.exports = {
        fbochanges,
        fboimprovements,
        fboobservations,
-       fbobeyondgrant
+       fbobeyondgrant,
+       bestpractices
         from site_visits
         where submissionstatus='Complete'`
         try {
@@ -266,10 +271,11 @@ module.exports = {
                     data.targetAudienceTotal=1
                     data.targetAudience=row.fbo
                     data.totalAttendees='N/A'
-                    data.notes=`${row.fbochanges} 
-                    ${row.fboimprovements} 
-                   ${row.fboobservations}  
-                   ${row.fbobeyondgrant}`
+                    data.notes=row.bestpractices
+                  //   data.notes=`${row.fbochanges} 
+                  //   ${row.fboimprovements} 
+                  //  ${row.fboobservations}  
+                  //  ${row.fbobeyondgrant}`
                     newData.push(data)   
                   })  
                
