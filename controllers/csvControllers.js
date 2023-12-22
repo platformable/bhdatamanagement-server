@@ -209,10 +209,11 @@ module.exports = {
                     data.targetAudienceTotal=""
                     data.targetAudience='All FBOs'
                     data.totalAttendees=row.totalattendees
-                    data.notes=`${row.eventworkedbest} 
+                    data.notes=row.eventdescription
+                    /* data.notes=`${row.eventworkedbest} 
                     ${row.eventimprove} 
                     ${row.organizerFeedback}
-                    `
+                    ` */
                     newData.push(data)   
               })  
                
