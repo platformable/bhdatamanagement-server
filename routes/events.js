@@ -5,6 +5,7 @@ const controller = require('../controllers/eventsControllers')
 const printController = require('../controllers/eventsPrintControllers')
 
 router.get("/",controller.getEvents)
+router.get("/nys/report/getEvents",controller.getEventsNYSCMPReport)
 router.get("/:id",controller.getEventById)
 router.get("/oef/cab",controller.getOefCabEvents)
 router.get("/oef/hiv/data_to_print/:id",printController.getHivOutreachDataToPrint)
