@@ -13,6 +13,9 @@ module.exports={
           }
     },
     getNysEventsOutput:async (req,res)=>{
+
+      const {startDate, endDate} = req.params
+
         const text=`select events_output.*, 
         events.userid,
         events.eventdescription,
@@ -34,7 +37,8 @@ module.exports={
         from events_output 
         join events on  events_output.eventid = events.id 
         join users on  events.userid = users.userid
-        where events.programname='NYS CMP'`
+        where events.programname='NYS CMP' and 
+        events.eventdate between '${startDate}' and '${endDate}'`
         try {
             const allData = await db.query(text);
             const response = allData.rows;
@@ -42,11 +46,11 @@ module.exports={
             if(response.length>0){
               res.send(response);
             } else {
-              res.status(400).send({message:"There is no data", statusText:"FAIL"})
+              res.status(404).send({message:"There is no data events output 404", statusText:"FAIL"})
             }
             
           } catch (e) {
-            res.send("an error ocurred");
+            res.status(500).send({message:"server error events output 500", statusText:"FAIL"})
             console.log("error",e)
           }
     },

@@ -458,14 +458,22 @@ module.exports = {
     }
   },
   getEventsNYSCMPReport: async (req, res) => {
+    const {startDate, endDate} = req.params
+
+    
     try {
       const allData =
         await db.query(`select events.*,events_output.id as posteventreportid from events
-            join events_output on events_output.eventid = events.id where events.id IS NOT NULL`);
+            join events_output on events_output.eventid = events.id where events.id IS NOT NULL and events.eventdate between '${startDate}' and '${endDate}'`);
       const response = allData.rows;
-      res.send(response);
+      if(response.length>0){
+        res.send(response);
+      } else {
+        res.status(404).send({message:"There is no data events", statusText:"FAIL"})
+      }
     } catch (e) {
-      res.send("an error ocurred");
+      res.status(500).send({message:"server error events 500", statusText:"FAIL"})
+      console.log("error",e)
     }
   },
   getEventById: async (req, res) => {
