@@ -2,18 +2,25 @@ const db = require("../dbConnect")
 
 module.exports={
     getParticipantEventOutputs: async (req,res)=>{
+        const {startDate, endDate} = req.params
+        console.log("startDate, endDate!!!",startDate, endDate)
         try {
             const allData = await db.query(`
             select events.id eventid, events.programid, events.programname,
             participant_survey_outputs.*
             from events
             join participant_survey_outputs on participant_survey_outputs.eventid = events.id
-            where events.programname='NYS CMP'`);
+            where events.programname='NYS CMP' and events.eventdate between '${startDate}' and '${endDate}'`);
             const response = allData.rows;
-            res.send(response);
-          } catch (e) {
-            res.send("an error ocurred");
-          }
+            if(response.length>0){
+                res.send(response);
+              } else {
+                res.status(404).send({message:"There is no data events", statusText:"FAIL"})
+              }
+            } catch (e) {
+              res.status(500).send({message:"server error events 500", statusText:"FAIL"})
+              console.log("error",e)
+            }
     },
     getParticipantOEFCBTEventOutputs: async (req,res)=>{
         try {
