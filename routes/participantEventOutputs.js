@@ -13,8 +13,8 @@ router.post("/oef-yip-participant-session2-survey/create",controller.createOefYi
 router.post("/oef-yip-participant-session3-survey/create",controller.createOefYipParticipantSession3)
 router.post("/oef-yip-participant-session4-survey/create",controller.createOefYipParticipantSession4)
 router.post("/oef-yip-6month-follow-up/create",controller.createOefYip6MonthsFollowUp)
-router.get("/",controller.getParticipantEventOutputs)
 router.get("/:id",controller.getParticipantEventOutputsById)
+router.get("/report/:startDate&:endDate",controller.getParticipantEventOutputs)
 router.get("/oef/cbt",controller.getParticipantOEFCBTEventOutputs)
 
 
