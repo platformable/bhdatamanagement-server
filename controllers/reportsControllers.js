@@ -417,7 +417,7 @@ console.log("error",e)
 },
 
 getOefSiteVisits: async (req, res) => {
-  const {starDate,endDate}=req.params
+  const {startDate,endDate}=req.params
   const query = `select  
 programId,
 programName,
@@ -464,7 +464,7 @@ communityDiversityOpenness,
 fboObservations,
 submissionStatus,
 submissionNotes
-from site_visits where surveyCreated between '${starDate}' and '${endDate}'`
+from site_visits where surveyCreated between '${startDate}' and '${endDate}'`
 try {
 const allData = await db.query(query);
 const response = allData.rows;
@@ -481,7 +481,7 @@ console.log("error",e)
 
 
 getOefEventsOutputReport:async (req,res)=>{
-  const {starDate,endDate}=req.params
+  const {startDate,endDate}=req.params
   const text=`select events_output.*, 
   events.userid,
   events.eventdescription,
@@ -500,7 +500,7 @@ getOefEventsOutputReport:async (req,res)=>{
   events.submissionstatus
   from events_output 
   join events on  events_output.eventid = events.id 
-  where events.programname='OEF' and events.eventdate between '${starDate}' and '${endDate}'`
+  where events.programname='OEF' and events.eventdate between '${startDate}' and '${endDate}'`
   try {
       const allData = await db.query(text);
       const response = allData.rows;
@@ -519,8 +519,11 @@ getOefEventsOutputReport:async (req,res)=>{
 getOefParticipantEventsOutput:async (req,res)=>{
   /* const text=`select events.id, events.eventname, events.eventdate, participant_survey_outputs.*
   from events join participant_survey_outputs on events.id=participant_survey_outputs.eventid` */
-  const {starDate,endDate}=req.params
-  const text=`select * from participant_survey_outputs where eventdate between '${starDate}' and '${endDate}'`
+  const {startDate,endDate}=req.params
+
+
+  console.log(startDate, endDate)
+  const text=`select * from participant_survey_outputs where eventdate between '${startDate}' and '${endDate}'`
   try {
       const allData = await db.query(text);
       const response = allData.rows;
@@ -539,7 +542,7 @@ getOefParticipantEventsOutput:async (req,res)=>{
 getOefCabOrganizer:async (req,res)=>{
   /* const text=`select events.id, events.eventname, events.eventdate, participant_survey_outputs.*
   from events join participant_survey_outputs on events.id=participant_survey_outputs.eventid` */
-  const {starDate,endDate}=req.params
+  const {startDate,endDate}=req.params
   const text=`select 
   events.createdbyname,
   events.createdbylastname,
@@ -557,7 +560,7 @@ getOefCabOrganizer:async (req,res)=>{
   events.submissionnotes
    from events
    inner join events_output on  events.id =events_output.eventid
-   where events.surveyname='oef-cab' and events.eventdate between '${starDate}' and '${endDate}'`
+   where events.surveyname='oef-cab' and events.eventdate between '${startDate}' and '${endDate}'`
   try {
       const allData = await db.query(text);
       const response = allData.rows;
