@@ -464,8 +464,7 @@ communityDiversityOpenness,
 fboObservations,
 submissionStatus,
 submissionNotes
-from site_visits where surveyCreated between '${starDate}' and '${endDate}'
-`
+from site_visits where surveyCreated between '${starDate}' and '${endDate}'`
 try {
 const allData = await db.query(query);
 const response = allData.rows;
