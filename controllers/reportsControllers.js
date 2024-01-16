@@ -2,6 +2,8 @@ const db = require("../dbConnect");
 
 module.exports = {
   getOefFboParticipantEventsOutput: async (req, res) => {
+
+    const {startDate,endDate}= req.params
         const query = `select participant_survey_outputs.id,
         participant_survey_outputs.surveyname,
         participant_survey_outputs.programId,
@@ -24,21 +26,22 @@ module.exports = {
         participant_survey_outputs.participantOrientationOther,
         participant_survey_outputs.participantReferral,
         participant_survey_outputs.participantReferralOther,
-        participant_survey_outputs.participantSuggestions from participant_survey_outputs where surveyname = 'oef-participant'`
+        participant_survey_outputs.participantSuggestions from participant_survey_outputs where surveyname = 'oef-participant' and participant_survey_outputs.eventDate between '${startDate}' and '${endDate}'`
     try {
       const allData = await db.query(query);
       const response = allData.rows;
       if(response.length>0){
-        res.status(200).send(response);
+        res.send(response);
       } else {
-        res.status(200).send({message:'There is no data'})
+        res.status(404).send({message:"There is no data events", statusText:"FAIL"})
       }
-      
     } catch (e) {
-      res.send("an error ocurred");
+      res.status(500).send({message:"server error events 500", statusText:"FAIL"})
+      console.log("error",e)
     }
   },
   getOefCbtParticipantEventsOutput: async (req, res) => {
+    const {startDate,endDate}= req.params
     const query = `select participant_survey_outputs.eventId,
     participant_survey_outputs.surveyName,
     participant_survey_outputs.programId,
@@ -64,21 +67,23 @@ module.exports = {
     participant_survey_outputs.understoodTopics,
     participant_survey_outputs.cbtChallenges,
     participant_survey_outputs.cbtDealChallenges,
-    participant_survey_outputs.participantTools from participant_survey_outputs where participant_survey_outputs.surveyname='cbt-participant' order by participant_survey_outputs.eventdate asc`
+    participant_survey_outputs.participantTools from participant_survey_outputs where participant_survey_outputs.surveyname='cbt-participant' and participant_survey_outputs.eventDate between '${startDate}' and '${endDate}' order by participant_survey_outputs.eventdate asc`
 try {
   const allData = await db.query(query);
   const response = allData.rows;
   if(response.length>0){
-    res.status(200).send(response);
+    res.send(response);
   } else {
-    res.status(200).send({message:'There is no data'})
+    res.status(404).send({message:"There is no data events", statusText:"FAIL"})
   }
-  
 } catch (e) {
-  res.send("an error ocurred");
+  res.status(500).send({message:"server error events 500", statusText:"FAIL"})
+  console.log("error",e)
 }
 },
 getOefHivOutReach: async (req, res) => {
+  const {startDate,endDate}= req.params
+
   const query = `select events.surveyName,
   events.programId,
   events.programName,
@@ -227,23 +232,26 @@ getOefHivOutReach: async (req, res) => {
   events_output.otherTesting,
   events_output.otherTestingType,
   events_output.otherTestedTotal
-          from events
-          join events_output on  events.id = events_output.eventid 
-          where events.programname='OEF' and events.surveyname='oef-fbo-outreach' order by events.eventdate asc`
+  from events
+  join events_output on  events.id = events_output.eventid 
+  where events.programname='OEF' and events.surveyname='oef-fbo-outreach' and events.eventdate between '${startDate}' and '${endDate}' order by events.eventdate asc`
 try {
 const allData = await db.query(query);
 const response = allData.rows;
 if(response.length>0){
-  res.status(200).send(response);
+  res.send(response);
 } else {
-  res.status(200).send({message:'There is no data'})
+  res.status(404).send({message:"There is no data events", statusText:"FAIL"})
 }
-
 } catch (e) {
-res.send("an error ocurred");
+res.status(500).send({message:"server error events 500", statusText:"FAIL"})
+console.log("error",e)
 }
 },
 getOefCbtQuarterly: async (req, res) => {
+
+  const {startDate,endDate}= req.params
+
   const query = `select
   participant_survey_outputs.programId,
   participant_survey_outputs.programName,
@@ -291,21 +299,22 @@ getOefCbtQuarterly: async (req, res) => {
   participant_survey_outputs.participantGrantsLearned,
   participant_survey_outputs.participantGrantsSuccessMore
   from participant_survey_outputs
-  where participant_survey_outputs.surveyname='cbt-quarterly-evaluation'`
+  where participant_survey_outputs.surveyname='cbt-quarterly-evaluation' participant_survey_outputs.surveycreated between '${startDate}' and '${endDate}'`
 try {
 const allData = await db.query(query);
 const response = allData.rows;
 if(response.length>0){
-  res.status(200).send(response);
+  res.send(response);
 } else {
-  res.status(200).send({message:'There is no data'})
+  res.status(404).send({message:"There is no data events", statusText:"FAIL"})
 }
-
 } catch (e) {
-res.send("an error ocurred");
+res.status(500).send({message:"server error events 500", statusText:"FAIL"})
+console.log("error",e)
 }
 },
 getTechnicalAssistance: async (req, res) => {
+  const {startDate,endDate}= req.params
   const query = `select        
   programId,
   programName,
@@ -325,21 +334,22 @@ getTechnicalAssistance: async (req, res) => {
   taStatusCompleteDate,
   taCompleteBhStaff,
   taNotesBhStaff
-  from technical_assistance where tastatus='Complete'`
+  from technical_assistance where tastatus='Complete' and taDateSubmitted between '${startDate}' and '${endDate}'`
 try {
 const allData = await db.query(query);
 const response = allData.rows;
 if(response.length>0){
-  res.status(200).send(response);
+  res.send(response);
 } else {
-  res.status(200).send({message:'There is no data'})
+  res.status(404).send({message:"There is no data events", statusText:"FAIL"})
 }
-
 } catch (e) {
-res.send("an error ocurred");
+res.status(500).send({message:"server error events 500", statusText:"FAIL"})
+console.log("error",e)
 }
 },
 getOefCbtFacilitartor: async (req, res) => {
+  const {startDate,endDate}= req.params
   const query = `select 
   events.programId,
   events.programName,
@@ -391,23 +401,23 @@ getOefCbtFacilitartor: async (req, res) => {
   events_output.eventQuestions,
   events_output.organizerFeedback
   from events 
-  inner join events_output on events.id = events_output.eventid where events.programname ='OEF' and events.surveyname = 'bh-cbt-register'
-`
+  inner join events_output on events.id = events_output.eventid where events.programname ='OEF' and events.surveyname = 'bh-cbt-register' and events.eventdate between '${startDate}' and '${endDate}'`
 try {
 const allData = await db.query(query);
 const response = allData.rows;
 if(response.length>0){
-  res.status(200).send(response);
+  res.send(response);
 } else {
-  res.status(200).send({message:'There is no data'})
+  res.status(404).send({message:"There is no data events", statusText:"FAIL"})
 }
-
 } catch (e) {
-res.send("an error ocurred");
+res.status(500).send({message:"server error events 500", statusText:"FAIL"})
+console.log("error",e)
 }
 },
 
 getOefSiteVisits: async (req, res) => {
+  const {starDate,endDate}=req.params
   const query = `select  
 programId,
 programName,
@@ -454,24 +464,25 @@ communityDiversityOpenness,
 fboObservations,
 submissionStatus,
 submissionNotes
-from site_visits
+from site_visits where surveyCreated between '${starDate}' and '${endDate}'
 `
 try {
 const allData = await db.query(query);
 const response = allData.rows;
 if(response.length>0){
-  res.status(200).send(response);
+  res.send(response);
 } else {
-  res.status(200).send({message:'There is no data'})
+  res.status(404).send({message:"There is no data events", statusText:"FAIL"})
 }
-
 } catch (e) {
-res.send({message:"an error ocurred", error:e});
+res.status(500).send({message:"server error events 500", statusText:"FAIL"})
+console.log("error",e)
 }
 },
 
 
 getOefEventsOutputReport:async (req,res)=>{
+  const {starDate,endDate}=req.params
   const text=`select events_output.*, 
   events.userid,
   events.eventdescription,
@@ -490,7 +501,7 @@ getOefEventsOutputReport:async (req,res)=>{
   events.submissionstatus
   from events_output 
   join events on  events_output.eventid = events.id 
-  where events.programname='OEF'`
+  where events.programname='OEF' and events.eventdate between '${starDate}' and '${endDate}'`
   try {
       const allData = await db.query(text);
       const response = allData.rows;
@@ -498,11 +509,10 @@ getOefEventsOutputReport:async (req,res)=>{
       if(response.length>0){
         res.send(response);
       } else {
-        res.status(400).send({message:"There is no data", statusText:"FAIL"})
+        res.status(404).send({message:"There is no data events", statusText:"FAIL"})
       }
-      
     } catch (e) {
-      res.send("an error ocurred");
+      res.status(500).send({message:"server error events 500", statusText:"FAIL"})
       console.log("error",e)
     }
 },
@@ -510,7 +520,8 @@ getOefEventsOutputReport:async (req,res)=>{
 getOefParticipantEventsOutput:async (req,res)=>{
   /* const text=`select events.id, events.eventname, events.eventdate, participant_survey_outputs.*
   from events join participant_survey_outputs on events.id=participant_survey_outputs.eventid` */
-  const text=`select * from participant_survey_outputs`
+  const {starDate,endDate}=req.params
+  const text=`select * from participant_survey_outputs where eventdate between '${starDate}' and '${endDate}'`
   try {
       const allData = await db.query(text);
       const response = allData.rows;
@@ -518,11 +529,10 @@ getOefParticipantEventsOutput:async (req,res)=>{
       if(response.length>0){
         res.send(response);
       } else {
-        res.status(400).send({message:"There is no data", statusText:"FAIL"})
+        res.status(404).send({message:"There is no data events", statusText:"FAIL"})
       }
-      
     } catch (e) {
-      res.send("an error ocurred");
+      res.status(500).send({message:"server error events 500", statusText:"FAIL"})
       console.log("error",e)
     }
 },
@@ -530,6 +540,7 @@ getOefParticipantEventsOutput:async (req,res)=>{
 getOefCabOrganizer:async (req,res)=>{
   /* const text=`select events.id, events.eventname, events.eventdate, participant_survey_outputs.*
   from events join participant_survey_outputs on events.id=participant_survey_outputs.eventid` */
+  const {starDate,endDate}=req.params
   const text=`select 
   events.createdbyname,
   events.createdbylastname,
@@ -547,18 +558,17 @@ getOefCabOrganizer:async (req,res)=>{
   events.submissionnotes
    from events
    inner join events_output on  events.id =events_output.eventid
-   where events.surveyname='oef-cab'`
+   where events.surveyname='oef-cab' and events.eventdate between '${starDate}' and '${endDate}'`
   try {
       const allData = await db.query(text);
       const response = allData.rows;
       if(response.length>0){
         res.send(response);
       } else {
-        res.status(400).send({message:"There is no data", statusText:"FAIL"})
+        res.status(404).send({message:"There is no data events", statusText:"FAIL"})
       }
-      
     } catch (e) {
-      res.send("an error ocurred");
+      res.status(500).send({message:"server error events 500", statusText:"FAIL"})
       console.log("error",e)
     }
 },
