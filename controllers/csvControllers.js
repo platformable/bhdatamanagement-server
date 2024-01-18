@@ -2,6 +2,7 @@ const db = require("../dbConnect");
 
 module.exports = {
     getQuarterlyReportSubcon:async (req,res)=>{
+      const {startDate,endDate}= req.params
         const text=`select events.eventName,
         events.onelineDescription,
         events.oefEventPresentationTopic,
@@ -24,7 +25,7 @@ module.exports = {
         events_output.eventhighlights
         from events
         inner join events_output on  events.id =events_output.eventid
-        where events.surveyname='oef-fbo-outreach' and events.submissionstatus = 'Complete'`
+        where events.surveyname='oef-fbo-outreach' and events.submissionstatus = 'Complete' and events.eventDate between '${startDate}' and '${endDate}'`
         try {
             const allData = await db.query(text);
             const response = allData.rows;
@@ -75,15 +76,18 @@ module.exports = {
                
               res.send(newData);
             } else {
-              res.status(400).send({message:"There is no data", statusText:"FAIL"})
+              res.status(404).send({message:"There is no data events", statusText:"FAIL"})
             }
-            
-          } catch (e) {
-            res.send("an error ocurred");
+            } catch (e) {
+            res.status(500).send({message:"server error events 500", statusText:"FAIL"})
             console.log("error",e)
-          }
+            }
     },
     getCabCsvData:async (req,res)=>{
+      const {startDate,endDate}= req.params
+
+      console.log("startDate",startDate)
+      console.log("endDate",endDate)
         const text=`select
         events.eventname,
         events.onelineDescription,
@@ -99,7 +103,7 @@ module.exports = {
         events_output.totalattendees 
         from events
         inner join events_output on  events.id =events_output.eventid
-        where events.surveyname='oef-cab' and events.submissionstatus = 'Complete'`
+        where events.surveyname='oef-cab' and events.submissionstatus = 'Complete' and events.eventDate between '${startDate}' and '${endDate}'`
         try {
             const allData = await db.query(text);
             const response = allData.rows;
@@ -148,15 +152,15 @@ module.exports = {
                
               res.send(newData);
             } else {
-              res.status(400).send({message:"There is no data", statusText:"FAIL"})
+              res.status(404).send({message:"There is no data events", statusText:"FAIL"})
             }
-            
-          } catch (e) {
-            res.send("an error ocurred");
+            } catch (e) {
+            res.status(500).send({message:"server error events 500", statusText:"FAIL"})
             console.log("error",e)
-          }
+            }
     },
     getCbtCsvData:async (req,res)=>{
+      const {startDate,endDate}= req.params
         const text=`select
         events.createdByName,
         events.eventName,
@@ -176,7 +180,7 @@ module.exports = {
         events_output.organizerFeedback
         from events
         inner join events_output on  events.id =events_output.eventid
-        where events_output.surveyname='bh-cbt-post-event' and events.surveyname='bh-cbt-register'`
+        where events_output.surveyname='bh-cbt-post-event' and events.surveyname='bh-cbt-register' and events.eventDate between '${startDate}' and '${endDate}'`
         try {
             const allData = await db.query(text);
             const response = allData.rows;
@@ -219,15 +223,15 @@ module.exports = {
                
               res.send(newData);
             } else {
-              res.status(400).send({message:"There is no data", statusText:"FAIL"})
+              res.status(404).send({message:"There is no data events", statusText:"FAIL"})
             }
-            
-          } catch (e) {
-            res.send("an error ocurred");
+            } catch (e) {
+            res.status(500).send({message:"server error events 500", statusText:"FAIL"})
             console.log("error",e)
-          }
+            }
     },
     getSiteVisitsCsvData:async (req,res)=>{
+      const {startDate,endDate}= req.params
         const text=`select
        eventDate,
        eventstarttime,
@@ -240,7 +244,7 @@ module.exports = {
        fbobeyondgrant,
        bestpractices
         from site_visits
-        where submissionstatus='Complete'`
+        where submissionstatus='Complete' and eventDate between '${startDate}' and '${endDate}'`
         try {
             const allData = await db.query(text);
             const response = allData.rows;
@@ -282,22 +286,22 @@ module.exports = {
                
               res.send(newData);
             } else {
-              res.status(400).send({message:"There is no data", statusText:"FAIL"})
+              res.status(404).send({message:"There is no data events", statusText:"FAIL"})
             }
-            
-          } catch (e) {
-            res.send("an error ocurred");
+            } catch (e) {
+            res.status(500).send({message:"server error events 500", statusText:"FAIL"})
             console.log("error",e)
-          }
+            }
     },
     getTechnicalAssistanceCsvData:async (req,res)=>{
+      const {startDate,endDate}= req.params
         const text=`select 
         taCompleteBhStaff,
         taType,
         taDateSubmitted,
         taFbo,
         taNotesBhStaff
-        from technical_assistance  where tastatus='Complete'`
+        from technical_assistance  where tastatus='Complete' and taDateSubmitted between '${startDate}' and '${endDate}'`
         try {
             const allData = await db.query(text);
             const response = allData.rows;
@@ -334,16 +338,16 @@ module.exports = {
                
               res.send(newData);
             } else {
-              res.status(400).send({message:"There is no data", statusText:"FAIL"})
+              res.status(404).send({message:"There is no data events", statusText:"FAIL"})
             }
-            
-          } catch (e) {
-            res.send("an error ocurred");
+            } catch (e) {
+            res.status(500).send({message:"server error events 500", statusText:"FAIL"})
             console.log("error",e)
-          }
+            }
     },
 
     getYipSession1CsvData:async (req,res)=>{
+      const {startDate,endDate}= req.params
       const text=`select
       surveyName,
       surveyCreated,
@@ -390,7 +394,7 @@ module.exports = {
       confidentLookingAfterMyMentalHealth,
       eventdate
       from participant_survey_outputs       
-      where surveyname='yip-participant-session1'`
+      where surveyname='yip-participant-session1' and eventdate between '${startDate}' and '${endDate}'`
       try {
           const allData = await db.query(text);
           const response = allData.rows;
@@ -398,15 +402,15 @@ module.exports = {
           if(response.length>0){
             res.send(response);
           } else {
-            res.send([{data:'no data'}])
+            res.status(404).send({message:"There is no data events", statusText:"FAIL"})
           }
-          
-        } catch (e) {
-          res.send("an error ocurred");
+          } catch (e) {
+          res.status(500).send({message:"server error events 500", statusText:"FAIL"})
           console.log("error",e)
-        }
+          }
   },
   getYipSession2CsvData:async (req,res)=>{
+    const {startDate,endDate}= req.params
     const text=`select
     surveyName,
 surveyCreated,
@@ -447,7 +451,7 @@ deleteFromInternetGoneForever,
 confidentCommunicatingEffectively,
 eventdate
 from participant_survey_outputs
-where surveyname='yip-participant-session2'`
+where surveyname='yip-participant-session2' and eventdate between '${startDate}' and '${endDate}'`
     try {
         const allData = await db.query(text);
         const response = allData.rows;
@@ -455,16 +459,16 @@ where surveyname='yip-participant-session2'`
         if(response.length>0){
           res.send(response);
         } else {
-          res.send([{data:'no data'}])
+          res.status(404).send({message:"There is no data events", statusText:"FAIL"})
         }
-        
-      } catch (e) {
-        res.send("an error ocurred");
+        } catch (e) {
+        res.status(500).send({message:"server error events 500", statusText:"FAIL"})
         console.log("error",e)
-      }
+        }
 },
 
 getYipSession3CsvData:async (req,res)=>{
+  const {startDate,endDate}= req.params
   const text=`select
   surveyName,
 surveyCreated,
@@ -506,7 +510,7 @@ hasMentor,
 confidentJobAndCareerChoices,
 eventdate
 from participant_survey_outputs
-where surveyname='yip-participant-session3'`
+where surveyname='yip-participant-session3' and eventdate between '${startDate}' and '${endDate}'`
   try {
       const allData = await db.query(text);
       const response = allData.rows;
@@ -514,15 +518,15 @@ where surveyname='yip-participant-session3'`
       if(response.length>0){
         res.send(response);
       } else {
-        res.send([{data:'no data'}])
+        res.status(404).send({message:"There is no data events", statusText:"FAIL"})
       }
-      
-    } catch (e) {
-      res.send("an error ocurred");
+      } catch (e) {
+      res.status(500).send({message:"server error events 500", statusText:"FAIL"})
       console.log("error",e)
-    }
+      }
 },
 getYipSession4CsvData:async (req,res)=>{
+  const {startDate,endDate}= req.params
   const text=`select
   surveyName,
 surveyCreated,
@@ -570,7 +574,7 @@ workshopFavorite,
 workshopLikelyTellFriend,
 eventdate
 from participant_survey_outputs
-where surveyname='yip-participant-session4'`
+where surveyname='yip-participant-session4' and eventdate between '${startDate}' and '${endDate}'`
   try {
       const allData = await db.query(text);
       const response = allData.rows;
@@ -578,16 +582,16 @@ where surveyname='yip-participant-session4'`
       if(response.length>0){
         res.send(response);
       } else {
-        res.send([{data:'no data'}])
+        res.status(404).send({message:"There is no data events", statusText:"FAIL"})
       }
-      
-    } catch (e) {
-      res.send("an error ocurred");
+      } catch (e) {
+      res.status(500).send({message:"server error events 500", statusText:"FAIL"})
       console.log("error",e)
-    }
+      }
 },
 
 getYipPreWorkshopCsvData:async (req,res)=>{
+  const {startDate,endDate}= req.params
   const text=`select
   surveyName,
   surveyCreated,
@@ -649,7 +653,7 @@ getYipPreWorkshopCsvData:async (req,res)=>{
   confidentJobAndCareerChoices,
   participantSuggestions
 from participant_survey_outputs
-where surveyname='yip-pre-workshop'`
+where surveyname='yip-pre-workshop' and surveyCreated between '${startDate}' and '${endDate}'`
   try {
       const allData = await db.query(text);
       const response = allData.rows;
@@ -657,16 +661,16 @@ where surveyname='yip-pre-workshop'`
       if(response.length>0){
         res.send(response);
       } else {
-        res.status(400).send({message:"There is no data", statusText:"FAIL"})
+        res.status(404).send({message:"There is no data events", statusText:"FAIL"})
       }
-      
-    } catch (e) {
-      res.send("an error ocurred");
+      } catch (e) {
+      res.status(500).send({message:"server error events 500", statusText:"FAIL"})
       console.log("error",e)
-    }
+      }
 },
 
 getYip6MonthsCsvData:async (req,res)=>{
+  const {startDate,endDate}= req.params
   const text=`select
   surveyName,
 surveyCreated,
@@ -728,7 +732,7 @@ confidentPreventingHivAndStis,
 confidentJobAndCareerChoices,
 participantSuggestions
 from participant_survey_outputs
-where surveyname='yip-6month-follow-up'`
+where surveyname='yip-6month-follow-up' and surveyCreated between '${startDate}' and '${endDate}'`
   try {
       const allData = await db.query(text);
       const response = allData.rows;
@@ -736,16 +740,16 @@ where surveyname='yip-6month-follow-up'`
       if(response.length>0){
         res.send(response);
       } else {
-        res.status(400).send({message:"There is no data", statusText:"FAIL"})
+        res.status(404).send({message:"There is no data events", statusText:"FAIL"})
       }
-      
-    } catch (e) {
-      res.send("an error ocurred");
+      } catch (e) {
+      res.status(500).send({message:"server error events 500", statusText:"FAIL"})
       console.log("error",e)
-    }
+      }
 },
 
 getPostEventCsvData:async (req,res)=>{
+  const {startDate,endDate}= req.params
   const text=`select
   events.programId,
   events.programName,
@@ -790,7 +794,7 @@ getPostEventCsvData:async (req,res)=>{
   from events
   join events_output
   on events.id=events_output.eventid
-  where events.surveyname='yip-register' and events_output.surveyname = 'yip-post-event'`
+  where events.surveyname='yip-register' and events_output.surveyname = 'yip-post-event' and events.eventDate between '${startDate}' and '${endDate}'`
   try {
       const allData = await db.query(text);
       const response = allData.rows;
@@ -798,13 +802,12 @@ getPostEventCsvData:async (req,res)=>{
       if(response.length>0){
         res.send(response);
       } else {
-        res.status(400).send({message:"There is no data", statusText:"FAIL"})
+        res.status(404).send({message:"There is no data events", statusText:"FAIL"})
       }
-      
-    } catch (e) {
-      res.send("an error ocurred");
+      } catch (e) {
+      res.status(500).send({message:"server error events 500", statusText:"FAIL"})
       console.log("error",e)
-    }
+      }
 },
 
 }
