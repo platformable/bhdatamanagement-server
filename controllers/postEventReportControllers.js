@@ -69,7 +69,7 @@ module.exports={
     },
     getPostEventReportById:async (req,res)=>{
       let {id}=req.params
-      const text=`select events.*,events_output.*,users."name" as username,users.lastname as userlastname from events
+      const text=`select events.*,events_output.*,users."name" as username,users.lastname as userlastname,events.eventdatecreated as eventdatecreatedtodisplay from events
       join events_output on  events.id = events_output.eventid
       join users on events.userid = users.userid
       where  eventid=$1`
