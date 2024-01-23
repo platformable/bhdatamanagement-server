@@ -4534,6 +4534,9 @@ console.log("req.body update oef post event report",req.body)
       console.log("create Event_output error:", error);
     }
   },
+
+ 
+
   createOEFYipPostEventReport: async (req, res) => {
     const {
       surveyCreated,
@@ -4564,74 +4567,98 @@ console.log("req.body update oef post event report",req.body)
   eventQuestions,
   organizerFeedback
     } = req.body;
+    const existsEventOutputRecord = async (eventId) => {
+      try {
+        // Realiza la consulta para verificar la existencia del registro
+        const result = await db.query(' select  eo.eventid, eo.createdbyname ,eo.createdbyname, events.eventname  from events_output eo join events on events.id=eo.eventid where eo.eventid  = $1', [eventId]);
+    
+        // Devuelve true si ya existe un registro, false si no
+        return result.rows.length > 0;
+      } catch (error) {
+        console.error('Error al verificar la existencia del registro:', error);
+        throw error; // Puedes manejar el error según tus necesidades
+      }
+    }
 
-
+    const text = `insert into events_output (
+      surveyCreated,
+    surveyName,
+    eventId,
+    programName,
+    programID,
+   externalFacilitatorName,
+   mainRoles,
+   participantRegistrationForm,
+   eventStartedOnTime,
+   eventFinishedOnTime,
+   participantGreeted,
+   resourcesAvailable,
+   photoRelease,
+   handSanitizerAvailable,
+   reminderSafeSpace,
+   reminderPostEvaluationSurvey,
+   eventChecklistOther,
+   totalAttendees,
+   eventOrganization,
+   eventResponsive,
+   engaged,
+topicsFollowup,
+leastEngaged,
+improveEngagement,
+eventChallenges,
+eventQuestions,
+organizerFeedback) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,
+          $16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27) RETURNING *`;
+    const values = [
+      surveyCreated,
+    surveyName,
+    eventId,
+    programName,
+    programID,
+   externalFacilitatorName,
+   mainRoles,
+   participantRegistrationForm,
+   eventStartedOnTime,
+   eventFinishedOnTime,
+   participantGreeted,
+   resourcesAvailable,
+   photoRelease,
+   handSanitizerAvailable,
+   reminderSafeSpace,
+   reminderPostEvaluationSurvey,
+   eventChecklistOther,
+   totalAttendees,
+   eventOrganization,
+   eventResponsive,
+   engaged,
+topicsFollowup,
+leastEngaged,
+improveEngagement,
+eventChallenges,
+eventQuestions,
+organizerFeedback
+    ];
     try {
-      const text = `insert into events_output (
-        surveyCreated,
-      surveyName,
-      eventId,
-      programName,
-      programID,
-     externalFacilitatorName,
-     mainRoles,
-     participantRegistrationForm,
-     eventStartedOnTime,
-     eventFinishedOnTime,
-     participantGreeted,
-     resourcesAvailable,
-     photoRelease,
-     handSanitizerAvailable,
-     reminderSafeSpace,
-     reminderPostEvaluationSurvey,
-     eventChecklistOther,
-     totalAttendees,
-     eventOrganization,
-     eventResponsive,
-     engaged,
-  topicsFollowup,
-  leastEngaged,
-  improveEngagement,
-  eventChallenges,
-  eventQuestions,
-  organizerFeedback) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,
-            $16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27) RETURNING *`;
-      const values = [
-        surveyCreated,
-      surveyName,
-      eventId,
-      programName,
-      programID,
-     externalFacilitatorName,
-     mainRoles,
-     participantRegistrationForm,
-     eventStartedOnTime,
-     eventFinishedOnTime,
-     participantGreeted,
-     resourcesAvailable,
-     photoRelease,
-     handSanitizerAvailable,
-     reminderSafeSpace,
-     reminderPostEvaluationSurvey,
-     eventChecklistOther,
-     totalAttendees,
-     eventOrganization,
-     eventResponsive,
-     engaged,
-  topicsFollowup,
-  leastEngaged,
-  improveEngagement,
-  eventChallenges,
-  eventQuestions,
-  organizerFeedback
-      ];
-
-      const allData = await db.query(text, values);
-      const response = allData.rows;
-      res
+      const eventExists = await existsEventOutputRecord(eventId);
+      if (eventExists) {
+        console.log('Already exists a postworkshop related to this event id');
+        res
+              .status(403)
+              .json({ message: "Already exists a postworkshop related to this event id", statusText: "FAIL" });
+      } else {
+        console.log('No existe un registro con el ID relacionado padre. Puedes agregar uno nuevo.');
+ 
+        const allData = await db.query(text, values);
+        const response = allData.rows;
+       res
         .status(200)
         .send({ message: "oef cb Event_output saved successfully", statusText: "OK" });
-      console.log("sucess post event report");
+         console.log("sucess post event report");
+      
+      }
+     
+      
+      
     } catch (error) {
       res
         .status(400)
@@ -4639,7 +4666,7 @@ console.log("req.body update oef post event report",req.body)
       console.log("create Event_output error:", error);
     }
   },
-
+  
   updateOefYipPostEventReport:async(req,res) =>{
     console.log("oef yip post event report update")
     let {
