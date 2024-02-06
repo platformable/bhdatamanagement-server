@@ -656,8 +656,10 @@ createOefPreWorkshopSurvey: async (req,res)=>{
         deliveryPartnerOther,
         awareOptionsEducationCareer,
         consentCanBeTakenAway,
-        participantBorough
-    
+        participantBorough,
+        confidentlookingaftermymentalhealth,
+        confidentnegotiatingcontraceptives
+        
     }= req.body
 
     console.log("OEF pre workshop participant survey",req.body)
@@ -723,7 +725,9 @@ const text = `insert into participant_survey_outputs (
         deliveryPartnerOther,
         awareOptionsEducationCareer,
         consentCanBeTakenAway,
-        participantBorough
+        participantBorough,
+        confidentlookingaftermymentalhealth,
+        confidentnegotiatingcontraceptives
     ) VALUES (
         $1,
         $2,
@@ -767,7 +771,7 @@ const text = `insert into participant_survey_outputs (
         $40,
         $41,
         $42,
-        $43,$44,$45,$46,$47,$48,$49,$50,$51,$52,$53,$54,$55,$56,$57,$58,$59
+        $43,$44,$45,$46,$47,$48,$49,$50,$51,$52,$53,$54,$55,$56,$57,$58,$59,$60,$61
         ) RETURNING *`;
         const values = [
             participantHivKnowledge,
@@ -828,7 +832,9 @@ const text = `insert into participant_survey_outputs (
         deliveryPartnerOther,
         awareOptionsEducationCareer,
         consentCanBeTakenAway,
-        participantBorough
+        participantBorough,
+        confidentlookingaftermymentalhealth,
+        confidentnegotiatingcontraceptives
         ]
 
 const allData = await db.query(text,values);
@@ -1739,8 +1745,8 @@ workshopShouldChange,
 workshopsLearnedFrom,
 workshopsRecommendToFriends,
 eventDate,
-participantAgeOther
-
+participantAgeOther,
+presenterexplainwell
     }= req.body
 
     console.log("OEF yip participant session 4 survey",req.body)
@@ -1797,7 +1803,8 @@ workshopShouldChange,
 workshopsLearnedFrom,
 workshopsRecommendToFriends,
 eventDate,
-participantAgeOther
+participantAgeOther,
+presenterexplainwell
     ) VALUES (
         $1,
         $2,
@@ -1846,7 +1853,7 @@ participantAgeOther
         $45,
         $46,
         $47,
-        $48,$49,$50
+        $48,$49,$50,$51
         ) RETURNING *`;
         const values = [
             canApply,
@@ -1898,7 +1905,8 @@ workshopShouldChange,
 workshopsLearnedFrom,
 workshopsRecommendToFriends,
 eventDate,
-participantAgeOther
+participantAgeOther,
+presenterexplainwell
         ]
 
 const allData = await db.query(text,values);
