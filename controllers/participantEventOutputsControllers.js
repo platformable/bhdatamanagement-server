@@ -657,8 +657,8 @@ createOefPreWorkshopSurvey: async (req,res)=>{
         awareOptionsEducationCareer,
         consentCanBeTakenAway,
         participantBorough,
-        confidentlookingaftermymentalhealth,
-        confidentnegotiatingcontraceptives
+        confidentLookingAfterMyMentalHealth,
+        confidentNegotiatingContraceptives
         
     }= req.body
 
@@ -726,8 +726,8 @@ const text = `insert into participant_survey_outputs (
         awareOptionsEducationCareer,
         consentCanBeTakenAway,
         participantBorough,
-        confidentlookingaftermymentalhealth,
-        confidentnegotiatingcontraceptives
+        confidentLookingAfterMyMentalHealth,
+        confidentNegotiatingContraceptives
     ) VALUES (
         $1,
         $2,
@@ -833,8 +833,8 @@ const text = `insert into participant_survey_outputs (
         awareOptionsEducationCareer,
         consentCanBeTakenAway,
         participantBorough,
-        confidentlookingaftermymentalhealth,
-        confidentnegotiatingcontraceptives
+        confidentLookingAfterMyMentalHealth,
+        confidentNegotiatingContraceptives
         ]
 
 const allData = await db.query(text,values);
@@ -1746,7 +1746,7 @@ workshopsLearnedFrom,
 workshopsRecommendToFriends,
 eventDate,
 participantAgeOther,
-presenterexplainwell
+presenterExplainWell
     }= req.body
 
     console.log("OEF yip participant session 4 survey",req.body)
@@ -1804,7 +1804,7 @@ workshopsLearnedFrom,
 workshopsRecommendToFriends,
 eventDate,
 participantAgeOther,
-presenterexplainwell
+presenterExplainWell
     ) VALUES (
         $1,
         $2,
@@ -1906,7 +1906,7 @@ workshopsLearnedFrom,
 workshopsRecommendToFriends,
 eventDate,
 participantAgeOther,
-presenterexplainwell
+presenterExplainWell
         ]
 
 const allData = await db.query(text,values);
