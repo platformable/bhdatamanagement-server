@@ -670,7 +670,11 @@ where surveyname='yip-pre-workshop' and surveyCreated between '${startDate}' and
 },
 
 getYip6MonthsCsvData:async (req,res)=>{
+  console.log("6 meses")
   const {startDate,endDate}= req.params
+
+  console.log("startDate",startDate)
+  console.log("endDate",endDate)
   const text=`select
   surveyName,
 surveyCreated,
@@ -740,7 +744,7 @@ where surveyname='yip-6month-follow-up' and surveyCreated between '${startDate}'
       if(response.length>0){
         res.send(response);
       } else {
-        res.status(404).send({message:"There is no data events", statusText:"FAIL"})
+        res.status(203).send({message:"There is no event data", statusText:"FAIL"})
       }
       } catch (e) {
       res.status(500).send({message:"server error events 500", statusText:"FAIL"})
