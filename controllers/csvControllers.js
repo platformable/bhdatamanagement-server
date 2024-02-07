@@ -806,7 +806,7 @@ getPostEventCsvData:async (req,res)=>{
       if(response.length>0){
         res.send(response);
       } else {
-        res.status(404).send({message:"There is no data events", statusText:"FAIL"})
+        res.status(203).send({message:"There is no data events", statusText:"FAIL"})
       }
       } catch (e) {
       res.status(500).send({message:"server error events 500", statusText:"FAIL"})
