@@ -449,6 +449,7 @@ poorCommunicationCanRuinRelationships,
 cyberBullyingOnlyNegativeSocialMedia,
 deleteFromInternetGoneForever,
 confidentCommunicatingEffectively,
+confidentLookingAfterMyMentalHealth,
 eventdate
 from participant_survey_outputs
 where surveyname='yip-participant-session2' and eventdate between '${startDate}' and '${endDate}'`
