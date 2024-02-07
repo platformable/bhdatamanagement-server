@@ -402,7 +402,7 @@ module.exports = {
           if(response.length>0){
             res.send(response);
           } else {
-            res.status(404).send({message:"There is no data events", statusText:"FAIL"})
+            res.send({message:"There is no data events", statusText:"FAIL"})
           }
           } catch (e) {
           res.status(500).send({message:"server error events 500", statusText:"FAIL"})
@@ -449,6 +449,7 @@ poorCommunicationCanRuinRelationships,
 cyberBullyingOnlyNegativeSocialMedia,
 deleteFromInternetGoneForever,
 confidentCommunicatingEffectively,
+confidentLookingAfterMyMentalHealth,
 eventdate
 from participant_survey_outputs
 where surveyname='yip-participant-session2' and eventdate between '${startDate}' and '${endDate}'`
@@ -459,7 +460,7 @@ where surveyname='yip-participant-session2' and eventdate between '${startDate}'
         if(response.length>0){
           res.send(response);
         } else {
-          res.status(404).send({message:"There is no data events", statusText:"FAIL"})
+          res.send({message:"No data",statusText:'FAIL'})
         }
         } catch (e) {
         res.status(500).send({message:"server error events 500", statusText:"FAIL"})
@@ -518,7 +519,7 @@ where surveyname='yip-participant-session3' and eventdate between '${startDate}'
       if(response.length>0){
         res.send(response);
       } else {
-        res.status(404).send({message:"There is no data events", statusText:"FAIL"})
+        res.send({message:"There is no data events", statusText:"FAIL"})
       }
       } catch (e) {
       res.status(500).send({message:"server error events 500", statusText:"FAIL"})
@@ -582,7 +583,7 @@ where surveyname='yip-participant-session4' and eventdate between '${startDate}'
       if(response.length>0){
         res.send(response);
       } else {
-        res.status(404).send({message:"There is no data events", statusText:"FAIL"})
+        res.send({message:"There is no data events", statusText:"FAIL"})
       }
       } catch (e) {
       res.status(500).send({message:"server error events 500", statusText:"FAIL"})
@@ -670,7 +671,11 @@ where surveyname='yip-pre-workshop' and surveyCreated between '${startDate}' and
 },
 
 getYip6MonthsCsvData:async (req,res)=>{
+  console.log("6 meses")
   const {startDate,endDate}= req.params
+
+  console.log("startDate",startDate)
+  console.log("endDate",endDate)
   const text=`select
   surveyName,
 surveyCreated,
@@ -740,7 +745,7 @@ where surveyname='yip-6month-follow-up' and surveyCreated between '${startDate}'
       if(response.length>0){
         res.send(response);
       } else {
-        res.status(404).send({message:"There is no data events", statusText:"FAIL"})
+        res.status(203).send({message:"There is no event data", statusText:"FAIL"})
       }
       } catch (e) {
       res.status(500).send({message:"server error events 500", statusText:"FAIL"})
@@ -802,7 +807,7 @@ getPostEventCsvData:async (req,res)=>{
       if(response.length>0){
         res.send(response);
       } else {
-        res.status(404).send({message:"There is no data events", statusText:"FAIL"})
+        res.status(203).send({message:"There is no data events", statusText:"FAIL"})
       }
       } catch (e) {
       res.status(500).send({message:"server error events 500", statusText:"FAIL"})
