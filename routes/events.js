@@ -22,7 +22,7 @@ router.put("/oef/cab/update",controller.updateOefCabEvent)
 router.put("/oef/yip/update",controller.updateOefYipEvent)
 router.put("/oef/update_from_event_output",controller.updateOefEventFromEventsOuput)
 router.put("/",controller.updateEvent)
-router.delete("/delete",controller.deleteEvent)
+router.delete("/delete/:id",controller.deleteEvent)
 
 router.get("/dropbox",controller.getDropbox)
 

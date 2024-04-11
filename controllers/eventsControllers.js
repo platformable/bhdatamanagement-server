@@ -938,8 +938,8 @@ eventLocationTypeNameOther=$31
     all();
   },
   deleteEvent: async (req, res) => {
-    let { id } = req.body;
-    console.log(req.body);
+    let { id } = req.params;
+    console.log(id);
 
     const query = {
       text: "DELETE from events where id=$1",
