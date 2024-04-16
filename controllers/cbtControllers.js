@@ -184,7 +184,7 @@ const submissionStatus='Submitted'
         //console.log("token",token)
         const createFolders= await dropbox.createAllFolders(token,'OEF/CBT',eventName,eventDate)
         //const shareDocumentFolder= await dropbox.shareFolder(token,programName,eventName,eventDate,'Documents')
-        const shareDocumentFolder= await dropbox.shareMainFolder(token,'OEF/CBT',eventName,eventDate)
+        /* const shareDocumentFolder= await dropbox.shareMainFolder(token,'OEF/CBT',eventName,eventDate)
         console.log('shareDocumentFolder',shareDocumentFolder)
         const DocumentsFolderAsyncJobId= await shareDocumentFolder.data.async_job_id
         let inProgress = false
@@ -208,8 +208,8 @@ const submissionStatus='Submitted'
           console.log("inprogress despues", inProgress)
         }
         console.log("MainFolderUrl",mainFolderUrl)
-        //console.log("ImagesFolderUrl",ImagesForlderUrl)
-        const addSharedFolderToEvent=await dropbox.addFoldersToEvent(mainFolderUrl.url, mainFolderUrl.path, eventId,'cbt')
+        
+        const addSharedFolderToEvent=await dropbox.addFoldersToEvent(mainFolderUrl.url, mainFolderUrl.path, eventId,'cbt') */
         const sendMessage= await sendMessageToSubscriber(eventName,eventDate,workArea='',eventDescription,locationAddress='New York City',onlineInPersonEventType='Online',eventStartTime,eventFinishTime)
         console.log("success")
         res.status(200).send({ message: "Event saved successfully", statusText: "OK", createdEventId:eventId });
