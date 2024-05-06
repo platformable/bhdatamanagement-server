@@ -736,7 +736,7 @@ eventLocationTypeNameOther
       const getRefreshToken= await dropbox.connectToDropbox()
       const token=await getRefreshToken
       const createFolders= await dropbox.createAllFolders(token,programName,eventName,eventDate)
-      const shareDocumentFolder= await dropbox.shareMainFolder(token,programName,eventName,eventDate)
+   /*    const shareDocumentFolder= await dropbox.shareMainFolder(token,programName,eventName,eventDate)
       console.log('shareDocumentFolder',shareDocumentFolder)
       const DocumentsFolderAsyncJobId= await shareDocumentFolder.data.async_job_id
       let inProgress = false
@@ -761,7 +761,7 @@ eventLocationTypeNameOther
       }
       console.log("MainFolderUrl",mainFolderUrl)
       
-      const addSharedFolderToEvent=await dropbox.addFoldersToEvent(mainFolderUrl.url, mainFolderUrl.path, eventId,'events')
+      const addSharedFolderToEvent=await dropbox.addFoldersToEvent(mainFolderUrl.url, mainFolderUrl.path, eventId,'events') */
       const generatedQRCode = await createQrCode(eventId).then((code) =>
       setTimeout(() => {
         updateEventWithQrCode(eventId, generatedCode);
